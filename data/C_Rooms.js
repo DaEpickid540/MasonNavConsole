@@ -1,0 +1,94 @@
+export const C_Rooms = {
+  // ── Floor 1 C Pod ─────────────────────────────────────────────
+  // Hallway nodes
+  C100: "C_Pod_1",
+  C115: "C_Pod_1",
+  C119: "C_Pod_1",
+  // Rooms
+  C101: "C_Pod_1",
+  C102: "C_Pod_1",
+  C103: "C_Pod_1",
+  C104: "C_Pod_1",
+  C105: "C_Pod_1",
+  C106: "C_Pod_1",
+  C107: "C_Pod_1",
+  C108: "C_Pod_1",
+  C110: "C_Pod_1",
+  C111: "C_Pod_1", // Media Center
+  C112: "C_Pod_1",
+  C113: "C_Pod_1",
+  C114: "C_Pod_1",
+  C118: "C_Pod_1", // Bathroom
+  // Curved lobby / auditorium area
+  C121: "C_Pod_1",
+  C121A: "C_Pod_1",
+  C122: "C_Pod_1",
+  C122A: "C_Pod_1",
+  C123: "C_Pod_1", // Curved lobby
+  C123A: "C_Pod_1",
+  C124: "C_Pod_1", // Curved lobby
+  C125: "C_Pod_1", // Harvard Room (auditorium-style)
+  C126: "C_Pod_1",
+  C126A: "C_Pod_1",
+  C126B: "C_Pod_1",
+  C126C: "C_Pod_1",
+  C126D: "C_Pod_1",
+  C126E: "C_Pod_1",
+  C126F: "C_Pod_1",
+  C126G: "C_Pod_1",
+  C126H: "C_Pod_1",
+  C126J: "C_Pod_1",
+  C126K: "C_Pod_1",
+  C126L: "C_Pod_1",
+  C126M: "C_Pod_1",
+  C126N: "C_Pod_1",
+  C126P: "C_Pod_1",
+  C130: "C_Pod_1", // Curved lobby
+  // ── Floor 2 C Pod ─────────────────────────────────────────────
+  // Hallway nodes
+  C200: "C_Pod_2",
+  C215: "C_Pod_2",
+  C219: "C_Pod_2",
+  // Rooms (from image: C201-C214, C218, C220, C221, C222, C225, C226, C227)
+  C201: "C_Pod_2",
+  C202: "C_Pod_2",
+  C203: "C_Pod_2",
+  C204: "C_Pod_2",
+  C205: "C_Pod_2",
+  C206: "C_Pod_2",
+  C207: "C_Pod_2",
+  C208: "C_Pod_2",
+  C209: "C_Pod_2",
+  C210: "C_Pod_2",
+  C212: "C_Pod_2",
+  C213: "C_Pod_2",
+  C214: "C_Pod_2",
+  C218: "C_Pod_2", // Bathroom
+  C220: "C_Pod_2",
+  C221: "C_Pod_2",
+  C222: "C_Pod_2",
+  C225: "C_Pod_2",
+  C226: "C_Pod_2",
+  C227: "C_Pod_2",
+  // ── Floor 3 C Pod ─────────────────────────────────────────────
+  // Hallway nodes
+  C300: "C_Pod_3",
+  C315: "C_Pod_3",
+  C319: "C_Pod_3",
+  // Rooms
+  C301: "C_Pod_3",
+  C302: "C_Pod_3",
+  C303: "C_Pod_3",
+  C304: "C_Pod_3",
+  C305: "C_Pod_3",
+  C306: "C_Pod_3",
+  C307: "C_Pod_3",
+  C308: "C_Pod_3",
+  C309: "C_Pod_3",
+  C310: "C_Pod_3",
+  C311: "C_Pod_3",
+  C312: "C_Pod_3",
+  C313: "C_Pod_3",
+  C314: "C_Pod_3",
+  C318: "C_Pod_3", // Bathroom
+};
