@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mason Navigator</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <!-- HEADER -->
+      <header>
+        <div class="hdr-left">
+          <span class="hdr-icon">🏫</span>
+          <div>
+            <div class="hdr-title">Mason Navigator</div>
+            <div class="hdr-sub">Mason High School · Mason, OH 45040</div>
+          </div>
+        </div>
+        <div class="hdr-right">
+          <span class="hdr-kiosk" id="kioskLabel">Loading…</span>
+          <button class="hdr-btn" id="accessBtn">Aa</button>
+          <button class="hdr-btn" id="resetBtn">↺ Reset</button>
+          <button class="hdr-btn" id="settingsBtn">⚙</button>
+        </div>
+      </header>
+
+      <!-- MAIN -->
+      <main>
+        <!-- LEFT: input + directions -->
+        <div class="panel-left">
+          <div class="input-section">
+            <div class="input-label">I am starting from…</div>
+            <div class="start-btns">
+              <button
+                class="start-btn active"
+                id="startStudent"
+                data-room="Z122"
+              >
+                <span class="start-icon">🚪</span>
+                <span class="start-name">Student Entrance</span>
+                <span class="start-room">Z122</span>
+              </button>
+              <button class="start-btn" id="startOffice" data-room="A11">
+                <span class="start-icon">🏢</span>
+                <span class="start-name">Front Office</span>
+                <span class="start-room">A11</span>
+              </button>
+            </div>
+          </div>
+
+          <div
+            class="input-section"
+            style="border-top: 1px solid var(--border2)"
+          >
+            <div class="input-label">Destination Room</div>
+            <div class="input-wrap">
+              <input
+                id="destInput"
+                class="room-input"
+                placeholder="Type a room number…"
+                autocomplete="off"
+                spellcheck="false"
+              />
+              <div class="autocomplete" id="ac"></div>
+            </div>
+            <button id="goBtn">🗺 Get Directions</button>
+            <div id="statusMsg"></div>
+          </div>
+
+          <div id="dirPanel"></div>
+        </div>
+
+        <!-- RIGHT: map -->
+        <div class="panel-right">
+          <div class="floor-tabs" id="floorTabs">
+            <button class="floor-tab active" data-floor="1">
+              Floor 1 <span class="route-dot"></span>
+            </button>
+            <button class="floor-tab" data-floor="2">
+              Floor 2 <span class="route-dot"></span>
+            </button>
+            <button class="floor-tab" data-floor="3">
+              Floor 3 <span class="route-dot"></span>
+            </button>
+          </div>
+
+          <div class="map-area" id="mapArea">
+            <img id="mapImg" alt="Floor plan" />
+            <canvas id="mapCanvas"></canvas>
+            <div class="legend">
+              <div class="legend-row">
+                <div class="ldot" style="background: #003087"></div>
+                You Are Here
+              </div>
+              <div class="legend-row">
+                <div class="ldot" style="background: #1a7a1a"></div>
+                Route
+              </div>
+              <div class="legend-row">
+                <div class="ldot" style="background: #ff6600"></div>
+                Stairwell
+              </div>
+              <div class="legend-row">
+                <div class="ldot" style="background: #cc2200"></div>
+                Destination
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- FOOTER -->
+      <footer>
+        <span
+          >Mason City Schools · Student Navigation Project · Sarvin Sukhe</span
+        >
+        <div class="idle-wrap">
+          <span class="idle-label">Auto-reset: <b id="idleCount">30</b>s</span>
+          <div id="idleBar"><div id="idleFill"></div></div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- IDLE OVERLAY -->
+    <div id="idleOverlay">
+      <div class="idle-icon">🏫</div>
+      <div class="idle-title">Mason Navigator</div>
+      <div class="idle-sub">Find any room in Mason High School instantly</div>
+      <button class="idle-cta" id="idleCta">Tap to Start</button>
+    </div>
+
+    <!-- SETTINGS OVERLAY -->
+    <div id="settingsOverlay">
+      <div class="settings-box">
+        <h2>⚙ Kiosk Configuration</h2>
+        <div class="cfg-row">
+          <label>Kiosk Name (shown in header)</label>
+          <input id="cfgName" placeholder="e.g. Main Entrance Kiosk" />
+        </div>
+        <div class="cfg-row">
+          <label>"You Are Here" Default Room</label>
+          <input id="cfgRoom" placeholder="e.g. A11" />
+        </div>
+        <div class="cfg-row">
+          <label>Default Floor</label>
+          <select id="cfgFloor">
+            <option value="1">Floor 1</option>
+            <option value="2">Floor 2</option>
+            <option value="3">Floor 3</option>
+          </select>
+        </div>
+        <div class="cfg-row">
+          <label>Idle Timeout (seconds)</label>
+          <input
+            id="cfgTimeout"
+            type="number"
+            min="10"
+            max="300"
+            placeholder="30"
+          />
+        </div>
+        <div class="cfg-row">
+          <label>Mode</label>
+          <select id="cfgDev">
+            <option value="false">Kiosk (fullscreen, locked)</option>
+            <option value="true">Development (windowed, DevTools)</option>
+          </select>
+        </div>
+        <div class="cfg-actions">
+          <button class="btn-cancel" id="cfgCancel">Cancel</button>
+          <button class="btn-save" id="cfgSave">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="renderer.js"></script>
+  </body>
+</html>

@@ -11,18 +11,50 @@
   "build": {
     "appId": "com.masonschools.navigator",
     "productName": "Mason Navigator",
-    "directories": { "output": "dist" },
-    "files": ["src/**/*", "assets/**/*", "data/**/*"],
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "data/**/*"
+    ],
     "extraResources": [
-      { "from": "assets/", "to": "assets/", "filter": ["**/*"] },
-      { "from": "data/",   "to": "data/",   "filter": ["**/*"] }
+      {
+        "from": "assets/",
+        "to": "assets/",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "data/",
+        "to": "data/",
+        "filter": [
+          "**/*"
+        ]
+      }
     ],
     "win": {
-      "target": [{ "target": "nsis", "arch": ["x64"] }],
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
       "icon": "assets/icon.ico"
     },
     "linux": {
-      "target": [{ "target": "AppImage", "arch": ["x64"] }],
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
       "category": "Education"
     },
     "nsis": {
