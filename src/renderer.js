@@ -28,6 +28,350 @@ const IMG_SRC = {
 };
 
 const SECONDARY = new Set(["Z2", "A2", "B2"]);
+
+// ── Route waypoints ─────────────────────────────────────────────
+// When drawing a line between two hub nodes, inject these intermediate
+// points so the line follows the actual hallway rather than cutting
+// through walls. Keyed as "FROM->TO" (bidirectional — code handles both).
+// Coordinates are in the same pixel space as coordinates_floor*.js
+// ROUTE_WAYPOINTS: intermediate corridor points so lines follow hallways.
+// All coordinates match the corrected hub positions in coordinates_floor*.js
+// Key insight: each path goes through actual corridor centerlines, not open space.
+// ROUTE_WAYPOINTS: intermediate corridor points so lines follow hallways.
+// All coordinates match the corrected hub positions in coordinates_floor*.js
+// Key insight: each path goes through actual corridor centerlines, not open space.
+const ROUTE_WAYPOINTS = {
+  // ═══ FLOOR 1 ═══════════════════════════════════════════════════
+
+  // B Pod ↔ A Pod: runs south through B100 area, bends at A_Stair, enters A Pod corridor
+  "B_Pod_1->A_Pod_1": [
+    { x: 1550, y: 740 }, // B_Pod_1
+    { x: 1550, y: 840 }, // descend through B-A connector hallway
+    { x: 1600, y: 870 }, // A_Stair area
+    { x: 1600, y: 960 }, // A_Pod_1
+  ],
+  "A_Pod_1->B_Pod_1": [
+    { x: 1600, y: 960 },
+    { x: 1600, y: 870 },
+    { x: 1550, y: 840 },
+    { x: 1550, y: 740 },
+  ],
+
+  // A Pod ↔ Z Pod: A Pod corridor south-west to Z_Stair then Z Pod
+  "A_Pod_1->Z_Pod_1": [
+    { x: 1600, y: 960 },
+    { x: 1567, y: 968 }, // Z_Stair
+    { x: 1507, y: 1040 }, // Z_Pod_1
+  ],
+  "Z_Pod_1->A_Pod_1": [
+    { x: 1507, y: 1040 },
+    { x: 1567, y: 968 },
+    { x: 1600, y: 960 },
+  ],
+
+  // A Pod ↔ Lobby: east A Pod hallway straight west to Lobby
+  "A_Pod_1->Lobby_1": [
+    { x: 1600, y: 960 },
+    { x: 1510, y: 960 }, // mid-corridor
+    { x: 1445, y: 950 }, // Lobby_1
+  ],
+  "Lobby_1->A_Pod_1": [
+    { x: 1445, y: 950 },
+    { x: 1510, y: 960 },
+    { x: 1600, y: 960 },
+  ],
+
+  // B Pod ↔ C Pod: west through B114 stairwell area then C Pod hallway
+  "B_Pod_1->C_Pod_1": [
+    { x: 1550, y: 740 },
+    { x: 1415, y: 655 }, // B_Stair / B114
+    { x: 1393, y: 660 }, // HW_BC_1
+    { x: 1310, y: 660 }, // C_Pod_1
+  ],
+  "C_Pod_1->B_Pod_1": [
+    { x: 1310, y: 660 },
+    { x: 1393, y: 660 },
+    { x: 1415, y: 655 },
+    { x: 1550, y: 740 },
+  ],
+
+  // B Pod ↔ Commons: west along B Pod to Commons
+  "B_Pod_1->Commons_1": [
+    { x: 1550, y: 740 },
+    { x: 1415, y: 655 }, // B_Stair area
+    { x: 1393, y: 660 }, // HW_BC_1
+    { x: 1295, y: 695 }, // Commons_1
+  ],
+  "Commons_1->B_Pod_1": [
+    { x: 1295, y: 695 },
+    { x: 1393, y: 660 },
+    { x: 1415, y: 655 },
+    { x: 1550, y: 740 },
+  ],
+
+  // C Pod ↔ Commons: south through C100
+  "C_Pod_1->Commons_1": [
+    { x: 1310, y: 660 },
+    { x: 1295, y: 695 },
+  ],
+  "Commons_1->C_Pod_1": [
+    { x: 1295, y: 695 },
+    { x: 1310, y: 660 },
+  ],
+
+  // Commons ↔ Z Pod: through main hallway bend
+  "Commons_1->Z_Pod_1": [
+    { x: 1295, y: 695 },
+    { x: 1295, y: 860 }, // south through lobby area
+    { x: 1445, y: 950 }, // Lobby_1 corridor
+    { x: 1507, y: 1040 }, // Z_Pod_1
+  ],
+  "Z_Pod_1->Commons_1": [
+    { x: 1507, y: 1040 },
+    { x: 1445, y: 950 },
+    { x: 1295, y: 860 },
+    { x: 1295, y: 695 },
+  ],
+
+  // Commons ↔ D Wing
+  "Commons_1->D_Wing_1": [
+    { x: 1295, y: 695 },
+    { x: 1230, y: 650 }, // HW_main_1
+    { x: 1115, y: 500 }, // HW_D_entry
+    { x: 1060, y: 500 }, // D_Wing_1
+  ],
+  "D_Wing_1->Commons_1": [
+    { x: 1060, y: 500 },
+    { x: 1115, y: 500 },
+    { x: 1230, y: 650 },
+    { x: 1295, y: 695 },
+  ],
+
+  // C Pod ↔ D Wing: north-west through C115/C114 area
+  "C_Pod_1->D_Wing_1": [
+    { x: 1310, y: 660 },
+    { x: 1230, y: 650 },
+    { x: 1115, y: 500 },
+    { x: 1060, y: 500 },
+  ],
+  "D_Wing_1->C_Pod_1": [
+    { x: 1060, y: 500 },
+    { x: 1115, y: 500 },
+    { x: 1230, y: 650 },
+    { x: 1310, y: 660 },
+  ],
+
+  // Lobby_1 ↔ C Pod: west lobby corridor to Commons to C Pod
+  "Lobby_1->C_Pod_1": [
+    { x: 1445, y: 950 },
+    { x: 1295, y: 860 },
+    { x: 1295, y: 695 },
+    { x: 1310, y: 660 },
+  ],
+  "C_Pod_1->Lobby_1": [
+    { x: 1310, y: 660 },
+    { x: 1295, y: 695 },
+    { x: 1295, y: 860 },
+    { x: 1445, y: 950 },
+  ],
+
+  // ═══ FLOOR 2 ═══════════════════════════════════════════════════
+
+  "B_Pod_2->A_Pod_2": [
+    { x: 1545, y: 742 },
+    { x: 1545, y: 840 },
+    { x: 1598, y: 870 },
+    { x: 1600, y: 962 },
+  ],
+  "A_Pod_2->B_Pod_2": [
+    { x: 1600, y: 962 },
+    { x: 1598, y: 870 },
+    { x: 1545, y: 840 },
+    { x: 1545, y: 742 },
+  ],
+
+  "A_Pod_2->Z_Pod_2": [
+    { x: 1600, y: 962 },
+    { x: 1563, y: 968 },
+    { x: 1503, y: 1043 },
+  ],
+  "Z_Pod_2->A_Pod_2": [
+    { x: 1503, y: 1043 },
+    { x: 1563, y: 968 },
+    { x: 1600, y: 962 },
+  ],
+
+  "A_Pod_2->Lobby_2": [
+    { x: 1600, y: 962 },
+    { x: 1510, y: 962 },
+    { x: 1445, y: 950 },
+  ],
+  "Lobby_2->A_Pod_2": [
+    { x: 1445, y: 950 },
+    { x: 1510, y: 962 },
+    { x: 1600, y: 962 },
+  ],
+
+  "B_Pod_2->C_Pod_2": [
+    { x: 1545, y: 742 },
+    { x: 1412, y: 658 },
+    { x: 1390, y: 660 },
+    { x: 1302, y: 670 },
+  ],
+  "C_Pod_2->B_Pod_2": [
+    { x: 1302, y: 670 },
+    { x: 1390, y: 660 },
+    { x: 1412, y: 658 },
+    { x: 1545, y: 742 },
+  ],
+
+  "B_Pod_2->Commons_2": [
+    { x: 1545, y: 742 },
+    { x: 1412, y: 658 },
+    { x: 1390, y: 660 },
+    { x: 1290, y: 700 },
+  ],
+  "Commons_2->B_Pod_2": [
+    { x: 1290, y: 700 },
+    { x: 1390, y: 660 },
+    { x: 1412, y: 658 },
+    { x: 1545, y: 742 },
+  ],
+
+  "C_Pod_2->Commons_2": [
+    { x: 1302, y: 670 },
+    { x: 1290, y: 700 },
+  ],
+  "Commons_2->C_Pod_2": [
+    { x: 1290, y: 700 },
+    { x: 1302, y: 670 },
+  ],
+
+  "Commons_2->Z_Pod_2": [
+    { x: 1290, y: 700 },
+    { x: 1290, y: 860 },
+    { x: 1445, y: 950 },
+    { x: 1503, y: 1043 },
+  ],
+  "Z_Pod_2->Commons_2": [
+    { x: 1503, y: 1043 },
+    { x: 1445, y: 950 },
+    { x: 1290, y: 860 },
+    { x: 1290, y: 700 },
+  ],
+
+  "Commons_2->D_Wing_2": [
+    { x: 1290, y: 700 },
+    { x: 1225, y: 652 },
+    { x: 1132, y: 588 },
+    { x: 1069, y: 605 },
+  ],
+  "D_Wing_2->Commons_2": [
+    { x: 1069, y: 605 },
+    { x: 1132, y: 588 },
+    { x: 1225, y: 652 },
+    { x: 1290, y: 700 },
+  ],
+
+  "Lobby_2->C_Pod_2": [
+    { x: 1445, y: 950 },
+    { x: 1290, y: 860 },
+    { x: 1290, y: 700 },
+    { x: 1302, y: 670 },
+  ],
+  "C_Pod_2->Lobby_2": [
+    { x: 1302, y: 670 },
+    { x: 1290, y: 700 },
+    { x: 1290, y: 860 },
+    { x: 1445, y: 950 },
+  ],
+
+  // ═══ FLOOR 3 ═══════════════════════════════════════════════════
+
+  "B_Pod_3->A_Pod_3": [
+    { x: 1500, y: 712 },
+    { x: 1500, y: 800 },
+    { x: 1592, y: 785 },
+    { x: 1600, y: 900 },
+  ],
+  "A_Pod_3->B_Pod_3": [
+    { x: 1600, y: 900 },
+    { x: 1592, y: 785 },
+    { x: 1500, y: 800 },
+    { x: 1500, y: 712 },
+  ],
+
+  "A_Pod_3->Z_Pod_3": [
+    { x: 1600, y: 900 },
+    { x: 1545, y: 912 },
+    { x: 1500, y: 1012 },
+  ],
+  "Z_Pod_3->A_Pod_3": [
+    { x: 1500, y: 1012 },
+    { x: 1545, y: 912 },
+    { x: 1600, y: 900 },
+  ],
+
+  "B_Pod_3->C_Pod_3": [
+    { x: 1500, y: 712 },
+    { x: 1435, y: 668 },
+    { x: 1370, y: 645 },
+    { x: 1205, y: 613 },
+  ],
+  "C_Pod_3->B_Pod_3": [
+    { x: 1205, y: 613 },
+    { x: 1370, y: 645 },
+    { x: 1435, y: 668 },
+    { x: 1500, y: 712 },
+  ],
+
+  "B_Pod_3->Commons_3": [
+    { x: 1500, y: 712 },
+    { x: 1435, y: 668 },
+    { x: 1370, y: 645 },
+    { x: 1205, y: 613 },
+  ],
+  "Commons_3->B_Pod_3": [
+    { x: 1205, y: 613 },
+    { x: 1370, y: 645 },
+    { x: 1435, y: 668 },
+    { x: 1500, y: 712 },
+  ],
+
+  "C_Pod_3->Commons_3": [
+    { x: 1205, y: 613 },
+    { x: 1205, y: 613 },
+  ],
+  "Commons_3->C_Pod_3": [
+    { x: 1205, y: 613 },
+    { x: 1205, y: 613 },
+  ],
+
+  "Commons_3->Z_Pod_3": [
+    { x: 1205, y: 613 },
+    { x: 1290, y: 860 },
+    { x: 1500, y: 1012 },
+  ],
+  "Z_Pod_3->Commons_3": [
+    { x: 1500, y: 1012 },
+    { x: 1290, y: 860 },
+    { x: 1205, y: 613 },
+  ],
+};
+
+// Inject waypoints between two consecutive hub nodes if a mapping exists
+function getWaypointsBetween(fromNode, toNode, floor) {
+  const key = `${fromNode}->${toNode}`;
+  const pts = ROUTE_WAYPOINTS[key];
+  if (!pts) return null;
+  // Scale from image pixels to canvas pixels
+  const [iw, ih] = IMG_SIZE[floor];
+  return pts.map((p) => ({
+    x: p.x * (mapCanvas.width / iw),
+    y: p.y * (mapCanvas.height / ih),
+  }));
+}
+
 const POD_LABELS = {
   A_Pod: "A Pod",
   B_Pod: "B Pod",
@@ -161,9 +505,15 @@ function applyConfig() {
 }
 
 // ══════════════════════════════════════════════════════
-//  IDLE TIMER
+//  IDLE TIMER / HOME SCREEN
 // ══════════════════════════════════════════════════════
-function resetIdle() {
+
+// restartCountdown: restart the 30s bar. Does NOT touch the overlay.
+// Called on every user interaction so timer resets while app is in use.
+function restartCountdown() {
+  // If the home/idle screen is showing, don't let background activity dismiss it.
+  if (idleOverlay.classList.contains("show")) return;
+
   idleRemaining = parseInt(config.idleTimeout) || 30;
   idleCount.textContent = idleRemaining;
   idleFill.style.transition = "none";
@@ -172,31 +522,44 @@ function resetIdle() {
     idleFill.style.transition = `width ${idleRemaining}s linear`;
     idleFill.style.width = "0%";
   });
-  idleOverlay.classList.remove("show");
   clearInterval(idleTimer);
   idleTimer = setInterval(() => {
     idleRemaining--;
     idleCount.textContent = Math.max(0, idleRemaining);
     if (idleRemaining <= 0) {
       clearInterval(idleTimer);
-      showIdle();
+      triggerIdleReset();
     }
   }, 1000);
 }
 
-function showIdle() {
-  idleOverlay.classList.add("show");
-}
-function dismissIdle() {
-  resetIdle();
-  resetAll();
+// resetIdle: alias used by applyConfig
+function resetIdle() {
+  restartCountdown();
 }
 
+// triggerIdleReset: called when timer hits 0 — wipes all state, shows home screen
+function triggerIdleReset() {
+  resetAll();
+  showHomeScreen();
+}
+
+function showHomeScreen() {
+  idleOverlay.classList.add("show");
+}
+
+// dismissHomeScreen: ONLY called via the CTA button tap
+function dismissHomeScreen() {
+  idleOverlay.classList.remove("show");
+  restartCountdown();
+}
+
+// Activity resets the countdown bar only — does NOT dismiss the overlay
 ["click", "keydown", "touchstart", "mousemove"].forEach((e) =>
-  document.addEventListener(e, resetIdle, { passive: true }),
+  document.addEventListener(e, restartCountdown, { passive: true }),
 );
-document.getElementById("idleCta").addEventListener("click", dismissIdle);
-idleOverlay.addEventListener("click", dismissIdle);
+// Only the CTA button can dismiss the home/idle screen
+document.getElementById("idleCta").addEventListener("click", dismissHomeScreen);
 
 // ══════════════════════════════════════════════════════
 //  RESET
@@ -214,6 +577,12 @@ function resetAll() {
   document
     .querySelectorAll(".start-btn")
     .forEach((b) => b.classList.toggle("active", b.dataset.room === "Z122"));
+  // Cancel any running animation and clear canvas
+  if (animFrame) {
+    cancelAnimationFrame(animFrame);
+    animFrame = null;
+  }
+  ctx.clearRect(0, 0, mapCanvas.width, mapCanvas.height);
   setFloor(parseInt(config.defaultFloor) || 1);
   clearRouteTabs();
 }
@@ -240,6 +609,7 @@ floorTabs
 
 function setFloor(floor) {
   currentFloor = floor;
+  if (typeof resetMapZoom === "function") resetMapZoom();
   floorTabs
     .querySelectorAll(".floor-tab")
     .forEach((t) =>
@@ -332,39 +702,54 @@ function drawAll() {
     return;
   }
 
-  // Collect points for current floor only
-  const pts = [];
+  // Collect points for current floor, injecting hallway waypoints between hubs
+  const rawPts = [];
   for (const node of currentPath) {
     const nf = nodeFloor(node);
     if (nf === currentFloor || nf === null) {
       const p = toCanvas(node, currentFloor);
-      if (p) pts.push({ node, p });
+      if (p) rawPts.push({ node, p });
     }
   }
 
+  // Build final point list with waypoints injected between hub nodes
+  const finalPts = [];
+  for (let i = 0; i < rawPts.length; i++) {
+    if (i === 0) {
+      finalPts.push(rawPts[i].p);
+      continue;
+    }
+    const fromNode = rawPts[i - 1].node;
+    const toNode = rawPts[i].node;
+    const waypts = getWaypointsBetween(fromNode, toNode, currentFloor);
+    if (waypts) {
+      // Skip the first waypoint if it's very close to the previous point
+      for (const wp of waypts.slice(1, -1)) finalPts.push(wp);
+    }
+    finalPts.push(rawPts[i].p);
+  }
+
+  const pts = rawPts; // keep for dot rendering
   const startPt = toCanvas(selectedStart, currentFloor);
   const endNode = currentPath[currentPath.length - 1];
   const endPt = toCanvas(endNode, currentFloor);
   const endOnFloor = nodeFloor(endNode) === currentFloor;
 
-  animateLine(
-    pts.map((x) => x.p),
-    () => {
-      // After animation: draw start + end dots
-      if (startPt) drawDot(startPt.x, startPt.y, 8, "#003087", "#fff");
-      if (pts.length > 0) {
-        const lastPt = pts[pts.length - 1];
-        const isStair = STAIR_NODES.has(lastPt.node);
-        const color = isStair ? "#ff6600" : endOnFloor ? "#cc2200" : "#ff6600";
-        drawDot(lastPt.p.x, lastPt.p.y, 8, color, "#fff");
-        const lbl = isStair ? "▲ Use Stairs" : displayRooms[endNode] || endNode;
-        drawLabel(lastPt.p.x, lastPt.p.y - 15, lbl);
-      }
-      if (startPt) drawLabel(startPt.x, startPt.y - 15, "You Are Here");
-      // Keep pulsing the start dot
-      pulseHereStatic(startPt);
-    },
-  );
+  animateLine(finalPts, () => {
+    // After animation: draw start + end dots
+    if (startPt) drawDot(startPt.x, startPt.y, 8, "#003087", "#fff");
+    if (pts.length > 0) {
+      const lastPt = pts[pts.length - 1];
+      const isStair = STAIR_NODES.has(lastPt.node);
+      const color = isStair ? "#ff6600" : endOnFloor ? "#cc2200" : "#ff6600";
+      drawDot(lastPt.p.x, lastPt.p.y, 8, color, "#fff");
+      const lbl = isStair ? "▲ Use Stairs" : displayRooms[endNode] || endNode;
+      drawLabel(lastPt.p.x, lastPt.p.y - 15, lbl);
+    }
+    if (startPt) drawLabel(startPt.x, startPt.y - 15, "You Are Here");
+    // Keep pulsing the start dot
+    pulseHereStatic(startPt);
+  });
 }
 
 function animateLine(points, onDone) {
@@ -837,7 +1222,182 @@ document.getElementById("cfgSave").addEventListener("click", async () => {
 });
 
 // ══════════════════════════════════════════════════════
+//  MAP ZOOM / PAN
+// ══════════════════════════════════════════════════════
+let mapZoom = 1;
+let mapPanX = 0;
+let mapPanY = 0;
+let isPanning = false;
+let panStart = { x: 0, y: 0 };
+
+const mapWrap = mapArea; // alias
+
+function applyMapTransform() {
+  const t = `translate(${mapPanX}px, ${mapPanY}px) scale(${mapZoom})`;
+  mapImg.style.transform = t;
+  mapCanvas.style.transform = t;
+  mapImg.style.transformOrigin = "0 0";
+  mapCanvas.style.transformOrigin = "0 0";
+}
+
+function clampPan() {
+  // Allow pan within reasonable bounds (don't let image disappear off screen)
+  const areaRect = mapArea.getBoundingClientRect();
+  const imgW = mapCanvas.width * mapZoom;
+  const imgH = mapCanvas.height * mapZoom;
+  const minX = Math.min(0, areaRect.width - imgW);
+  const minY = Math.min(0, areaRect.height - imgH);
+  mapPanX = Math.max(minX, Math.min(0, mapPanX));
+  mapPanY = Math.max(minY, Math.min(0, mapPanY));
+}
+
+// Scroll wheel zoom
+mapArea.addEventListener(
+  "wheel",
+  (e) => {
+    e.preventDefault();
+    const rect = mapArea.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const delta = e.deltaY > 0 ? 0.85 : 1.18;
+    const newZoom = Math.max(1, Math.min(6, mapZoom * delta));
+    // Zoom toward mouse position
+    mapPanX = mouseX - (mouseX - mapPanX) * (newZoom / mapZoom);
+    mapPanY = mouseY - (mouseY - mapPanY) * (newZoom / mapZoom);
+    mapZoom = newZoom;
+    if (mapZoom <= 1) {
+      mapPanX = 0;
+      mapPanY = 0;
+    }
+    clampPan();
+    applyMapTransform();
+  },
+  { passive: false },
+);
+
+// Double-click: zoom in and center on click point
+mapArea.addEventListener("dblclick", (e) => {
+  e.preventDefault();
+  const rect = mapArea.getBoundingClientRect();
+  const mouseX = e.clientX - rect.left;
+  const mouseY = e.clientY - rect.top;
+  if (mapZoom >= 3.5) {
+    // Already zoomed — reset
+    mapZoom = 1;
+    mapPanX = 0;
+    mapPanY = 0;
+  } else {
+    const newZoom = Math.min(6, mapZoom * 2);
+    mapPanX = mouseX - (mouseX - mapPanX) * (newZoom / mapZoom);
+    mapPanY = mouseY - (mouseY - mapPanY) * (newZoom / mapZoom);
+    mapZoom = newZoom;
+    clampPan();
+  }
+  mapImg.style.transition = "transform 0.25s ease";
+  mapCanvas.style.transition = "transform 0.25s ease";
+  applyMapTransform();
+  setTimeout(() => {
+    mapImg.style.transition = "";
+    mapCanvas.style.transition = "";
+  }, 260);
+});
+
+// Pinch-to-zoom (touch)
+let lastPinchDist = null;
+mapArea.addEventListener(
+  "touchstart",
+  (e) => {
+    if (e.touches.length === 2) {
+      lastPinchDist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY,
+      );
+    } else if (e.touches.length === 1) {
+      isPanning = true;
+      panStart = {
+        x: e.touches[0].clientX - mapPanX,
+        y: e.touches[0].clientY - mapPanY,
+      };
+    }
+  },
+  { passive: true },
+);
+
+mapArea.addEventListener(
+  "touchmove",
+  (e) => {
+    if (e.touches.length === 2 && lastPinchDist) {
+      e.preventDefault();
+      const dist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY,
+      );
+      const rect = mapArea.getBoundingClientRect();
+      const centerX =
+        (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
+      const centerY =
+        (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
+      const delta = dist / lastPinchDist;
+      const newZoom = Math.max(1, Math.min(6, mapZoom * delta));
+      mapPanX = centerX - (centerX - mapPanX) * (newZoom / mapZoom);
+      mapPanY = centerY - (centerY - mapPanY) * (newZoom / mapZoom);
+      mapZoom = newZoom;
+      if (mapZoom <= 1) {
+        mapPanX = 0;
+        mapPanY = 0;
+      }
+      clampPan();
+      applyMapTransform();
+      lastPinchDist = dist;
+    } else if (e.touches.length === 1 && isPanning && mapZoom > 1) {
+      mapPanX = e.touches[0].clientX - panStart.x;
+      mapPanY = e.touches[0].clientY - panStart.y;
+      clampPan();
+      applyMapTransform();
+    }
+  },
+  { passive: false },
+);
+
+mapArea.addEventListener("touchend", () => {
+  lastPinchDist = null;
+  isPanning = false;
+});
+
+// Mouse pan (when zoomed in)
+mapArea.addEventListener("mousedown", (e) => {
+  if (mapZoom <= 1) return;
+  isPanning = true;
+  panStart = { x: e.clientX - mapPanX, y: e.clientY - mapPanY };
+  mapArea.style.cursor = "grabbing";
+});
+window.addEventListener("mousemove", (e) => {
+  if (!isPanning) return;
+  mapPanX = e.clientX - panStart.x;
+  mapPanY = e.clientY - panStart.y;
+  clampPan();
+  applyMapTransform();
+});
+window.addEventListener("mouseup", () => {
+  isPanning = false;
+  mapArea.style.cursor = mapZoom > 1 ? "grab" : "default";
+});
+
+// Reset zoom when floor changes
+function resetMapZoom() {
+  mapZoom = 1;
+  mapPanX = 0;
+  mapPanY = 0;
+  applyMapTransform();
+}
+
+// ══════════════════════════════════════════════════════
 //  INIT
 // ══════════════════════════════════════════════════════
 await loadConfig();
 setFloor(parseInt(config.defaultFloor) || 1);
+showHomeScreen(); // Show welcome screen on first load
+
+// Hide zoom hint after 4 seconds
+const zoomHint = document.getElementById("zoomHint");
+if (zoomHint) setTimeout(() => zoomHint.classList.add("hide"), 4000);

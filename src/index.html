@@ -88,6 +88,9 @@
           <div class="map-area" id="mapArea">
             <img id="mapImg" alt="Floor plan" />
             <canvas id="mapCanvas"></canvas>
+            <div class="zoom-hint" id="zoomHint">
+              Scroll or pinch to zoom · Double-click to zoom in
+            </div>
             <div class="legend">
               <div class="legend-row">
                 <div class="ldot" style="background: #003087"></div>
@@ -122,12 +125,16 @@
       </footer>
     </div>
 
-    <!-- IDLE OVERLAY -->
+    <!-- HOME / IDLE OVERLAY -->
     <div id="idleOverlay">
       <div class="idle-icon">🏫</div>
       <div class="idle-title">Mason Navigator</div>
+      <div class="idle-school">Mason High School · Mason, OH 45040</div>
       <div class="idle-sub">Find any room in Mason High School instantly</div>
       <button class="idle-cta" id="idleCta">Tap to Start</button>
+      <div class="idle-footer-note">
+        Mason City Schools · Student Navigation Project · Sarvin Sukhe
+      </div>
     </div>
 
     <!-- SETTINGS OVERLAY -->
