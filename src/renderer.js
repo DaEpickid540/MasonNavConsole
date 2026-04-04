@@ -1403,7 +1403,8 @@ function resetMapZoom() {
 // ══════════════════════════════════════════════════════════════
 
 // Your GitHub Pages base URL — update to match your actual repo
-const ROUTE_BASE_URL = "https://daepickid540.github.io/School-Map/route.html";
+const ROUTE_BASE_URL =
+  "https://daepickid540.github.io/School-Map/src/route.html";
 const QR_EXPIRY_MIN = 30;
 
 let qrCountdownInterval = null;
