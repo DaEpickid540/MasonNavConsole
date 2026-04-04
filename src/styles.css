@@ -897,3 +897,257 @@ footer {
 .zoom-hint.hide {
   opacity: 0;
 }
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE DESIGN FOR SMALL SCREENS (7"+)
+═══════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Adjust header for smaller screens */
+  #app {
+    grid-template-rows: 56px 1fr 40px;
+  }
+
+  header {
+    padding: 0 16px;
+  }
+
+  .hdr-left {
+    gap: 8px;
+  }
+
+  .hdr-icon {
+    font-size: 1.3em;
+  }
+
+  .hdr-title {
+    font-size: 0.95em;
+  }
+
+  .hdr-sub {
+    font-size: 0.6em;
+  }
+
+  .hdr-right {
+    gap: 6px;
+  }
+
+  .hdr-btn {
+    padding: 4px 10px;
+    font-size: 0.65em;
+  }
+
+  /* Stack layout vertically on small screens */
+  main {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .panel-left {
+    max-height: 45vh;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    overflow-y: auto;
+  }
+
+  .panel-right {
+    min-height: 55vh;
+  }
+
+  /* Adjust input sections for smaller screens */
+  .input-section {
+    padding: 12px 16px;
+  }
+
+  .input-label,
+  .you-here-label {
+    font-size: 0.55em;
+    margin-bottom: 6px;
+  }
+
+  .start-btns {
+    gap: 6px;
+  }
+
+  .start-btn {
+    padding: 10px 6px;
+    gap: 3px;
+  }
+
+  .start-icon {
+    font-size: 1.2em;
+  }
+
+  .start-name {
+    font-size: 0.7em;
+  }
+
+  .start-room {
+    font-size: 0.55em;
+  }
+
+  .room-input {
+    padding: 10px 12px;
+    font-size: 0.95em;
+  }
+
+  #goBtn {
+    margin-top: 10px;
+    padding: 11px;
+    font-size: 0.9em;
+    min-height: 44px; /* Touch-friendly minimum */
+  }
+
+  .dir-steps {
+    padding: 8px 12px;
+    gap: 4px;
+  }
+
+  .dir-step {
+    padding: 8px 10px;
+    font-size: 0.9em;
+  }
+
+  .step-ico {
+    width: 18px;
+  }
+
+  .step-main {
+    font-size: 0.8em;
+  }
+
+  .step-sub {
+    font-size: 0.65em;
+  }
+
+  /* Adjust legend for smaller screens */
+  .legend {
+    bottom: 8px;
+    right: 8px;
+    padding: 6px 10px;
+    gap: 3px;
+  }
+
+  .legend-row {
+    font-size: 0.62em;
+    gap: 5px;
+  }
+
+  .ldot {
+    width: 7px;
+    height: 7px;
+  }
+
+  /* Adjust floor tabs */
+  .floor-tab {
+    padding: 0 4px;
+    height: 38px;
+    font-size: 0.75em;
+  }
+
+  .floor-tab .route-dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  footer {
+    padding: 0 12px;
+    font-size: 0.58em;
+  }
+
+  .idle-wrap {
+    gap: 6px;
+  }
+
+  #idleBar {
+    width: 60px;
+    height: 2px;
+  }
+}
+
+/* Extra small screens (< 500px) */
+@media (max-width: 500px) {
+  #app {
+    grid-template-rows: 48px 1fr 36px;
+  }
+
+  header {
+    padding: 0 12px;
+  }
+
+  .hdr-left {
+    gap: 6px;
+  }
+
+  .hdr-title {
+    font-size: 0.9em;
+  }
+
+  .hdr-sub {
+    display: none; /* Hide subtitle on very small screens */
+  }
+
+  .hdr-right {
+    gap: 4px;
+  }
+
+  .hdr-btn {
+    padding: 3px 8px;
+    font-size: 0.6em;
+  }
+
+  .hdr-kiosk {
+    display: none; /* Hide kiosk label on very small screens */
+  }
+
+  .panel-left {
+    max-height: 50vh;
+  }
+
+  .panel-right {
+    min-height: 50vh;
+  }
+
+  .input-section {
+    padding: 10px 12px;
+  }
+
+  .start-btns {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+
+  .start-btn {
+    padding: 8px 4px;
+  }
+
+  .start-name {
+    font-size: 0.65em;
+  }
+
+  .start-room {
+    font-size: 0.5em;
+  }
+
+  .room-input {
+    padding: 9px 10px;
+    font-size: 0.9em;
+  }
+
+  #goBtn {
+    min-height: 40px;
+    padding: 9px;
+  }
+
+  .legend {
+    bottom: 6px;
+    right: 6px;
+  }
+
+  .legend-row {
+    font-size: 0.58em;
+  }
+
+  footer {
+    font-size: 0.55em;
+  }
+}

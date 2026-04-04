@@ -67,7 +67,7 @@ function getAfterSecondaryStairHint(stairNode, destRoom, destPod) {
     }
     if (destPod.startsWith("A_Pod")) {
       if (isAdminRoom(destRoom)) {
-        return `At A2, turn <strong>LEFT</strong> into A Pod. Pass through A Pod toward A11 (Front Desk). The admin rooms (A14–A32 / A51–A71) are on the <strong>right side path behind A11</strong>, opposite the A1 stairwell entrance.`;
+        return `At A2, turn <strong>LEFT</strong> into A Pod. Walk through A Pod toward the front — follow the hallway past the display cases into the <strong>front office lobby</strong>. The admin rooms are on the right side behind A11.`;
       }
       if (isInnerHallwayRoom(destRoom)) {
         return `At A2, turn <strong>LEFT</strong> into A Pod. Walk down the hallway toward the water fountain and lockers — ${destRoom} is along this path (A101–A114 side).`;
@@ -80,7 +80,7 @@ function getAfterSecondaryStairHint(stairNode, destRoom, destPod) {
     // Z2 is in the connector between A Pod and Z Pod
     if (destPod.startsWith("A_Pod")) {
       if (isAdminRoom(destRoom)) {
-        return `At Z2, enter A Pod. Pass through toward A11 (Front Desk). Admin rooms are on the <strong>right side path behind A11</strong>, opposite the A1 stairwell entrance.`;
+        return `At Z2, enter A Pod. Walk through A Pod toward the front — follow the hallway past the display cases into the <strong>front office lobby</strong>. Admin rooms are on the right side behind A11.`;
       }
       if (isInnerHallwayRoom(destRoom)) {
         return `At Z2, enter A Pod and walk toward the water fountain / lockers — ${destRoom} is along this path (A101–A114 side).`;
@@ -129,7 +129,7 @@ function getAfterPrimaryStairHint(stairNode, destRoom, destPod) {
   // Admin rooms → right side behind front desk
 
   if (isAdminRoom(destRoom)) {
-    return `You are now inside A Pod at the A${podFloor === 1 ? "1" : podFloor === 2 ? "" : ""}  stairwell. The admin rooms are on the <strong>right side path behind A11 (Front Desk)</strong>, opposite to where you entered. Walk toward A11 and take the right-side corridor.`;
+    return `You are now in A Pod. Walk through toward the front of the building — follow the hallway past the display cases to reach the <strong>front office lobby</strong>. Admin rooms are on the right side behind A11 (Front Desk).`;
   }
   if (isInnerHallwayRoom(destRoom)) {
     return `You are now inside ${podLetter} Pod at the main stairwell. Walk toward the <strong>water fountain and lockers</strong> — ${destRoom} is along this hallway path (${podLetter}101–${podLetter}114 side).`;
@@ -264,7 +264,7 @@ function getStairDescription(stairNode, fromFloor, toFloor) {
 
 // ── Room arrival hints ───────────────────────────────────────────
 const ROOM_HINTS = {
-  A11: "Front Desk — near the main A Pod entrance, right side path",
+  A11: "Front Desk — in the front office lobby. Reach it via the display cases hallway from A Pod, or the Harvard Room (C125) hallway from C Pod",
   A100: "Hallway hub — inter-pod corridor intersection of A Pod",
   A115: "Hallway node — mid-hallway intersection in A Pod",
   A118: "Bathroom — near A115 hallway node",
@@ -340,7 +340,7 @@ const ROOM_HINTS = {
 
 // Admin rooms share the same hint
 const ADMIN_HINT =
-  "Admin suite — on the RIGHT-SIDE PATH behind A11 (Front Desk), opposite from the A1 stairwell entrance. Walk past A11 and take the right corridor.";
+  "Front Office — 1st floor admin suite. Walk down the hallway from A Pod past the display cases (or from C Pod past the Harvard Room) to reach the front office lobby, then turn right behind A11 (Front Desk).";
 for (let i = 14; i <= 32; i++) ROOM_HINTS[`A${i}`] = ADMIN_HINT;
 ROOM_HINTS["A32"] =
   "Nurse's Office — accessible from A100 (the inter-pod corridor outside the main A Pod hallway)";
@@ -348,7 +348,7 @@ const adminF2 = ["A51A", "A51B", "A52", "A53", "A53A", "A53B", "A53C", "A53D"];
 for (let i = 54; i <= 71; i++) adminF2.push(`A${i}`);
 adminF2.forEach((r) => {
   ROOM_HINTS[r] =
-    "Admin suite (Floor 2) — on the right-side path behind the admin area. Access via A Pod 2nd floor.";
+    "Front Office — 2nd floor admin suite. Walk down the hallway from A Pod or C Pod to the 2nd floor front office lobby, then follow signs for the admin area.";
 });
 
 // Generic inner-hallway rooms (B/A/C/Z 101–114) get water fountain hint

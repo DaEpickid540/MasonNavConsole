@@ -1,46 +1,34 @@
 // coordinates_floor1.js
 // Pixel coordinates in floor1.png (2000 × 1428)
-// Re-mapped by visual inspection — hub/stair nodes placed in corridor centerlines.
+// Data extracted from CVAT annotations
 
 export const coordinates_floor1 = {
-  // ── Structural hubs — corridor centerlines ──────────────────────
-  // A_Pod_1: A Pod main corridor (between A100 and A32 hallway)
+  // Hubs
   A_Pod_1: { x: 1600, y: 960 },
-  // B_Pod_1: B Pod central corridor (between B100 and B119)
   B_Pod_1: { x: 1550, y: 740 },
-  // C_Pod_1: C Pod hallway (between C100 and C101, the main corridor centerline)
   C_Pod_1: { x: 1310, y: 660 },
-  // Commons_1: Commons/C100 area (the wide hallway junction between C Pod, B Pod, Z Pod and D Wing)
   Commons_1: { x: 1295, y: 695 },
-  // D_Wing_1: D Wing entry corridor
   D_Wing_1: { x: 1060, y: 500 },
-  // E_Wing_1 / F_Wing_1: far D Wing branches
   E_Wing_1: { x: 898, y: 410 },
   F_Wing_1: { x: 914, y: 563 },
-  // Z_Pod_1: Z Pod main corridor (between Z100 and Z127 hallway area, ~x1507 y1040)
   Z_Pod_1: { x: 1507, y: 1040 },
-  // Lobby_1: front office lobby corridor (the long hallway at A11/A12, ~x1445 y950)
   Lobby_1: { x: 1445, y: 950 },
 
-  // ── Stairwells — at actual stairwell symbols ────────────────────
-  // A_Stair: at the B-A connector stairwell (near B126c / where B meets A100 corridor)
+  // Stairs
   A_Stair: { x: 1600, y: 867 },
-  // B_Stair: B Pod / C Pod connector stairwell (near B114 area, ~x1415 y655)
   B_Stair: { x: 1415, y: 655 },
-  // C_Stair: C Pod internal stairwell (near C115/C119, ~x1295 y445)
   C_Stair: { x: 1295, y: 445 },
-  // Z_Stair: Z-A connector stairwell (between Z127 and A100 area, ~x1567 y968)
   Z_Stair: { x: 1567, y: 968 },
 
-  // ── Hallway waypoints ───────────────────────────────────────────
-  HW_AB_1: { x: 1555, y: 830 }, // mid A-B connector corridor
-  HW_AZ_1: { x: 1553, y: 975 }, // A-Z corridor junction
-  HW_BC_1: { x: 1393, y: 660 }, // B-C connector hallway
-  HW_main_1: { x: 1230, y: 650 }, // main hallway near Commons west side
-  HW_main_2: { x: 1295, y: 700 }, // main hallway center junction
-  HW_D_entry: { x: 1115, y: 500 }, // D Wing entry
+  // Hallway waypoints
+  HW_AB_1: { x: 1555, y: 830 },
+  HW_AZ_1: { x: 1553, y: 975 },
+  HW_BC_1: { x: 1393, y: 660 },
+  HW_main_1: { x: 1230, y: 650 },
+  HW_main_2: { x: 1295, y: 700 },
+  HW_D_entry: { x: 1115, y: 500 },
 
-  // ── A Pod rooms ─────────────────────────────────────────────────
+  // A Pod rooms
   A10: { x: 1331, y: 931 },
   A11: { x: 1380, y: 955 },
   A12: { x: 1430, y: 965 },
@@ -63,7 +51,7 @@ export const coordinates_floor1 = {
   A115: { x: 1768, y: 909 },
   A119: { x: 1660, y: 940 },
 
-  // ── B Pod rooms ─────────────────────────────────────────────────
+  // B Pod rooms
   B100: { x: 1487, y: 755 },
   B102: { x: 1562, y: 768 },
   B103: { x: 1638, y: 748 },
@@ -71,6 +59,7 @@ export const coordinates_floor1 = {
   B105: { x: 1750, y: 700 },
   B106: { x: 1720, y: 657 },
   B108: { x: 1663, y: 623 },
+  B108A: { x: 1718, y: 648 },
   B109: { x: 1690, y: 588 },
   B110: { x: 1625, y: 540 },
   B112: { x: 1583, y: 600 },
@@ -79,14 +68,13 @@ export const coordinates_floor1 = {
   B115: { x: 1638, y: 598 },
   B119: { x: 1545, y: 753 },
   B125: { x: 1355, y: 818 },
+  B125b: { x: 1432, y: 875 },
+  B126C: { x: 1483, y: 843 },
   B127: { x: 1453, y: 810 },
   B128: { x: 1310, y: 628 },
   B129: { x: 1253, y: 678 },
-  B108A: { x: 1718, y: 648 },
-  B125b: { x: 1432, y: 875 },
-  B126C: { x: 1483, y: 843 },
 
-  // ── C Pod rooms ─────────────────────────────────────────────────
+  // C Pod rooms
   C100: { x: 1268, y: 660 },
   C101: { x: 1348, y: 610 },
   C102: { x: 1408, y: 580 },
@@ -108,7 +96,7 @@ export const coordinates_floor1 = {
   C123: { x: 1302, y: 723 },
   C124: { x: 1068, y: 710 },
 
-  // ── Z Pod rooms ─────────────────────────────────────────────────
+  // Z Pod rooms
   Z100: { x: 1503, y: 1062 },
   Z101: { x: 1500, y: 1107 },
   Z102: { x: 1572, y: 1097 },

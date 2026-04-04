@@ -572,6 +572,12 @@ function resetAll() {
   currentPath = null;
   acDrop.classList.remove("open");
   acDrop.innerHTML = "";
+  const oldQR = document.getElementById("qrPanel");
+  if (oldQR) oldQR.remove();
+  if (typeof qrCountdownInterval !== "undefined" && qrCountdownInterval) {
+    clearInterval(qrCountdownInterval);
+    qrCountdownInterval = null;
+  }
   // Reset start selection to Student Entrance
   selectedStart = "Z122";
   document
@@ -1015,6 +1021,7 @@ function go() {
   // Jump to start floor, then after short delay let user see route
   const sf = getRoomFloor(start) || 1;
   setFloor(sf);
+  generateQR(start, end); // ← QR code (after renderDirections so dirPanel is visible)
 }
 
 function setStatus(msg, type) {
@@ -1389,6 +1396,96 @@ function resetMapZoom() {
   mapPanX = 0;
   mapPanY = 0;
   applyMapTransform();
+}
+
+// ══════════════════════════════════════════════════════════════
+//  QR CODE — encodes route as URL, shows panel with countdown
+// ══════════════════════════════════════════════════════════════
+
+// Your GitHub Pages base URL — update to match your actual repo
+const ROUTE_BASE_URL = "https://daepickid540.github.io/School-Map/route.html";
+const QR_EXPIRY_MIN = 30;
+
+let qrCountdownInterval = null;
+
+function generateQR(start, end) {
+  // Encode: start, end, unix timestamp in seconds
+  const ts = Math.floor(Date.now() / 1000);
+  const url = `${ROUTE_BASE_URL}?s=${encodeURIComponent(start)}&e=${encodeURIComponent(end)}&t=${ts}`;
+
+  // Remove old panel if exists
+  const old = document.getElementById("qrPanel");
+  if (old) old.remove();
+  if (qrCountdownInterval) {
+    clearInterval(qrCountdownInterval);
+    qrCountdownInterval = null;
+  }
+
+  // Build panel
+  const panel = document.createElement("div");
+  panel.id = "qrPanel";
+  panel.innerHTML = `
+    <div class="qr-header">
+      <span class="qr-title">📱 Scan for Mobile Route</span>
+      <button class="qr-close" id="qrClose">✕</button>
+    </div>
+    <div class="qr-body">
+      <div id="qrCanvas"></div>
+      <div class="qr-meta">
+        <div class="qr-route">${start} → ${end}</div>
+        <div class="qr-expiry">
+          Expires in <strong id="qrCountdown">${QR_EXPIRY_MIN}:00</strong>
+        </div>
+        <div class="qr-bar-wrap"><div class="qr-bar" id="qrBar"></div></div>
+      </div>
+    </div>`;
+  dirPanel.appendChild(panel);
+
+  document.getElementById("qrClose").addEventListener("click", () => {
+    panel.remove();
+    if (qrCountdownInterval) {
+      clearInterval(qrCountdownInterval);
+      qrCountdownInterval = null;
+    }
+  });
+
+  // Generate QR using qrcodejs (loaded via CDN in index.html)
+  if (window.QRCode) {
+    new QRCode(document.getElementById("qrCanvas"), {
+      text: url,
+      width: 160,
+      height: 160,
+      colorDark: "#003087",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.M,
+    });
+  } else {
+    document.getElementById("qrCanvas").innerHTML =
+      `<div class="qr-fallback">QR library not loaded.<br>Add qrcodejs script to index.html</div>`;
+  }
+
+  // Countdown timer
+  const deadline = Date.now() + QR_EXPIRY_MIN * 60 * 1000;
+  function tick() {
+    const left = Math.max(0, deadline - Date.now());
+    const m = Math.floor(left / 60000);
+    const s = Math.floor((left % 60000) / 1000);
+    const el = document.getElementById("qrCountdown");
+    const bar = document.getElementById("qrBar");
+    if (el) el.textContent = `${m}:${s.toString().padStart(2, "0")}`;
+    if (bar) bar.style.width = `${(left / (QR_EXPIRY_MIN * 60000)) * 100}%`;
+    if (left <= 0) {
+      clearInterval(qrCountdownInterval);
+      qrCountdownInterval = null;
+      const p = document.getElementById("qrPanel");
+      if (p) {
+        p.querySelector(".qr-body").innerHTML =
+          `<div class="qr-expired">⏱️ This QR code has expired.<br>Generate a new route to get a fresh code.</div>`;
+      }
+    }
+  }
+  tick();
+  qrCountdownInterval = setInterval(tick, 1000);
 }
 
 // ══════════════════════════════════════════════════════

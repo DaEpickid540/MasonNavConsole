@@ -1,0 +1,1002 @@
+<?xml version="1.0" encoding="utf-8"?>
+<annotations>
+  <version>1.1</version>
+  <meta>
+    <task>
+      <id>1</id>
+      <name>Mason Navigator Coordinates</name>
+      <size>304</size>
+      <mode>annotation</mode>
+      <overlap>0</overlap>
+      <bugtracker></bugtracker>
+      <created>2026-04-03</created>
+      <updated>2026-04-03</updated>
+      <labels>
+        <label>
+          <name>hub</name>
+          <color>#ff6600</color>
+          <type>points</type>
+          <attributes></attributes>
+        </label>
+        <label>
+          <name>stairwell</name>
+          <color>#aa00ff</color>
+          <type>points</type>
+          <attributes></attributes>
+        </label>
+        <label>
+          <name>hallway_waypoint</name>
+          <color>#ffcc00</color>
+          <type>points</type>
+          <attributes></attributes>
+        </label>
+        <label>
+          <name>A_Pod_room</name>
+          <color>#0066ff</color>
+          <type>points</type>
+          <attributes></attributes>
+        </label>
+        <label>
+          <name>B_Pod_room</name>
+          <color>#00cc66</color>
+          <type>points</type>
+          <attributes></attributes>
+        </label>
+        <label>
+          <name>C_Pod_room</name>
+          <color>#ff3399</color>
+          <type>points</type>
+          <attributes></attributes>
+        </label>
+        <label>
+          <name>Z_Pod_room</name>
+          <color>#ff0000</color>
+          <type>points</type>
+          <attributes></attributes>
+        </label>
+        <label>
+          <name>D_Wing_room</name>
+          <color>#00cccc</color>
+          <type>points</type>
+          <attributes></attributes>
+        </label>
+        <label>
+          <name>E_Wing_room</name>
+          <color>#888888</color>
+          <type>points</type>
+          <attributes></attributes>
+        </label>
+        <label>
+          <name>F_Wing_room</name>
+          <color>#aaaaaa</color>
+          <type>points</type>
+          <attributes></attributes>
+        </label>
+        <label>
+          <name>room</name>
+          <color>#cccccc</color>
+          <type>points</type>
+          <attributes></attributes>
+        </label>
+      </labels>
+    </task>
+  </meta>
+  <image id="0" name="floor1.png" width="2000" height="1428">
+    <points label="hub" source="manual" occluded="0" points="1600.00,960.00" z_order="0" id="0">
+      <attribute name="node_id">A_Pod_1</attribute>
+    </points>
+    <points label="hub" source="manual" occluded="0" points="1550.00,740.00" z_order="0" id="1">
+      <attribute name="node_id">B_Pod_1</attribute>
+    </points>
+    <points label="hub" source="manual" occluded="0" points="1310.00,660.00" z_order="0" id="2">
+      <attribute name="node_id">C_Pod_1</attribute>
+    </points>
+    <points label="hub" source="manual" occluded="0" points="1295.00,695.00" z_order="0" id="3">
+      <attribute name="node_id">Commons_1</attribute>
+    </points>
+    <points label="hub" source="manual" occluded="0" points="1060.00,500.00" z_order="0" id="4">
+      <attribute name="node_id">D_Wing_1</attribute>
+    </points>
+    <points label="hub" source="manual" occluded="0" points="898.00,410.00" z_order="0" id="5">
+      <attribute name="node_id">E_Wing_1</attribute>
+    </points>
+    <points label="hub" source="manual" occluded="0" points="914.00,563.00" z_order="0" id="6">
+      <attribute name="node_id">F_Wing_1</attribute>
+    </points>
+    <points label="hub" source="manual" occluded="0" points="1507.00,1040.00" z_order="0" id="7">
+      <attribute name="node_id">Z_Pod_1</attribute>
+    </points>
+    <points label="hub" source="manual" occluded="0" points="1445.00,950.00" z_order="0" id="8">
+      <attribute name="node_id">Lobby_1</attribute>
+    </points>
+    <points label="stairwell" source="manual" occluded="0" points="1600.00,867.00" z_order="0" id="9">
+      <attribute name="node_id">A_Stair</attribute>
+    </points>
+    <points label="stairwell" source="manual" occluded="0" points="1415.00,655.00" z_order="0" id="10">
+      <attribute name="node_id">B_Stair</attribute>
+    </points>
+    <points label="stairwell" source="manual" occluded="0" points="1295.00,445.00" z_order="0" id="11">
+      <attribute name="node_id">C_Stair</attribute>
+    </points>
+    <points label="stairwell" source="manual" occluded="0" points="1567.00,968.00" z_order="0" id="12">
+      <attribute name="node_id">Z_Stair</attribute>
+    </points>
+    <points label="hallway_waypoint" source="manual" occluded="0" points="1555.00,830.00" z_order="0" id="13">
+      <attribute name="node_id">HW_AB_1</attribute>
+    </points>
+    <points label="hallway_waypoint" source="manual" occluded="0" points="1553.00,975.00" z_order="0" id="14">
+      <attribute name="node_id">HW_AZ_1</attribute>
+    </points>
+    <points label="hallway_waypoint" source="manual" occluded="0" points="1393.00,660.00" z_order="0" id="15">
+      <attribute name="node_id">HW_BC_1</attribute>
+    </points>
+    <points label="hallway_waypoint" source="manual" occluded="0" points="1230.00,650.00" z_order="0" id="16">
+      <attribute name="node_id">HW_main_1</attribute>
+    </points>
+    <points label="hallway_waypoint" source="manual" occluded="0" points="1295.00,700.00" z_order="0" id="17">
+      <attribute name="node_id">HW_main_2</attribute>
+    </points>
+    <points label="hallway_waypoint" source="manual" occluded="0" points="1115.00,500.00" z_order="0" id="18">
+      <attribute name="node_id">HW_D_entry</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1331.00,931.00" z_order="0" id="19">
+      <attribute name="node_id">A10</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1380.00,955.00" z_order="0" id="20">
+      <attribute name="node_id">A11</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1430.00,965.00" z_order="0" id="21">
+      <attribute name="node_id">A12</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1510.00,975.00" z_order="0" id="22">
+      <attribute name="node_id">A32</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1620.00,905.00" z_order="0" id="23">
+      <attribute name="node_id">A100</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1622.00,1010.00" z_order="0" id="24">
+      <attribute name="node_id">A101</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1669.00,1002.00" z_order="0" id="25">
+      <attribute name="node_id">A102</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1723.00,1010.00" z_order="0" id="26">
+      <attribute name="node_id">A103</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1732.00,938.00" z_order="0" id="27">
+      <attribute name="node_id">A104</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1704.00,935.00" z_order="0" id="28">
+      <attribute name="node_id">A105</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1753.00,1026.00" z_order="0" id="29">
+      <attribute name="node_id">A106</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1801.00,1025.00" z_order="0" id="30">
+      <attribute name="node_id">A107</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1792.00,936.00" z_order="0" id="31">
+      <attribute name="node_id">A108</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1707.00,907.00" z_order="0" id="32">
+      <attribute name="node_id">A109</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1802.00,848.00" z_order="0" id="33">
+      <attribute name="node_id">A110</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1757.00,850.00" z_order="0" id="34">
+      <attribute name="node_id">A111</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1708.00,864.00" z_order="0" id="35">
+      <attribute name="node_id">A112</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1668.00,875.00" z_order="0" id="36">
+      <attribute name="node_id">A113</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1638.00,862.00" z_order="0" id="37">
+      <attribute name="node_id">A114</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1768.00,909.00" z_order="0" id="38">
+      <attribute name="node_id">A115</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1660.00,940.00" z_order="0" id="39">
+      <attribute name="node_id">A119</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1487.00,755.00" z_order="0" id="40">
+      <attribute name="node_id">B100</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1562.00,768.00" z_order="0" id="41">
+      <attribute name="node_id">B102</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1638.00,748.00" z_order="0" id="42">
+      <attribute name="node_id">B103</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1658.00,695.00" z_order="0" id="43">
+      <attribute name="node_id">B104</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1750.00,700.00" z_order="0" id="44">
+      <attribute name="node_id">B105</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1720.00,657.00" z_order="0" id="45">
+      <attribute name="node_id">B106</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1663.00,623.00" z_order="0" id="46">
+      <attribute name="node_id">B108</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1690.00,588.00" z_order="0" id="47">
+      <attribute name="node_id">B109</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1625.00,540.00" z_order="0" id="48">
+      <attribute name="node_id">B110</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1583.00,600.00" z_order="0" id="49">
+      <attribute name="node_id">B112</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1622.00,648.00" z_order="0" id="50">
+      <attribute name="node_id">B113</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1398.00,643.00" z_order="0" id="51">
+      <attribute name="node_id">B114</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1638.00,598.00" z_order="0" id="52">
+      <attribute name="node_id">B115</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1545.00,753.00" z_order="0" id="53">
+      <attribute name="node_id">B119</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1355.00,818.00" z_order="0" id="54">
+      <attribute name="node_id">B125</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1453.00,810.00" z_order="0" id="55">
+      <attribute name="node_id">B127</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1310.00,628.00" z_order="0" id="56">
+      <attribute name="node_id">B128</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1253.00,678.00" z_order="0" id="57">
+      <attribute name="node_id">B129</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1718.00,648.00" z_order="0" id="58">
+      <attribute name="node_id">B108A</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1432.00,875.00" z_order="0" id="59">
+      <attribute name="node_id">B125b</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1483.00,843.00" z_order="0" id="60">
+      <attribute name="node_id">B126C</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1268.00,660.00" z_order="0" id="61">
+      <attribute name="node_id">C100</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1348.00,610.00" z_order="0" id="62">
+      <attribute name="node_id">C101</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1408.00,580.00" z_order="0" id="63">
+      <attribute name="node_id">C102</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1362.00,548.00" z_order="0" id="64">
+      <attribute name="node_id">C103</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1337.00,492.00" z_order="0" id="65">
+      <attribute name="node_id">C104</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1418.00,483.00" z_order="0" id="66">
+      <attribute name="node_id">C106</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1399.00,450.00" z_order="0" id="67">
+      <attribute name="node_id">C107</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1276.00,339.00" z_order="0" id="68">
+      <attribute name="node_id">C108</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1268.00,525.00" z_order="0" id="69">
+      <attribute name="node_id">C110</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1185.00,448.00" z_order="0" id="70">
+      <attribute name="node_id">C111</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1147.00,595.00" z_order="0" id="71">
+      <attribute name="node_id">C112</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1085.00,568.00" z_order="0" id="72">
+      <attribute name="node_id">C113</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1115.00,490.00" z_order="0" id="73">
+      <attribute name="node_id">C114</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1280.00,375.00" z_order="0" id="74">
+      <attribute name="node_id">C115</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1258.00,442.00" z_order="0" id="75">
+      <attribute name="node_id">C119</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1073.00,625.00" z_order="0" id="76">
+      <attribute name="node_id">C120</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1245.00,780.00" z_order="0" id="77">
+      <attribute name="node_id">C121</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1072.00,718.00" z_order="0" id="78">
+      <attribute name="node_id">C122</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1302.00,723.00" z_order="0" id="79">
+      <attribute name="node_id">C123</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1068.00,710.00" z_order="0" id="80">
+      <attribute name="node_id">C124</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1503.00,1062.00" z_order="0" id="81">
+      <attribute name="node_id">Z100</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1500.00,1107.00" z_order="0" id="82">
+      <attribute name="node_id">Z101</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1572.00,1097.00" z_order="0" id="83">
+      <attribute name="node_id">Z102</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1442.00,1120.00" z_order="0" id="84">
+      <attribute name="node_id">Z103</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1437.00,1152.00" z_order="0" id="85">
+      <attribute name="node_id">Z104</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1483.00,1197.00" z_order="0" id="86">
+      <attribute name="node_id">Z105</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1568.00,1178.00" z_order="0" id="87">
+      <attribute name="node_id">Z106</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1520.00,1217.00" z_order="0" id="88">
+      <attribute name="node_id">Z107</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1592.00,1165.00" z_order="0" id="89">
+      <attribute name="node_id">Z108</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1594.00,1202.00" z_order="0" id="90">
+      <attribute name="node_id">Z109</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1557.00,1253.00" z_order="0" id="91">
+      <attribute name="node_id">Z110</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1605.00,1252.00" z_order="0" id="92">
+      <attribute name="node_id">Z111</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1570.00,1292.00" z_order="0" id="93">
+      <attribute name="node_id">Z112</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1648.00,1150.00" z_order="0" id="94">
+      <attribute name="node_id">Z113</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1688.00,1177.00" z_order="0" id="95">
+      <attribute name="node_id">Z114</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1662.00,1230.00" z_order="0" id="96">
+      <attribute name="node_id">Z119</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1492.00,1282.00" z_order="0" id="97">
+      <attribute name="node_id">Z122</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1652.00,1262.00" z_order="0" id="98">
+      <attribute name="node_id">Z125</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1717.00,1202.00" z_order="0" id="99">
+      <attribute name="node_id">Z126</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1582.00,1055.00" z_order="0" id="100">
+      <attribute name="node_id">Z127</attribute>
+    </points>
+    <points label="D_Wing_room" source="manual" occluded="0" points="1065.00,367.00" z_order="0" id="101">
+      <attribute name="node_id">D101</attribute>
+    </points>
+    <points label="D_Wing_room" source="manual" occluded="0" points="997.00,407.00" z_order="0" id="102">
+      <attribute name="node_id">D105</attribute>
+    </points>
+    <points label="D_Wing_room" source="manual" occluded="0" points="1150.00,260.00" z_order="0" id="103">
+      <attribute name="node_id">D106</attribute>
+    </points>
+    <points label="D_Wing_room" source="manual" occluded="0" points="939.00,409.00" z_order="0" id="104">
+      <attribute name="node_id">D107</attribute>
+    </points>
+    <points label="D_Wing_room" source="manual" occluded="0" points="915.00,473.00" z_order="0" id="105">
+      <attribute name="node_id">D108</attribute>
+    </points>
+    <points label="D_Wing_room" source="manual" occluded="0" points="883.00,323.00" z_order="0" id="106">
+      <attribute name="node_id">D109</attribute>
+    </points>
+    <points label="D_Wing_room" source="manual" occluded="0" points="964.00,411.00" z_order="0" id="107">
+      <attribute name="node_id">D111</attribute>
+    </points>
+    <points label="D_Wing_room" source="manual" occluded="0" points="934.00,335.00" z_order="0" id="108">
+      <attribute name="node_id">D112</attribute>
+    </points>
+    <points label="D_Wing_room" source="manual" occluded="0" points="981.00,307.00" z_order="0" id="109">
+      <attribute name="node_id">D114</attribute>
+    </points>
+    <points label="D_Wing_room" source="manual" occluded="0" points="920.00,238.00" z_order="0" id="110">
+      <attribute name="node_id">D123</attribute>
+    </points>
+    <points label="D_Wing_room" source="manual" occluded="0" points="995.00,247.00" z_order="0" id="111">
+      <attribute name="node_id">D125</attribute>
+    </points>
+    <points label="D_Wing_room" source="manual" occluded="0" points="897.00,672.00" z_order="0" id="112">
+      <attribute name="node_id">D138</attribute>
+    </points>
+    <points label="D_Wing_room" source="manual" occluded="0" points="1248.00,202.00" z_order="0" id="113">
+      <attribute name="node_id">D150</attribute>
+    </points>
+    <points label="D_Wing_room" source="manual" occluded="0" points="1349.00,202.00" z_order="0" id="114">
+      <attribute name="node_id">D152</attribute>
+    </points>
+    <points label="D_Wing_room" source="manual" occluded="0" points="1843.00,898.00" z_order="0" id="115">
+      <attribute name="node_id">D153</attribute>
+    </points>
+    <points label="D_Wing_room" source="manual" occluded="0" points="1842.00,940.00" z_order="0" id="116">
+      <attribute name="node_id">D158</attribute>
+    </points>
+    <points label="D_Wing_room" source="manual" occluded="0" points="1846.00,971.00" z_order="0" id="117">
+      <attribute name="node_id">D160</attribute>
+    </points>
+    <points label="D_Wing_room" source="manual" occluded="0" points="1843.00,1027.00" z_order="0" id="118">
+      <attribute name="node_id">D114A</attribute>
+    </points>
+    <points label="E_Wing_room" source="manual" occluded="0" points="1629.00,1365.00" z_order="0" id="119">
+      <attribute name="node_id">E135</attribute>
+    </points>
+    <points label="E_Wing_room" source="manual" occluded="0" points="1668.00,1332.00" z_order="0" id="120">
+      <attribute name="node_id">E137</attribute>
+    </points>
+    <points label="F_Wing_room" source="manual" occluded="0" points="1717.00,1276.00" z_order="0" id="121">
+      <attribute name="node_id">F137</attribute>
+    </points>
+  </image>
+  <image id="1" name="floor2.png" width="2000" height="1428">
+    <points label="hub" source="manual" occluded="0" points="1600.00,962.00" z_order="0" id="122">
+      <attribute name="node_id">A_Pod_2</attribute>
+    </points>
+    <points label="hub" source="manual" occluded="0" points="1545.00,742.00" z_order="0" id="123">
+      <attribute name="node_id">B_Pod_2</attribute>
+    </points>
+    <points label="hub" source="manual" occluded="0" points="1302.00,670.00" z_order="0" id="124">
+      <attribute name="node_id">C_Pod_2</attribute>
+    </points>
+    <points label="hub" source="manual" occluded="0" points="1290.00,700.00" z_order="0" id="125">
+      <attribute name="node_id">Commons_2</attribute>
+    </points>
+    <points label="hub" source="manual" occluded="0" points="1069.00,605.00" z_order="0" id="126">
+      <attribute name="node_id">D_Wing_2</attribute>
+    </points>
+    <points label="hub" source="manual" occluded="0" points="1503.00,1043.00" z_order="0" id="127">
+      <attribute name="node_id">Z_Pod_2</attribute>
+    </points>
+    <points label="hub" source="manual" occluded="0" points="1445.00,950.00" z_order="0" id="128">
+      <attribute name="node_id">Lobby_2</attribute>
+    </points>
+    <points label="stairwell" source="manual" occluded="0" points="1598.00,870.00" z_order="0" id="129">
+      <attribute name="node_id">A_Stair</attribute>
+    </points>
+    <points label="stairwell" source="manual" occluded="0" points="1412.00,658.00" z_order="0" id="130">
+      <attribute name="node_id">B_Stair</attribute>
+    </points>
+    <points label="stairwell" source="manual" occluded="0" points="1292.00,447.00" z_order="0" id="131">
+      <attribute name="node_id">C_Stair</attribute>
+    </points>
+    <points label="stairwell" source="manual" occluded="0" points="1563.00,968.00" z_order="0" id="132">
+      <attribute name="node_id">Z_Stair</attribute>
+    </points>
+    <points label="hallway_waypoint" source="manual" occluded="0" points="1547.00,833.00" z_order="0" id="133">
+      <attribute name="node_id">HW_AB_1</attribute>
+    </points>
+    <points label="hallway_waypoint" source="manual" occluded="0" points="1550.00,975.00" z_order="0" id="134">
+      <attribute name="node_id">HW_AZ_1</attribute>
+    </points>
+    <points label="hallway_waypoint" source="manual" occluded="0" points="1390.00,660.00" z_order="0" id="135">
+      <attribute name="node_id">HW_BC_1</attribute>
+    </points>
+    <points label="hallway_waypoint" source="manual" occluded="0" points="1225.00,652.00" z_order="0" id="136">
+      <attribute name="node_id">HW_main_1</attribute>
+    </points>
+    <points label="hallway_waypoint" source="manual" occluded="0" points="1292.00,702.00" z_order="0" id="137">
+      <attribute name="node_id">HW_main_2</attribute>
+    </points>
+    <points label="hallway_waypoint" source="manual" occluded="0" points="1132.00,588.00" z_order="0" id="138">
+      <attribute name="node_id">HW_D_entry</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1331.00,927.00" z_order="0" id="139">
+      <attribute name="node_id">A50</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1440.00,975.00" z_order="0" id="140">
+      <attribute name="node_id">A53</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1290.00,962.00" z_order="0" id="141">
+      <attribute name="node_id">A54</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1508.00,930.00" z_order="0" id="142">
+      <attribute name="node_id">A72</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1636.00,1016.00" z_order="0" id="143">
+      <attribute name="node_id">A200</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1672.00,1013.00" z_order="0" id="144">
+      <attribute name="node_id">A201</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1713.00,1017.00" z_order="0" id="145">
+      <attribute name="node_id">A202</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1706.00,934.00" z_order="0" id="146">
+      <attribute name="node_id">A203</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1757.00,1020.00" z_order="0" id="147">
+      <attribute name="node_id">A204</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1740.00,962.00" z_order="0" id="148">
+      <attribute name="node_id">A205</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1798.00,1015.00" z_order="0" id="149">
+      <attribute name="node_id">A206</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1843.00,1016.00" z_order="0" id="150">
+      <attribute name="node_id">A207</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1798.00,928.00" z_order="0" id="151">
+      <attribute name="node_id">A208</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1806.00,848.00" z_order="0" id="152">
+      <attribute name="node_id">A209</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1851.00,849.00" z_order="0" id="153">
+      <attribute name="node_id">A210</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1761.00,850.00" z_order="0" id="154">
+      <attribute name="node_id">A211</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1707.00,856.00" z_order="0" id="155">
+      <attribute name="node_id">A212</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1665.00,872.00" z_order="0" id="156">
+      <attribute name="node_id">A213</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1640.00,858.00" z_order="0" id="157">
+      <attribute name="node_id">A214</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1755.00,911.00" z_order="0" id="158">
+      <attribute name="node_id">A215</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1662.00,938.00" z_order="0" id="159">
+      <attribute name="node_id">A219</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1490.00,762.00" z_order="0" id="160">
+      <attribute name="node_id">B200</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1432.00,788.00" z_order="0" id="161">
+      <attribute name="node_id">B201</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1560.00,772.00" z_order="0" id="162">
+      <attribute name="node_id">B202</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1638.00,752.00" z_order="0" id="163">
+      <attribute name="node_id">B203</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1668.00,710.00" z_order="0" id="164">
+      <attribute name="node_id">B204</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1718.00,700.00" z_order="0" id="165">
+      <attribute name="node_id">B205</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1745.00,658.00" z_order="0" id="166">
+      <attribute name="node_id">B206</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1718.00,620.00" z_order="0" id="167">
+      <attribute name="node_id">B207</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1678.00,610.00" z_order="0" id="168">
+      <attribute name="node_id">B208</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1668.00,573.00" z_order="0" id="169">
+      <attribute name="node_id">B209</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1628.00,548.00" z_order="0" id="170">
+      <attribute name="node_id">B210</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1593.00,570.00" z_order="0" id="171">
+      <attribute name="node_id">B211</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1542.00,622.00" z_order="0" id="172">
+      <attribute name="node_id">B212</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1643.00,633.00" z_order="0" id="173">
+      <attribute name="node_id">B213</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1400.00,643.00" z_order="0" id="174">
+      <attribute name="node_id">B214</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1403.00,600.00" z_order="0" id="175">
+      <attribute name="node_id">B215</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1348.00,660.00" z_order="0" id="176">
+      <attribute name="node_id">B219</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1308.00,733.00" z_order="0" id="177">
+      <attribute name="node_id">B220</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1562.00,835.00" z_order="0" id="178">
+      <attribute name="node_id">B221</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1272.00,705.00" z_order="0" id="179">
+      <attribute name="node_id">C200</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1328.00,590.00" z_order="0" id="180">
+      <attribute name="node_id">C201</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1278.00,620.00" z_order="0" id="181">
+      <attribute name="node_id">C202</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1338.00,555.00" z_order="0" id="182">
+      <attribute name="node_id">C203</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1363.00,518.00" z_order="0" id="183">
+      <attribute name="node_id">C204</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1403.00,543.00" z_order="0" id="184">
+      <attribute name="node_id">C205</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1343.00,495.00" z_order="0" id="185">
+      <attribute name="node_id">C206</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1263.00,558.00" z_order="0" id="186">
+      <attribute name="node_id">C207</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1081.00,627.00" z_order="0" id="187">
+      <attribute name="node_id">C208</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1026.00,597.00" z_order="0" id="188">
+      <attribute name="node_id">C209</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="912.00,601.00" z_order="0" id="189">
+      <attribute name="node_id">C210</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1288.00,773.00" z_order="0" id="190">
+      <attribute name="node_id">C212</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="919.00,682.00" z_order="0" id="191">
+      <attribute name="node_id">C213</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1263.00,845.00" z_order="0" id="192">
+      <attribute name="node_id">C214</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="810.00,534.00" z_order="0" id="193">
+      <attribute name="node_id">C215</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="810.00,585.00" z_order="0" id="194">
+      <attribute name="node_id">C218</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="741.00,547.00" z_order="0" id="195">
+      <attribute name="node_id">C219</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="756.00,640.00" z_order="0" id="196">
+      <attribute name="node_id">C220</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1478.00,1058.00" z_order="0" id="197">
+      <attribute name="node_id">C221</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1458.00,1090.00" z_order="0" id="198">
+      <attribute name="node_id">C222</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1605.00,1098.00" z_order="0" id="199">
+      <attribute name="node_id">Z200</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1428.00,1133.00" z_order="0" id="200">
+      <attribute name="node_id">Z201</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1478.00,1183.00" z_order="0" id="201">
+      <attribute name="node_id">Z202</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1503.00,1122.00" z_order="0" id="202">
+      <attribute name="node_id">Z203</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1568.00,1163.00" z_order="0" id="203">
+      <attribute name="node_id">Z204</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1518.00,1105.00" z_order="0" id="204">
+      <attribute name="node_id">Z205</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1523.00,1218.00" z_order="0" id="205">
+      <attribute name="node_id">Z206</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1533.00,1253.00" z_order="0" id="206">
+      <attribute name="node_id">Z207</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1568.00,1283.00" z_order="0" id="207">
+      <attribute name="node_id">Z208</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1648.00,1148.00" z_order="0" id="208">
+      <attribute name="node_id">Z213</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1643.00,1208.00" z_order="0" id="209">
+      <attribute name="node_id">Z214</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1608.00,1245.00" z_order="0" id="210">
+      <attribute name="node_id">Z219</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1598.00,1313.00" z_order="0" id="211">
+      <attribute name="node_id">Z221</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1658.00,1255.00" z_order="0" id="212">
+      <attribute name="node_id">Z222</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1715.00,1202.00" z_order="0" id="213">
+      <attribute name="node_id">Z223</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1682.00,1285.00" z_order="0" id="214">
+      <attribute name="node_id">Z224</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1710.00,1270.00" z_order="0" id="215">
+      <attribute name="node_id">Z226</attribute>
+    </points>
+    <points label="D_Wing_room" source="manual" occluded="0" points="635.00,634.00" z_order="0" id="216">
+      <attribute name="node_id">D201</attribute>
+    </points>
+    <points label="D_Wing_room" source="manual" occluded="0" points="590.00,314.00" z_order="0" id="217">
+      <attribute name="node_id">D202</attribute>
+    </points>
+    <points label="D_Wing_room" source="manual" occluded="0" points="570.00,316.00" z_order="0" id="218">
+      <attribute name="node_id">D203</attribute>
+    </points>
+    <points label="D_Wing_room" source="manual" occluded="0" points="530.00,634.00" z_order="0" id="219">
+      <attribute name="node_id">D204</attribute>
+    </points>
+    <points label="D_Wing_room" source="manual" occluded="0" points="571.00,295.00" z_order="0" id="220">
+      <attribute name="node_id">D206</attribute>
+    </points>
+  </image>
+  <image id="2" name="floor3.png" width="2000" height="1363">
+    <points label="hub" source="manual" occluded="0" points="1600.00,900.00" z_order="0" id="221">
+      <attribute name="node_id">A_Pod_3</attribute>
+    </points>
+    <points label="hub" source="manual" occluded="0" points="1500.00,712.00" z_order="0" id="222">
+      <attribute name="node_id">B_Pod_3</attribute>
+    </points>
+    <points label="hub" source="manual" occluded="0" points="1205.00,613.00" z_order="0" id="223">
+      <attribute name="node_id">C_Pod_3</attribute>
+    </points>
+    <points label="hub" source="manual" occluded="0" points="1205.00,613.00" z_order="0" id="224">
+      <attribute name="node_id">Commons_3</attribute>
+    </points>
+    <points label="hub" source="manual" occluded="0" points="1500.00,1012.00" z_order="0" id="225">
+      <attribute name="node_id">Z_Pod_3</attribute>
+    </points>
+    <points label="stairwell" source="manual" occluded="0" points="1592.00,785.00" z_order="0" id="226">
+      <attribute name="node_id">A_Stair</attribute>
+    </points>
+    <points label="stairwell" source="manual" occluded="0" points="1435.00,668.00" z_order="0" id="227">
+      <attribute name="node_id">B_Stair</attribute>
+    </points>
+    <points label="stairwell" source="manual" occluded="0" points="1262.00,450.00" z_order="0" id="228">
+      <attribute name="node_id">C_Stair</attribute>
+    </points>
+    <points label="stairwell" source="manual" occluded="0" points="1545.00,912.00" z_order="0" id="229">
+      <attribute name="node_id">Z_Stair</attribute>
+    </points>
+    <points label="hallway_waypoint" source="manual" occluded="0" points="1500.00,793.00" z_order="0" id="230">
+      <attribute name="node_id">HW_AB_1</attribute>
+    </points>
+    <points label="hallway_waypoint" source="manual" occluded="0" points="1545.00,958.00" z_order="0" id="231">
+      <attribute name="node_id">HW_AZ_1</attribute>
+    </points>
+    <points label="hallway_waypoint" source="manual" occluded="0" points="1370.00,645.00" z_order="0" id="232">
+      <attribute name="node_id">HW_BC_1</attribute>
+    </points>
+    <points label="hallway_waypoint" source="manual" occluded="0" points="1205.00,538.00" z_order="0" id="233">
+      <attribute name="node_id">HW_main_1</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1570.00,948.00" z_order="0" id="234">
+      <attribute name="node_id">A300</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1520.00,1043.00" z_order="0" id="235">
+      <attribute name="node_id">A301</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1622.00,953.00" z_order="0" id="236">
+      <attribute name="node_id">A302</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1662.00,958.00" z_order="0" id="237">
+      <attribute name="node_id">A303</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1657.00,916.00" z_order="0" id="238">
+      <attribute name="node_id">A304</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1715.00,958.00" z_order="0" id="239">
+      <attribute name="node_id">A305</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1697.00,884.00" z_order="0" id="240">
+      <attribute name="node_id">A306</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1752.00,960.00" z_order="0" id="241">
+      <attribute name="node_id">A307</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1748.00,922.00" z_order="0" id="242">
+      <attribute name="node_id">A308</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1745.00,890.00" z_order="0" id="243">
+      <attribute name="node_id">A309</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1615.00,810.00" z_order="0" id="244">
+      <attribute name="node_id">A310</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1753.00,848.00" z_order="0" id="245">
+      <attribute name="node_id">A311</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1668.00,803.00" z_order="0" id="246">
+      <attribute name="node_id">A312</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1715.00,803.00" z_order="0" id="247">
+      <attribute name="node_id">A313</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1548.00,808.00" z_order="0" id="248">
+      <attribute name="node_id">A314</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1752.00,798.00" z_order="0" id="249">
+      <attribute name="node_id">A315</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1568.00,778.00" z_order="0" id="250">
+      <attribute name="node_id">A316</attribute>
+    </points>
+    <points label="A_Pod_room" source="manual" occluded="0" points="1438.00,810.00" z_order="0" id="251">
+      <attribute name="node_id">A319</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1663.00,597.00" z_order="0" id="252">
+      <attribute name="node_id">B303</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1638.00,627.00" z_order="0" id="253">
+      <attribute name="node_id">B305</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1622.00,563.00" z_order="0" id="254">
+      <attribute name="node_id">B306</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1608.00,547.00" z_order="0" id="255">
+      <attribute name="node_id">B307</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1572.00,573.00" z_order="0" id="256">
+      <attribute name="node_id">B308</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1580.00,518.00" z_order="0" id="257">
+      <attribute name="node_id">B309</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1548.00,488.00" z_order="0" id="258">
+      <attribute name="node_id">B310</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1522.00,508.00" z_order="0" id="259">
+      <attribute name="node_id">B311</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1462.00,592.00" z_order="0" id="260">
+      <attribute name="node_id">B312</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1562.00,622.00" z_order="0" id="261">
+      <attribute name="node_id">B313</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1328.00,657.00" z_order="0" id="262">
+      <attribute name="node_id">B314</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1608.00,662.00" z_order="0" id="263">
+      <attribute name="node_id">B315</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1338.00,588.00" z_order="0" id="264">
+      <attribute name="node_id">B316</attribute>
+    </points>
+    <points label="B_Pod_room" source="manual" occluded="0" points="1252.00,725.00" z_order="0" id="265">
+      <attribute name="node_id">B319</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1168.00,662.00" z_order="0" id="266">
+      <attribute name="node_id">C300</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1287.00,577.00" z_order="0" id="267">
+      <attribute name="node_id">C301</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1338.00,535.00" z_order="0" id="268">
+      <attribute name="node_id">C302</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1338.00,502.00" z_order="0" id="269">
+      <attribute name="node_id">C303</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1291.00,490.00" z_order="0" id="270">
+      <attribute name="node_id">C304</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1262.00,493.00" z_order="0" id="271">
+      <attribute name="node_id">C305</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1227.00,487.00" z_order="0" id="272">
+      <attribute name="node_id">C306</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1183.00,491.00" z_order="0" id="273">
+      <attribute name="node_id">C307</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1175.00,570.00" z_order="0" id="274">
+      <attribute name="node_id">C308</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1028.00,470.00" z_order="0" id="275">
+      <attribute name="node_id">C309</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1022.00,458.00" z_order="0" id="276">
+      <attribute name="node_id">C310</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1055.00,598.00" z_order="0" id="277">
+      <attribute name="node_id">C311</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1057.00,620.00" z_order="0" id="278">
+      <attribute name="node_id">C312</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1077.00,655.00" z_order="0" id="279">
+      <attribute name="node_id">C313</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1045.00,665.00" z_order="0" id="280">
+      <attribute name="node_id">C314</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1038.00,652.00" z_order="0" id="281">
+      <attribute name="node_id">C315</attribute>
+    </points>
+    <points label="C_Pod_room" source="manual" occluded="0" points="1023.00,615.00" z_order="0" id="282">
+      <attribute name="node_id">C319</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1438.00,1065.00" z_order="0" id="283">
+      <attribute name="node_id">Z300</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1397.00,1050.00" z_order="0" id="284">
+      <attribute name="node_id">Z301</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1355.00,1092.00" z_order="0" id="285">
+      <attribute name="node_id">Z302</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1405.00,1132.00" z_order="0" id="286">
+      <attribute name="node_id">Z303</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1425.00,1028.00" z_order="0" id="287">
+      <attribute name="node_id">Z304</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1445.00,1160.00" z_order="0" id="288">
+      <attribute name="node_id">Z305</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1465.00,1190.00" z_order="0" id="289">
+      <attribute name="node_id">Z306</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1487.00,1225.00" z_order="0" id="290">
+      <attribute name="node_id">Z307</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1528.00,1188.00" z_order="0" id="291">
+      <attribute name="node_id">Z308</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1568.00,1195.00" z_order="0" id="292">
+      <attribute name="node_id">Z309</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1515.00,1263.00" z_order="0" id="293">
+      <attribute name="node_id">Z310</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1605.00,1230.00" z_order="0" id="294">
+      <attribute name="node_id">Z311</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1558.00,1082.00" z_order="0" id="295">
+      <attribute name="node_id">Z312</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1597.00,1108.00" z_order="0" id="296">
+      <attribute name="node_id">Z313</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1637.00,1135.00" z_order="0" id="297">
+      <attribute name="node_id">Z314</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1585.00,1248.00" z_order="0" id="298">
+      <attribute name="node_id">Z319</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1628.00,1198.00" z_order="0" id="299">
+      <attribute name="node_id">Z320</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1545.00,1287.00" z_order="0" id="300">
+      <attribute name="node_id">Z321</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="1665.00,1170.00" z_order="0" id="301">
+      <attribute name="node_id">Z323</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="945.00,709.00" z_order="0" id="302">
+      <attribute name="node_id">Z324</attribute>
+    </points>
+    <points label="Z_Pod_room" source="manual" occluded="0" points="951.00,685.00" z_order="0" id="303">
+      <attribute name="node_id">Z325</attribute>
+    </points>
+  </image>
+</annotations>
