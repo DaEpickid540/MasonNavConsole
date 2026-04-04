@@ -1,670 +1,1552 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
-<title>Mason Navigator — Route</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <title>Mason Navigator — Route</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-:root{
-  --bg:#f5f7fa;
-  --card:#ffffff;
-  --accent:#0057b8;
-  --accent2:#003d82;
-  --green:#16a34a;
-  --red:#dc2626;
-  --orange:#ea580c;
-  --text:#111827;
-  --dim:#6b7280;
-  --border:#e5e7eb;
-  --font:'Inter',system-ui,sans-serif;
-}
+      :root {
+        --bg: #f5f7fa;
+        --card: #ffffff;
+        --accent: #0057b8;
+        --accent2: #003d82;
+        --green: #16a34a;
+        --red: #dc2626;
+        --orange: #ea580c;
+        --text: #111827;
+        --dim: #6b7280;
+        --border: #e5e7eb;
+        --font: "Inter", system-ui, sans-serif;
+      }
 
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:var(--font);
-  min-height:100vh;
-  padding-bottom:32px;
-}
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font);
+        min-height: 100vh;
+        padding-bottom: 32px;
+      }
 
-/* ── Header ── */
-.header{
-  background:linear-gradient(135deg,#003d82 0%,#0057b8 60%,#1a7fd4 100%);
-  padding:20px 20px 28px;
-  position:relative;
-  overflow:hidden;
-}
-.header::after{
-  content:'';
-  position:absolute;
-  bottom:-12px;left:0;right:0;
-  height:24px;
-  background:var(--bg);
-  border-radius:50% 50% 0 0 / 100% 100% 0 0;
-}
-.header-inner{
-  display:flex;align-items:center;gap:12px;
-  position:relative;z-index:1;
-}
-.header-logo{font-size:1.8rem;}
-.header-text{}
-.header-title{
-  font-size:1.1rem;font-weight:800;color:#fff;
-  letter-spacing:-0.01em;
-}
-.header-sub{
-  font-size:0.72rem;color:rgba(255,255,255,0.72);
-  margin-top:2px;font-weight:500;
-}
+      /* ── Header ── */
+      .header {
+        background: linear-gradient(
+          135deg,
+          #003d82 0%,
+          #0057b8 60%,
+          #1a7fd4 100%
+        );
+        padding: 20px 20px 28px;
+        position: relative;
+        overflow: hidden;
+      }
+      .header::after {
+        content: "";
+        position: absolute;
+        bottom: -12px;
+        left: 0;
+        right: 0;
+        height: 24px;
+        background: var(--bg);
+        border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+      }
+      .header-inner {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        position: relative;
+        z-index: 1;
+      }
+      .header-logo {
+        font-size: 1.8rem;
+      }
+      .header-text {
+      }
+      .header-title {
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: #fff;
+        letter-spacing: -0.01em;
+      }
+      .header-sub {
+        font-size: 0.72rem;
+        color: rgba(255, 255, 255, 0.72);
+        margin-top: 2px;
+        font-weight: 500;
+      }
 
-/* ── Expiry bar ── */
-.expiry-bar{
-  margin:20px 16px 0;
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:12px 16px;
-  display:flex;align-items:center;gap:12px;
-}
-.expiry-icon{font-size:1.1rem;flex-shrink:0;}
-.expiry-text{flex:1;}
-.expiry-label{font-size:0.78rem;font-weight:600;color:var(--text);}
-.expiry-sub{font-size:0.68rem;color:var(--dim);margin-top:2px;}
-.expiry-pill{
-  font-size:0.68rem;font-weight:700;
-  padding:4px 10px;border-radius:20px;
-  background:#dcfce7;color:#16a34a;
-  white-space:nowrap;flex-shrink:0;
-}
-.expiry-pill.warn{background:#fef3c7;color:#d97706;}
-.expiry-pill.dead{background:#fee2e2;color:#dc2626;}
+      /* ── Expiry bar ── */
+      .expiry-bar {
+        margin: 20px 16px 0;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
 
-/* ── Route header ── */
-.route-card{
-  margin:12px 16px 0;
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:16px;
-}
-.route-title{
-  font-size:0.68rem;font-weight:600;
-  text-transform:uppercase;letter-spacing:0.08em;
-  color:var(--dim);margin-bottom:10px;
-}
-.route-row{
-  display:flex;align-items:center;gap:8px;
-  flex-wrap:wrap;
-}
-.route-room{
-  font-size:1.1rem;font-weight:800;color:var(--text);
-}
-.route-arrow{
-  font-size:1rem;color:var(--accent);font-weight:700;
-}
-.route-badges{
-  display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;
-}
-.badge{
-  font-size:0.65rem;font-weight:600;
-  padding:3px 9px;border-radius:20px;
-  border:1px solid;
-}
-.badge-floor{border-color:var(--accent);color:var(--accent);background:rgba(0,87,184,0.07);}
-.badge-stairs{border-color:#7c3aed;color:#7c3aed;background:rgba(124,58,237,0.07);}
+      .expiry-icon {
+        font-size: 1.1rem;
+        flex-shrink: 0;
+      }
+      .expiry-text {
+        flex: 1;
+      }
+      .expiry-label {
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--text);
+      }
+      .expiry-sub {
+        font-size: 0.68rem;
+        color: var(--dim);
+        margin-top: 2px;
+      }
+      .expiry-pill {
+        font-size: 0.68rem;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 20px;
+        background: #dcfce7;
+        color: #16a34a;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .expiry-pill.warn {
+        background: #fef3c7;
+        color: #d97706;
+      }
+      .expiry-pill.dead {
+        background: #fee2e2;
+        color: #dc2626;
+      }
 
-/* ── Map ── */
-.map-section{
-  margin:12px 16px 0;
-}
-.map-label{
-  font-size:0.68rem;font-weight:600;
-  text-transform:uppercase;letter-spacing:0.08em;
-  color:var(--dim);margin-bottom:8px;padding-left:2px;
-}
-.map-floor-block{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:12px;
-  overflow:hidden;
-  margin-bottom:10px;
-}
-.map-floor-label{
-  font-size:0.7rem;font-weight:700;
-  color:var(--accent);
-  padding:10px 14px 0;
-  text-transform:uppercase;letter-spacing:0.1em;
-}
-.map-wrap{
-  position:relative;
-  width:100%;
-  line-height:0;
-  padding:8px;
-}
-.map-wrap img{
-  width:100%;height:auto;
-  border-radius:6px;
-  display:block;
-}
-.map-wrap canvas{
-  position:absolute;
-  top:8px;left:8px;
-  width:calc(100% - 16px);
-  height:calc(100% - 16px);
-  border-radius:6px;
-  pointer-events:none;
-}
+      /* ── Route header ── */
+      .route-card {
+        margin: 12px 16px 0;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 16px;
+      }
+      .route-title {
+        font-size: 0.68rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--dim);
+        margin-bottom: 10px;
+      }
+      .route-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .route-room {
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: var(--text);
+      }
+      .route-arrow {
+        font-size: 1rem;
+        color: var(--accent);
+        font-weight: 700;
+      }
+      .route-badges {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+      .badge {
+        font-size: 0.65rem;
+        font-weight: 600;
+        padding: 3px 9px;
+        border-radius: 20px;
+        border: 1px solid;
+      }
+      .badge-floor {
+        border-color: var(--accent);
+        color: var(--accent);
+        background: rgba(0, 87, 184, 0.07);
+      }
+      .badge-stairs {
+        border-color: #7c3aed;
+        color: #7c3aed;
+        background: rgba(124, 58, 237, 0.07);
+      }
 
-/* ── Directions ── */
-.dir-section{
-  margin:12px 16px 0;
-}
-.dir-steps{list-style:none;display:flex;flex-direction:column;gap:8px;}
-.dir-step{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-left:3px solid var(--border);
-  border-radius:0 10px 10px 0;
-  padding:12px 14px;
-  display:flex;align-items:flex-start;gap:12px;
-  animation:stepIn .3s ease both;
-}
-.dir-step:first-child{border-left-color:var(--accent);}
-.dir-step:last-child{border-left-color:var(--green);}
-@keyframes stepIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
-.step-ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
-.step-main{font-size:0.9rem;font-weight:600;color:var(--text);line-height:1.4;}
-.step-main strong{color:var(--accent);}
-.step-sub{font-size:0.68rem;color:var(--dim);margin-top:3px;text-transform:uppercase;letter-spacing:0.05em;}
-.step-warn{
-  font-size:0.72rem;color:#92400e;
-  background:#fef3c7;border:1px solid #fcd34d;
-  border-radius:6px;padding:5px 8px;margin-top:6px;
-}
+      /* ── Map ── */
+      .map-section {
+        margin: 12px 16px 0;
+      }
+      .map-label {
+        font-size: 0.68rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--dim);
+        margin-bottom: 8px;
+        padding-left: 2px;
+      }
+      .map-floor-block {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 10px;
+      }
+      .map-floor-label {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: var(--accent);
+        padding: 10px 14px 0;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+      .map-wrap {
+        position: relative;
+        width: 100%;
+        line-height: 0;
+        padding: 8px;
+      }
+      .map-wrap img {
+        width: 100%;
+        height: auto;
+        border-radius: 6px;
+        display: block;
+      }
+      .map-wrap canvas {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        width: calc(100% - 16px);
+        height: calc(100% - 16px);
+        border-radius: 6px;
+        pointer-events: none;
+      }
 
-/* ── Legend ── */
-.legend{
-  display:flex;gap:14px;flex-wrap:wrap;
-  margin:0 16px;padding:12px 14px;
-  background:var(--card);border:1px solid var(--border);
-  border-radius:10px;
-}
-.legend-item{display:flex;align-items:center;gap:6px;font-size:0.68rem;color:var(--dim);}
-.ldot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+      /* ── Directions ── */
+      .dir-section {
+        margin: 12px 16px 0;
+      }
+      .dir-steps {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .dir-step {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-left: 3px solid var(--border);
+        border-radius: 0 10px 10px 0;
+        padding: 12px 14px;
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        animation: stepIn 0.3s ease both;
+      }
+      .dir-step:first-child {
+        border-left-color: var(--accent);
+      }
+      .dir-step:last-child {
+        border-left-color: var(--green);
+      }
+      @keyframes stepIn {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .step-ico {
+        font-size: 1.1rem;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      .step-main {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text);
+        line-height: 1.4;
+      }
+      .step-main strong {
+        color: var(--accent);
+      }
+      .step-sub {
+        font-size: 0.68rem;
+        color: var(--dim);
+        margin-top: 3px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .step-warn {
+        font-size: 0.72rem;
+        color: #92400e;
+        background: #fef3c7;
+        border: 1px solid #fcd34d;
+        border-radius: 6px;
+        padding: 5px 8px;
+        margin-top: 6px;
+      }
 
-/* ── Expired / error screens ── */
-.full-screen{
-  min-height:100vh;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  text-align:center;padding:32px 24px;
-}
-.expired-icon{font-size:4rem;margin-bottom:20px;}
-.expired-title{font-size:1.5rem;font-weight:800;color:var(--text);margin-bottom:8px;}
-.expired-sub{font-size:0.9rem;color:var(--dim);max-width:280px;line-height:1.6;}
-.expired-time{
-  margin-top:20px;
-  font-size:0.78rem;font-weight:600;
-  padding:8px 18px;border-radius:20px;
-  background:#fee2e2;color:#dc2626;
-}
+      /* ── Legend ── */
+      .legend {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin: 0 16px;
+        padding: 12px 14px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.68rem;
+        color: var(--dim);
+      }
+      .ldot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
 
-/* ── Footer ── */
-.footer{
-  text-align:center;margin-top:24px;
-  font-size:0.65rem;color:var(--dim);
-  padding:0 16px;
-}
-</style>
-</head>
-<body>
+      /* ── Expired / error screens ── */
+      .full-screen {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 32px 24px;
+      }
+      .expired-icon {
+        font-size: 4rem;
+        margin-bottom: 20px;
+      }
+      .expired-title {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--text);
+        margin-bottom: 8px;
+      }
+      .expired-sub {
+        font-size: 0.9rem;
+        color: var(--dim);
+        max-width: 280px;
+        line-height: 1.6;
+      }
+      .expired-time {
+        margin-top: 20px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        padding: 8px 18px;
+        border-radius: 20px;
+        background: #fee2e2;
+        color: #dc2626;
+      }
 
-<div id="root"></div>
+      /* ── Footer ── */
+      .footer {
+        text-align: center;
+        margin-top: 24px;
+        font-size: 0.65rem;
+        color: var(--dim);
+        padding: 0 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
 
-<script>
-// ══════════════════════════════════════════════════════════════
-//  ALL GRAPH + COORDINATE DATA BAKED IN
-//  (mirrors the kiosk data files — update both when coords change)
-// ══════════════════════════════════════════════════════════════
+    <script>
+      // ══════════════════════════════════════════════════════════════
+      //  ALL GRAPH + COORDINATE DATA BAKED IN
+      //  (mirrors the kiosk data files — update both when coords change)
+      // ══════════════════════════════════════════════════════════════
 
-const EXPIRY_MS = 30 * 60 * 1000; // 30 minutes
+      const EXPIRY_MS = 30 * 60 * 1000; // 30 minutes
 
-// ── Floor image URLs (your GitHub Pages repo) ─────────────────
-const FLOOR_IMGS = {
-  1: 'maps/floor1.png',
-  2: 'maps/floor2.png',
-  3: 'maps/floor3.png',
-};
-const IMG_SIZE = {1:[2000,1428], 2:[2000,1428], 3:[2000,1363]};
+      // ── Floor image URLs (your GitHub Pages repo) ─────────────────
+      const FLOOR_IMGS = {
+        1: "maps/floor1.png",
+        2: "maps/floor2.png",
+        3: "maps/floor3.png",
+      };
+      const IMG_SIZE = { 1: [2000, 1428], 2: [2000, 1428], 3: [2000, 1363] };
 
-// ── Room → pod mapping (condensed) ───────────────────────────
-const ALL_ROOMS = {};
-function reg(rooms, pod){ rooms.forEach(r => ALL_ROOMS[r]=pod); }
+      // ── Room → pod mapping (condensed) ───────────────────────────
+      const ALL_ROOMS = {};
+      function reg(rooms, pod) {
+        rooms.forEach((r) => (ALL_ROOMS[r] = pod));
+      }
 
-reg(['A10','A11','A12','A32','A100','A101','A102','A103','A104','A105','A106','A107',
-     'A108','A109','A110','A111','A112','A113','A114','A115','A118','A119','A122',
-     'A125','A126','A127','A14','A15','A16','A17','A18','A19','A20','A21','A22',
-     'A23','A24','A25','A26','A27','A28','A29','A30','A31'], 'A_Pod_1');
-reg(['A200','A201','A202','A203','A204','A205','A206','A207','A208','A209','A210',
-     'A211','A212','A213','A214','A215','A218','A219','A50','A51A','A51B','A52',
-     'A53','A53A','A53B','A53C','A53D','A54','A55','A56','A57','A58','A59','A60',
-     'A61','A62','A63','A64','A65','A66','A67','A68','A69','A70','A71','A72'], 'A_Pod_2');
-reg(['A300','A301','A302','A303','A304','A305','A306','A307','A308','A309','A310',
-     'A311','A312','A313','A314','A315','A316','A318','A319'], 'A_Pod_3');
+      reg(
+        [
+          "A10",
+          "A11",
+          "A12",
+          "A32",
+          "A100",
+          "A101",
+          "A102",
+          "A103",
+          "A104",
+          "A105",
+          "A106",
+          "A107",
+          "A108",
+          "A109",
+          "A110",
+          "A111",
+          "A112",
+          "A113",
+          "A114",
+          "A115",
+          "A118",
+          "A119",
+          "A122",
+          "A125",
+          "A126",
+          "A127",
+          "A14",
+          "A15",
+          "A16",
+          "A17",
+          "A18",
+          "A19",
+          "A20",
+          "A21",
+          "A22",
+          "A23",
+          "A24",
+          "A25",
+          "A26",
+          "A27",
+          "A28",
+          "A29",
+          "A30",
+          "A31",
+        ],
+        "A_Pod_1",
+      );
+      reg(
+        [
+          "A200",
+          "A201",
+          "A202",
+          "A203",
+          "A204",
+          "A205",
+          "A206",
+          "A207",
+          "A208",
+          "A209",
+          "A210",
+          "A211",
+          "A212",
+          "A213",
+          "A214",
+          "A215",
+          "A218",
+          "A219",
+          "A50",
+          "A51A",
+          "A51B",
+          "A52",
+          "A53",
+          "A53A",
+          "A53B",
+          "A53C",
+          "A53D",
+          "A54",
+          "A55",
+          "A56",
+          "A57",
+          "A58",
+          "A59",
+          "A60",
+          "A61",
+          "A62",
+          "A63",
+          "A64",
+          "A65",
+          "A66",
+          "A67",
+          "A68",
+          "A69",
+          "A70",
+          "A71",
+          "A72",
+        ],
+        "A_Pod_2",
+      );
+      reg(
+        [
+          "A300",
+          "A301",
+          "A302",
+          "A303",
+          "A304",
+          "A305",
+          "A306",
+          "A307",
+          "A308",
+          "A309",
+          "A310",
+          "A311",
+          "A312",
+          "A313",
+          "A314",
+          "A315",
+          "A316",
+          "A318",
+          "A319",
+        ],
+        "A_Pod_3",
+      );
 
-reg(['B100','B101','B102','B103','B104','B105','B106','B107','B108','B108A','B109',
-     'B110','B111','B112','B113','B114','B115','B118','B119','B122','B125','B125b',
-     'B125c','B126','B126C','B127','B128','B129'], 'B_Pod_1');
-reg(['B200','B201','B202','B203','B204','B205','B206','B207','B208','B209','B210',
-     'B211','B212','B213','B214','B215','B218','B219','B220','B221'], 'B_Pod_2');
-reg(['B300','B301','B302','B303','B304','B305','B306','B307','B308','B309','B310',
-     'B311','B312','B313','B314','B315','B316','B318','B319'], 'B_Pod_3');
+      reg(
+        [
+          "B100",
+          "B101",
+          "B102",
+          "B103",
+          "B104",
+          "B105",
+          "B106",
+          "B107",
+          "B108",
+          "B108A",
+          "B109",
+          "B110",
+          "B111",
+          "B112",
+          "B113",
+          "B114",
+          "B115",
+          "B118",
+          "B119",
+          "B122",
+          "B125",
+          "B125b",
+          "B125c",
+          "B126",
+          "B126C",
+          "B127",
+          "B128",
+          "B129",
+        ],
+        "B_Pod_1",
+      );
+      reg(
+        [
+          "B200",
+          "B201",
+          "B202",
+          "B203",
+          "B204",
+          "B205",
+          "B206",
+          "B207",
+          "B208",
+          "B209",
+          "B210",
+          "B211",
+          "B212",
+          "B213",
+          "B214",
+          "B215",
+          "B218",
+          "B219",
+          "B220",
+          "B221",
+        ],
+        "B_Pod_2",
+      );
+      reg(
+        [
+          "B300",
+          "B301",
+          "B302",
+          "B303",
+          "B304",
+          "B305",
+          "B306",
+          "B307",
+          "B308",
+          "B309",
+          "B310",
+          "B311",
+          "B312",
+          "B313",
+          "B314",
+          "B315",
+          "B316",
+          "B318",
+          "B319",
+        ],
+        "B_Pod_3",
+      );
 
-reg(['C100','C101','C102','C103','C104','C105','C106','C107','C108','C110','C111',
-     'C112','C113','C114','C115','C118','C119','C120','C121','C121A','C122','C122A',
-     'C123','C123A','C124','C125','C126','C126A','C126B','C126C','C126D','C126E',
-     'C126F','C126G','C126H','C126J','C126K','C126L','C126M','C126N','C126P','C130'], 'C_Pod_1');
-reg(['C200','C201','C202','C203','C204','C205','C206','C207','C208','C209','C210',
-     'C212','C213','C214','C215','C218','C219','C220','C221','C222','C225','C226','C227'], 'C_Pod_2');
-reg(['C300','C301','C302','C303','C304','C305','C306','C307','C308','C309','C310',
-     'C311','C312','C313','C314','C315','C318','C319'], 'C_Pod_3');
+      reg(
+        [
+          "C100",
+          "C101",
+          "C102",
+          "C103",
+          "C104",
+          "C105",
+          "C106",
+          "C107",
+          "C108",
+          "C110",
+          "C111",
+          "C112",
+          "C113",
+          "C114",
+          "C115",
+          "C118",
+          "C119",
+          "C120",
+          "C121",
+          "C121A",
+          "C122",
+          "C122A",
+          "C123",
+          "C123A",
+          "C124",
+          "C125",
+          "C126",
+          "C126A",
+          "C126B",
+          "C126C",
+          "C126D",
+          "C126E",
+          "C126F",
+          "C126G",
+          "C126H",
+          "C126J",
+          "C126K",
+          "C126L",
+          "C126M",
+          "C126N",
+          "C126P",
+          "C130",
+        ],
+        "C_Pod_1",
+      );
+      reg(
+        [
+          "C200",
+          "C201",
+          "C202",
+          "C203",
+          "C204",
+          "C205",
+          "C206",
+          "C207",
+          "C208",
+          "C209",
+          "C210",
+          "C212",
+          "C213",
+          "C214",
+          "C215",
+          "C218",
+          "C219",
+          "C220",
+          "C221",
+          "C222",
+          "C225",
+          "C226",
+          "C227",
+        ],
+        "C_Pod_2",
+      );
+      reg(
+        [
+          "C300",
+          "C301",
+          "C302",
+          "C303",
+          "C304",
+          "C305",
+          "C306",
+          "C307",
+          "C308",
+          "C309",
+          "C310",
+          "C311",
+          "C312",
+          "C313",
+          "C314",
+          "C315",
+          "C318",
+          "C319",
+        ],
+        "C_Pod_3",
+      );
 
-reg(['Z100','Z101','Z102','Z103','Z104','Z105','Z106','Z107','Z108','Z109','Z110',
-     'Z111','Z112','Z113','Z114','Z115','Z118','Z119','Z122','Z125','Z126','Z127'], 'Z_Pod_1');
-reg(['Z200','Z201','Z202','Z203','Z204','Z205','Z206','Z207','Z208','Z209','Z210',
-     'Z211','Z212','Z213','Z214','Z215','Z218','Z219','Z221','Z222','Z223','Z224',
-     'Z226','Z227','Z228','Z229','Z230','Z231','Z232'], 'Z_Pod_2');
-reg(['Z300','Z301','Z302','Z303','Z304','Z305','Z306','Z307','Z308','Z309','Z310',
-     'Z311','Z312','Z313','Z314','Z315','Z318','Z319','Z320','Z321','Z323','Z324','Z325','Z326'], 'Z_Pod_3');
+      reg(
+        [
+          "Z100",
+          "Z101",
+          "Z102",
+          "Z103",
+          "Z104",
+          "Z105",
+          "Z106",
+          "Z107",
+          "Z108",
+          "Z109",
+          "Z110",
+          "Z111",
+          "Z112",
+          "Z113",
+          "Z114",
+          "Z115",
+          "Z118",
+          "Z119",
+          "Z122",
+          "Z125",
+          "Z126",
+          "Z127",
+        ],
+        "Z_Pod_1",
+      );
+      reg(
+        [
+          "Z200",
+          "Z201",
+          "Z202",
+          "Z203",
+          "Z204",
+          "Z205",
+          "Z206",
+          "Z207",
+          "Z208",
+          "Z209",
+          "Z210",
+          "Z211",
+          "Z212",
+          "Z213",
+          "Z214",
+          "Z215",
+          "Z218",
+          "Z219",
+          "Z221",
+          "Z222",
+          "Z223",
+          "Z224",
+          "Z226",
+          "Z227",
+          "Z228",
+          "Z229",
+          "Z230",
+          "Z231",
+          "Z232",
+        ],
+        "Z_Pod_2",
+      );
+      reg(
+        [
+          "Z300",
+          "Z301",
+          "Z302",
+          "Z303",
+          "Z304",
+          "Z305",
+          "Z306",
+          "Z307",
+          "Z308",
+          "Z309",
+          "Z310",
+          "Z311",
+          "Z312",
+          "Z313",
+          "Z314",
+          "Z315",
+          "Z318",
+          "Z319",
+          "Z320",
+          "Z321",
+          "Z323",
+          "Z324",
+          "Z325",
+          "Z326",
+        ],
+        "Z_Pod_3",
+      );
 
-reg(['D101','D123','D136','D138','D150','D152','D158','D160'], 'D_Wing_1');
-reg(['D202','D203','D204','D205','D212','D213'], 'D_Wing_2');
-reg(['E135','E137'], 'E_Wing_1');
-reg(['F137'], 'F_Wing_1');
+      reg(
+        ["D101", "D123", "D136", "D138", "D150", "D152", "D158", "D160"],
+        "D_Wing_1",
+      );
+      reg(["D202", "D203", "D204", "D205", "D212", "D213"], "D_Wing_2");
+      reg(["E135", "E137"], "E_Wing_1");
+      reg(["F137"], "F_Wing_1");
 
-// Override admin rooms to Lobby
-const ADMIN_F1 = ['A11','A14','A15','A16','A17','A18','A19','A20','A21','A22','A23','A24','A25','A26','A27','A28','A29','A30','A31'];
-const ADMIN_F2 = ['A51A','A51B','A52','A53','A53A','A53B','A53C','A53D','A54','A55','A56','A57','A58','A59','A60','A61','A62','A63','A64','A65','A66','A67','A68','A69','A70','A71'];
+      // Override admin rooms to Lobby
+      const ADMIN_F1 = [
+        "A11",
+        "A14",
+        "A15",
+        "A16",
+        "A17",
+        "A18",
+        "A19",
+        "A20",
+        "A21",
+        "A22",
+        "A23",
+        "A24",
+        "A25",
+        "A26",
+        "A27",
+        "A28",
+        "A29",
+        "A30",
+        "A31",
+      ];
+      const ADMIN_F2 = [
+        "A51A",
+        "A51B",
+        "A52",
+        "A53",
+        "A53A",
+        "A53B",
+        "A53C",
+        "A53D",
+        "A54",
+        "A55",
+        "A56",
+        "A57",
+        "A58",
+        "A59",
+        "A60",
+        "A61",
+        "A62",
+        "A63",
+        "A64",
+        "A65",
+        "A66",
+        "A67",
+        "A68",
+        "A69",
+        "A70",
+        "A71",
+      ];
 
-const STAIR_NODES = new Set(['A_Stair','B_Stair','C_Stair','Z_Stair','Z2','A2','B2','Front_Stair']);
+      const STAIR_NODES = new Set([
+        "A_Stair",
+        "B_Stair",
+        "C_Stair",
+        "Z_Stair",
+        "Z2",
+        "A2",
+        "B2",
+        "Front_Stair",
+      ]);
 
-// ── Graph ─────────────────────────────────────────────────────
-const G = {
-  Lobby_1:['A_Pod_1','C_Pod_1','Front_Stair'],
-  Commons_1:['C_Pod_1','D_Wing_1','Z_Pod_1','B_Pod_1'],
-  A_Pod_1:['A_Stair','B_Pod_1','Z_Pod_1','Z2','A2','Lobby_1'],
-  B_Pod_1:['Commons_1','B_Stair','A_Pod_1','C_Pod_1','A2','B2'],
-  C_Pod_1:['Commons_1','C_Stair','B_Pod_1','D_Wing_1','B2','Lobby_1'],
-  Z_Pod_1:['Commons_1','Z_Stair','A_Pod_1','Z2'],
-  D_Wing_1:['Commons_1','C_Pod_1','E_Wing_1','F_Wing_1'],
-  E_Wing_1:['D_Wing_1'], F_Wing_1:['D_Wing_1'],
+      // ── Graph ─────────────────────────────────────────────────────
+      const G = {
+        Lobby_1: ["A_Pod_1", "C_Pod_1", "Front_Stair"],
+        Commons_1: ["C_Pod_1", "D_Wing_1", "Z_Pod_1", "B_Pod_1"],
+        A_Pod_1: ["A_Stair", "B_Pod_1", "Z_Pod_1", "Z2", "A2", "Lobby_1"],
+        B_Pod_1: ["Commons_1", "B_Stair", "A_Pod_1", "C_Pod_1", "A2", "B2"],
+        C_Pod_1: [
+          "Commons_1",
+          "C_Stair",
+          "B_Pod_1",
+          "D_Wing_1",
+          "B2",
+          "Lobby_1",
+        ],
+        Z_Pod_1: ["Commons_1", "Z_Stair", "A_Pod_1", "Z2"],
+        D_Wing_1: ["Commons_1", "C_Pod_1", "E_Wing_1", "F_Wing_1"],
+        E_Wing_1: ["D_Wing_1"],
+        F_Wing_1: ["D_Wing_1"],
 
-  Lobby_2:['A_Pod_2','C_Pod_2','Front_Stair'],
-  Commons_2:['C_Pod_2','D_Wing_2','Z_Pod_2','B_Pod_2'],
-  A_Pod_2:['A_Stair','B_Pod_2','Z_Pod_2','Z2','A2','Lobby_2'],
-  B_Pod_2:['Commons_2','B_Stair','A_Pod_2','C_Pod_2','A2','B2'],
-  C_Pod_2:['Commons_2','C_Stair','B_Pod_2','B2','Lobby_2'],
-  Z_Pod_2:['Commons_2','Z_Stair','A_Pod_2','Z2'],
-  D_Wing_2:['Commons_2'],
+        Lobby_2: ["A_Pod_2", "C_Pod_2", "Front_Stair"],
+        Commons_2: ["C_Pod_2", "D_Wing_2", "Z_Pod_2", "B_Pod_2"],
+        A_Pod_2: ["A_Stair", "B_Pod_2", "Z_Pod_2", "Z2", "A2", "Lobby_2"],
+        B_Pod_2: ["Commons_2", "B_Stair", "A_Pod_2", "C_Pod_2", "A2", "B2"],
+        C_Pod_2: ["Commons_2", "C_Stair", "B_Pod_2", "B2", "Lobby_2"],
+        Z_Pod_2: ["Commons_2", "Z_Stair", "A_Pod_2", "Z2"],
+        D_Wing_2: ["Commons_2"],
 
-  Commons_3:['C_Pod_3','Z_Pod_3','B_Pod_3'],
-  A_Pod_3:['A_Stair','B_Pod_3','Z_Pod_3','Z2','A2'],
-  B_Pod_3:['Commons_3','B_Stair','A_Pod_3','C_Pod_3','A2','B2'],
-  C_Pod_3:['Commons_3','C_Stair','B_Pod_3','B2'],
-  Z_Pod_3:['Commons_3','Z_Stair','A_Pod_3','Z2'],
+        Commons_3: ["C_Pod_3", "Z_Pod_3", "B_Pod_3"],
+        A_Pod_3: ["A_Stair", "B_Pod_3", "Z_Pod_3", "Z2", "A2"],
+        B_Pod_3: ["Commons_3", "B_Stair", "A_Pod_3", "C_Pod_3", "A2", "B2"],
+        C_Pod_3: ["Commons_3", "C_Stair", "B_Pod_3", "B2"],
+        Z_Pod_3: ["Commons_3", "Z_Stair", "A_Pod_3", "Z2"],
 
-  A_Stair:['A_Pod_1','A_Pod_2','A_Pod_3'],
-  B_Stair:['B_Pod_1','B_Pod_2','B_Pod_3'],
-  C_Stair:['C_Pod_1','C_Pod_2','C_Pod_3'],
-  Z_Stair:['Z_Pod_1','Z_Pod_2','Z_Pod_3'],
-  Z2:['Z_Pod_1','A_Pod_1','Z_Pod_2','A_Pod_2','Z_Pod_3','A_Pod_3'],
-  A2:['A_Pod_1','B_Pod_1','A_Pod_2','B_Pod_2','A_Pod_3','B_Pod_3'],
-  B2:['B_Pod_1','C_Pod_1','B_Pod_2','C_Pod_2','B_Pod_3','C_Pod_3'],
-  Front_Stair:['Lobby_1','Lobby_2'],
-};
+        A_Stair: ["A_Pod_1", "A_Pod_2", "A_Pod_3"],
+        B_Stair: ["B_Pod_1", "B_Pod_2", "B_Pod_3"],
+        C_Stair: ["C_Pod_1", "C_Pod_2", "C_Pod_3"],
+        Z_Stair: ["Z_Pod_1", "Z_Pod_2", "Z_Pod_3"],
+        Z2: ["Z_Pod_1", "A_Pod_1", "Z_Pod_2", "A_Pod_2", "Z_Pod_3", "A_Pod_3"],
+        A2: ["A_Pod_1", "B_Pod_1", "A_Pod_2", "B_Pod_2", "A_Pod_3", "B_Pod_3"],
+        B2: ["B_Pod_1", "C_Pod_1", "B_Pod_2", "C_Pod_2", "B_Pod_3", "C_Pod_3"],
+        Front_Stair: ["Lobby_1", "Lobby_2"],
+      };
 
-// Inject rooms into graph
-for(const [room,pod] of Object.entries(ALL_ROOMS)){
-  G[room]=[pod];
-  if(!G[pod]) G[pod]=[];
-  if(!G[pod].includes(room)) G[pod].push(room);
-}
-for(const r of ADMIN_F1){ G[r]=['Lobby_1']; if(!G.Lobby_1.includes(r)) G.Lobby_1.push(r); }
-for(const r of ADMIN_F2){ G[r]=['Lobby_2']; if(!G.Lobby_2) G.Lobby_2=['A_Pod_2','C_Pod_2','Front_Stair']; if(!G.Lobby_2.includes(r)) G.Lobby_2.push(r); }
-G.A32=['A_Pod_1'];
+      // Inject rooms into graph
+      for (const [room, pod] of Object.entries(ALL_ROOMS)) {
+        G[room] = [pod];
+        if (!G[pod]) G[pod] = [];
+        if (!G[pod].includes(room)) G[pod].push(room);
+      }
+      for (const r of ADMIN_F1) {
+        G[r] = ["Lobby_1"];
+        if (!G.Lobby_1.includes(r)) G.Lobby_1.push(r);
+      }
+      for (const r of ADMIN_F2) {
+        G[r] = ["Lobby_2"];
+        if (!G.Lobby_2) G.Lobby_2 = ["A_Pod_2", "C_Pod_2", "Front_Stair"];
+        if (!G.Lobby_2.includes(r)) G.Lobby_2.push(r);
+      }
+      G.A32 = ["A_Pod_1"];
 
-// ── Coordinates (floor 1) ─────────────────────────────────────
-const C1={
-  A_Pod_1:{x:1600,y:960},B_Pod_1:{x:1550,y:740},C_Pod_1:{x:1310,y:660},
-  Commons_1:{x:1295,y:695},D_Wing_1:{x:1060,y:500},E_Wing_1:{x:898,y:410},
-  F_Wing_1:{x:914,y:563},Z_Pod_1:{x:1507,y:1040},Lobby_1:{x:1445,y:950},
-  A_Stair:{x:1600,y:867},B_Stair:{x:1415,y:655},C_Stair:{x:1295,y:445},Z_Stair:{x:1567,y:968},
-  A10:{x:1331,y:931},A11:{x:1380,y:955},A12:{x:1430,y:965},A32:{x:1510,y:975},
-  A100:{x:1620,y:905},A101:{x:1622,y:1010},A102:{x:1669,y:1002},A103:{x:1723,y:1010},
-  A104:{x:1732,y:938},A105:{x:1704,y:935},A106:{x:1753,y:1026},A107:{x:1801,y:1025},
-  A108:{x:1792,y:936},A109:{x:1707,y:907},A110:{x:1802,y:848},A111:{x:1757,y:850},
-  A112:{x:1708,y:864},A113:{x:1668,y:875},A114:{x:1638,y:862},A115:{x:1768,y:909},A119:{x:1660,y:940},
-  B100:{x:1487,y:755},B102:{x:1562,y:768},B103:{x:1638,y:748},B104:{x:1658,y:695},
-  B105:{x:1750,y:700},B106:{x:1720,y:657},B108:{x:1663,y:623},B109:{x:1690,y:588},
-  B110:{x:1625,y:540},B112:{x:1583,y:600},B113:{x:1622,y:648},B114:{x:1398,y:643},
-  B115:{x:1638,y:598},B119:{x:1545,y:753},B125:{x:1355,y:818},B127:{x:1453,y:810},
-  B128:{x:1310,y:628},B129:{x:1253,y:678},B108A:{x:1718,y:648},B125b:{x:1432,y:875},B126C:{x:1483,y:843},
-  C100:{x:1268,y:660},C101:{x:1348,y:610},C102:{x:1408,y:580},C103:{x:1362,y:548},
-  C104:{x:1337,y:492},C106:{x:1418,y:483},C107:{x:1399,y:450},C108:{x:1276,y:339},
-  C110:{x:1268,y:525},C111:{x:1185,y:448},C112:{x:1147,y:595},C113:{x:1085,y:568},
-  C114:{x:1115,y:490},C115:{x:1280,y:375},C119:{x:1258,y:442},C120:{x:1073,y:625},
-  C121:{x:1245,y:780},C122:{x:1072,y:718},C123:{x:1302,y:723},C124:{x:1068,y:710},
-  Z100:{x:1503,y:1062},Z101:{x:1500,y:1107},Z102:{x:1572,y:1097},Z103:{x:1442,y:1120},
-  Z104:{x:1437,y:1152},Z105:{x:1483,y:1197},Z106:{x:1568,y:1178},Z107:{x:1520,y:1217},
-  Z108:{x:1592,y:1165},Z109:{x:1594,y:1202},Z110:{x:1557,y:1253},Z111:{x:1605,y:1252},
-  Z112:{x:1570,y:1292},Z113:{x:1648,y:1150},Z114:{x:1688,y:1177},Z119:{x:1662,y:1230},
-  Z122:{x:1492,y:1282},Z125:{x:1652,y:1262},Z126:{x:1717,y:1202},Z127:{x:1582,y:1055},
-  D101:{x:1065,y:367},D138:{x:897,y:672},D150:{x:1248,y:202},D152:{x:1349,y:202},
-  D123:{x:920,y:238},E135:{x:1629,y:1365},E137:{x:1668,y:1332},F137:{x:1717,y:1276},
-};
-const C2={
-  A_Pod_2:{x:1600,y:962},B_Pod_2:{x:1545,y:742},C_Pod_2:{x:1302,y:670},
-  Commons_2:{x:1290,y:700},D_Wing_2:{x:1069,y:605},Z_Pod_2:{x:1503,y:1043},Lobby_2:{x:1445,y:950},
-  A_Stair:{x:1598,y:870},B_Stair:{x:1412,y:658},C_Stair:{x:1292,y:447},Z_Stair:{x:1563,y:968},
-  A50:{x:1331,y:927},A53:{x:1440,y:975},A54:{x:1290,y:962},A72:{x:1508,y:930},
-  A200:{x:1636,y:1016},A201:{x:1672,y:1013},A202:{x:1713,y:1017},A203:{x:1706,y:934},
-  A204:{x:1757,y:1020},A205:{x:1740,y:962},A206:{x:1798,y:1015},A207:{x:1843,y:1016},
-  A208:{x:1798,y:928},A209:{x:1806,y:848},A210:{x:1851,y:849},A211:{x:1761,y:850},
-  A212:{x:1707,y:856},A213:{x:1665,y:872},A214:{x:1640,y:858},A215:{x:1755,y:911},A219:{x:1662,y:938},
-  B200:{x:1490,y:762},B201:{x:1432,y:788},B202:{x:1560,y:772},B203:{x:1638,y:752},
-  B204:{x:1668,y:710},B205:{x:1718,y:700},B206:{x:1745,y:658},B207:{x:1718,y:620},
-  B208:{x:1678,y:610},B209:{x:1668,y:573},B210:{x:1628,y:548},B211:{x:1593,y:570},
-  B212:{x:1542,y:622},B213:{x:1643,y:633},B214:{x:1400,y:643},B215:{x:1403,y:600},
-  B219:{x:1348,y:660},B220:{x:1308,y:733},B221:{x:1562,y:835},
-  C200:{x:1272,y:705},C201:{x:1328,y:590},C202:{x:1278,y:620},C203:{x:1338,y:555},
-  C204:{x:1363,y:518},C205:{x:1403,y:543},C206:{x:1343,y:495},C207:{x:1263,y:558},
-  C208:{x:1081,y:627},C209:{x:1026,y:597},C210:{x:912,y:601},C212:{x:1288,y:773},
-  C221:{x:1478,y:1058},C222:{x:1458,y:1090},
-  Z200:{x:1605,y:1098},Z201:{x:1428,y:1133},Z202:{x:1478,y:1183},Z203:{x:1503,y:1122},
-  Z204:{x:1568,y:1163},Z205:{x:1518,y:1105},Z206:{x:1523,y:1218},Z207:{x:1533,y:1253},
-  Z208:{x:1568,y:1283},Z213:{x:1648,y:1148},Z214:{x:1643,y:1208},Z219:{x:1608,y:1245},
-  Z221:{x:1598,y:1313},Z222:{x:1658,y:1255},Z223:{x:1715,y:1202},Z224:{x:1682,y:1285},Z226:{x:1710,y:1270},
-  D201:{x:635,y:634},D202:{x:590,y:314},D203:{x:570,y:316},D204:{x:530,y:634},D206:{x:571,y:295},
-};
-const C3={
-  A_Pod_3:{x:1600,y:900},B_Pod_3:{x:1500,y:712},C_Pod_3:{x:1205,y:613},
-  Commons_3:{x:1205,y:613},Z_Pod_3:{x:1500,y:1012},
-  A_Stair:{x:1592,y:785},B_Stair:{x:1435,y:668},C_Stair:{x:1262,y:450},Z_Stair:{x:1545,y:912},
-  A300:{x:1570,y:948},A301:{x:1520,y:1043},A302:{x:1622,y:953},A303:{x:1662,y:958},
-  A304:{x:1657,y:916},A305:{x:1715,y:958},A306:{x:1697,y:884},A307:{x:1752,y:960},
-  A308:{x:1748,y:922},A309:{x:1745,y:890},A310:{x:1615,y:810},A311:{x:1753,y:848},
-  A312:{x:1668,y:803},A313:{x:1715,y:803},A314:{x:1548,y:808},A315:{x:1752,y:798},A316:{x:1568,y:778},A319:{x:1438,y:810},
-  B303:{x:1663,y:597},B305:{x:1638,y:627},B306:{x:1622,y:563},B307:{x:1608,y:547},
-  B308:{x:1572,y:573},B309:{x:1580,y:518},B310:{x:1548,y:488},B311:{x:1522,y:508},
-  B312:{x:1462,y:592},B313:{x:1562,y:622},B314:{x:1328,y:657},B315:{x:1608,y:662},B316:{x:1338,y:588},B319:{x:1252,y:725},
-  C300:{x:1168,y:662},C301:{x:1287,y:577},C302:{x:1338,y:535},C303:{x:1338,y:502},
-  C304:{x:1291,y:490},C305:{x:1262,y:493},C306:{x:1227,y:487},C307:{x:1183,y:491},
-  C308:{x:1175,y:570},C309:{x:1028,y:470},C310:{x:1022,y:458},C311:{x:1055,y:598},
-  C312:{x:1057,y:620},C313:{x:1077,y:655},C314:{x:1045,y:665},C315:{x:1038,y:652},C319:{x:1023,y:615},
-  Z300:{x:1438,y:1065},Z301:{x:1397,y:1050},Z302:{x:1355,y:1092},Z303:{x:1405,y:1132},
-  Z304:{x:1425,y:1028},Z305:{x:1445,y:1160},Z306:{x:1465,y:1190},Z307:{x:1487,y:1225},
-  Z308:{x:1528,y:1188},Z309:{x:1568,y:1195},Z310:{x:1515,y:1263},Z311:{x:1605,y:1230},
-  Z312:{x:1558,y:1082},Z313:{x:1597,y:1108},Z314:{x:1637,y:1135},Z319:{x:1585,y:1248},
-  Z320:{x:1628,y:1198},Z321:{x:1545,y:1287},Z323:{x:1665,y:1170},
-};
-const COORDS={1:C1,2:C2,3:C3};
+      // ── Coordinates (floor 1) ─────────────────────────────────────
+      const C1 = {
+        A_Pod_1: { x: 1600, y: 960 },
+        B_Pod_1: { x: 1550, y: 740 },
+        C_Pod_1: { x: 1310, y: 660 },
+        Commons_1: { x: 1295, y: 695 },
+        D_Wing_1: { x: 1060, y: 500 },
+        E_Wing_1: { x: 898, y: 410 },
+        F_Wing_1: { x: 914, y: 563 },
+        Z_Pod_1: { x: 1507, y: 1040 },
+        Lobby_1: { x: 1445, y: 950 },
+        A_Stair: { x: 1600, y: 867 },
+        B_Stair: { x: 1415, y: 655 },
+        C_Stair: { x: 1295, y: 445 },
+        Z_Stair: { x: 1567, y: 968 },
+        A10: { x: 1331, y: 931 },
+        A11: { x: 1380, y: 955 },
+        A12: { x: 1430, y: 965 },
+        A32: { x: 1510, y: 975 },
+        A100: { x: 1620, y: 905 },
+        A101: { x: 1622, y: 1010 },
+        A102: { x: 1669, y: 1002 },
+        A103: { x: 1723, y: 1010 },
+        A104: { x: 1732, y: 938 },
+        A105: { x: 1704, y: 935 },
+        A106: { x: 1753, y: 1026 },
+        A107: { x: 1801, y: 1025 },
+        A108: { x: 1792, y: 936 },
+        A109: { x: 1707, y: 907 },
+        A110: { x: 1802, y: 848 },
+        A111: { x: 1757, y: 850 },
+        A112: { x: 1708, y: 864 },
+        A113: { x: 1668, y: 875 },
+        A114: { x: 1638, y: 862 },
+        A115: { x: 1768, y: 909 },
+        A119: { x: 1660, y: 940 },
+        B100: { x: 1487, y: 755 },
+        B102: { x: 1562, y: 768 },
+        B103: { x: 1638, y: 748 },
+        B104: { x: 1658, y: 695 },
+        B105: { x: 1750, y: 700 },
+        B106: { x: 1720, y: 657 },
+        B108: { x: 1663, y: 623 },
+        B109: { x: 1690, y: 588 },
+        B110: { x: 1625, y: 540 },
+        B112: { x: 1583, y: 600 },
+        B113: { x: 1622, y: 648 },
+        B114: { x: 1398, y: 643 },
+        B115: { x: 1638, y: 598 },
+        B119: { x: 1545, y: 753 },
+        B125: { x: 1355, y: 818 },
+        B127: { x: 1453, y: 810 },
+        B128: { x: 1310, y: 628 },
+        B129: { x: 1253, y: 678 },
+        B108A: { x: 1718, y: 648 },
+        B125b: { x: 1432, y: 875 },
+        B126C: { x: 1483, y: 843 },
+        C100: { x: 1268, y: 660 },
+        C101: { x: 1348, y: 610 },
+        C102: { x: 1408, y: 580 },
+        C103: { x: 1362, y: 548 },
+        C104: { x: 1337, y: 492 },
+        C106: { x: 1418, y: 483 },
+        C107: { x: 1399, y: 450 },
+        C108: { x: 1276, y: 339 },
+        C110: { x: 1268, y: 525 },
+        C111: { x: 1185, y: 448 },
+        C112: { x: 1147, y: 595 },
+        C113: { x: 1085, y: 568 },
+        C114: { x: 1115, y: 490 },
+        C115: { x: 1280, y: 375 },
+        C119: { x: 1258, y: 442 },
+        C120: { x: 1073, y: 625 },
+        C121: { x: 1245, y: 780 },
+        C122: { x: 1072, y: 718 },
+        C123: { x: 1302, y: 723 },
+        C124: { x: 1068, y: 710 },
+        Z100: { x: 1503, y: 1062 },
+        Z101: { x: 1500, y: 1107 },
+        Z102: { x: 1572, y: 1097 },
+        Z103: { x: 1442, y: 1120 },
+        Z104: { x: 1437, y: 1152 },
+        Z105: { x: 1483, y: 1197 },
+        Z106: { x: 1568, y: 1178 },
+        Z107: { x: 1520, y: 1217 },
+        Z108: { x: 1592, y: 1165 },
+        Z109: { x: 1594, y: 1202 },
+        Z110: { x: 1557, y: 1253 },
+        Z111: { x: 1605, y: 1252 },
+        Z112: { x: 1570, y: 1292 },
+        Z113: { x: 1648, y: 1150 },
+        Z114: { x: 1688, y: 1177 },
+        Z119: { x: 1662, y: 1230 },
+        Z122: { x: 1492, y: 1282 },
+        Z125: { x: 1652, y: 1262 },
+        Z126: { x: 1717, y: 1202 },
+        Z127: { x: 1582, y: 1055 },
+        D101: { x: 1065, y: 367 },
+        D138: { x: 897, y: 672 },
+        D150: { x: 1248, y: 202 },
+        D152: { x: 1349, y: 202 },
+        D123: { x: 920, y: 238 },
+        E135: { x: 1629, y: 1365 },
+        E137: { x: 1668, y: 1332 },
+        F137: { x: 1717, y: 1276 },
+      };
+      const C2 = {
+        A_Pod_2: { x: 1600, y: 962 },
+        B_Pod_2: { x: 1545, y: 742 },
+        C_Pod_2: { x: 1302, y: 670 },
+        Commons_2: { x: 1290, y: 700 },
+        D_Wing_2: { x: 1069, y: 605 },
+        Z_Pod_2: { x: 1503, y: 1043 },
+        Lobby_2: { x: 1445, y: 950 },
+        A_Stair: { x: 1598, y: 870 },
+        B_Stair: { x: 1412, y: 658 },
+        C_Stair: { x: 1292, y: 447 },
+        Z_Stair: { x: 1563, y: 968 },
+        A50: { x: 1331, y: 927 },
+        A53: { x: 1440, y: 975 },
+        A54: { x: 1290, y: 962 },
+        A72: { x: 1508, y: 930 },
+        A200: { x: 1636, y: 1016 },
+        A201: { x: 1672, y: 1013 },
+        A202: { x: 1713, y: 1017 },
+        A203: { x: 1706, y: 934 },
+        A204: { x: 1757, y: 1020 },
+        A205: { x: 1740, y: 962 },
+        A206: { x: 1798, y: 1015 },
+        A207: { x: 1843, y: 1016 },
+        A208: { x: 1798, y: 928 },
+        A209: { x: 1806, y: 848 },
+        A210: { x: 1851, y: 849 },
+        A211: { x: 1761, y: 850 },
+        A212: { x: 1707, y: 856 },
+        A213: { x: 1665, y: 872 },
+        A214: { x: 1640, y: 858 },
+        A215: { x: 1755, y: 911 },
+        A219: { x: 1662, y: 938 },
+        B200: { x: 1490, y: 762 },
+        B201: { x: 1432, y: 788 },
+        B202: { x: 1560, y: 772 },
+        B203: { x: 1638, y: 752 },
+        B204: { x: 1668, y: 710 },
+        B205: { x: 1718, y: 700 },
+        B206: { x: 1745, y: 658 },
+        B207: { x: 1718, y: 620 },
+        B208: { x: 1678, y: 610 },
+        B209: { x: 1668, y: 573 },
+        B210: { x: 1628, y: 548 },
+        B211: { x: 1593, y: 570 },
+        B212: { x: 1542, y: 622 },
+        B213: { x: 1643, y: 633 },
+        B214: { x: 1400, y: 643 },
+        B215: { x: 1403, y: 600 },
+        B219: { x: 1348, y: 660 },
+        B220: { x: 1308, y: 733 },
+        B221: { x: 1562, y: 835 },
+        C200: { x: 1272, y: 705 },
+        C201: { x: 1328, y: 590 },
+        C202: { x: 1278, y: 620 },
+        C203: { x: 1338, y: 555 },
+        C204: { x: 1363, y: 518 },
+        C205: { x: 1403, y: 543 },
+        C206: { x: 1343, y: 495 },
+        C207: { x: 1263, y: 558 },
+        C208: { x: 1081, y: 627 },
+        C209: { x: 1026, y: 597 },
+        C210: { x: 912, y: 601 },
+        C212: { x: 1288, y: 773 },
+        C221: { x: 1478, y: 1058 },
+        C222: { x: 1458, y: 1090 },
+        Z200: { x: 1605, y: 1098 },
+        Z201: { x: 1428, y: 1133 },
+        Z202: { x: 1478, y: 1183 },
+        Z203: { x: 1503, y: 1122 },
+        Z204: { x: 1568, y: 1163 },
+        Z205: { x: 1518, y: 1105 },
+        Z206: { x: 1523, y: 1218 },
+        Z207: { x: 1533, y: 1253 },
+        Z208: { x: 1568, y: 1283 },
+        Z213: { x: 1648, y: 1148 },
+        Z214: { x: 1643, y: 1208 },
+        Z219: { x: 1608, y: 1245 },
+        Z221: { x: 1598, y: 1313 },
+        Z222: { x: 1658, y: 1255 },
+        Z223: { x: 1715, y: 1202 },
+        Z224: { x: 1682, y: 1285 },
+        Z226: { x: 1710, y: 1270 },
+        D201: { x: 635, y: 634 },
+        D202: { x: 590, y: 314 },
+        D203: { x: 570, y: 316 },
+        D204: { x: 530, y: 634 },
+        D206: { x: 571, y: 295 },
+      };
+      const C3 = {
+        A_Pod_3: { x: 1600, y: 900 },
+        B_Pod_3: { x: 1500, y: 712 },
+        C_Pod_3: { x: 1205, y: 613 },
+        Commons_3: { x: 1205, y: 613 },
+        Z_Pod_3: { x: 1500, y: 1012 },
+        A_Stair: { x: 1592, y: 785 },
+        B_Stair: { x: 1435, y: 668 },
+        C_Stair: { x: 1262, y: 450 },
+        Z_Stair: { x: 1545, y: 912 },
+        A300: { x: 1570, y: 948 },
+        A301: { x: 1520, y: 1043 },
+        A302: { x: 1622, y: 953 },
+        A303: { x: 1662, y: 958 },
+        A304: { x: 1657, y: 916 },
+        A305: { x: 1715, y: 958 },
+        A306: { x: 1697, y: 884 },
+        A307: { x: 1752, y: 960 },
+        A308: { x: 1748, y: 922 },
+        A309: { x: 1745, y: 890 },
+        A310: { x: 1615, y: 810 },
+        A311: { x: 1753, y: 848 },
+        A312: { x: 1668, y: 803 },
+        A313: { x: 1715, y: 803 },
+        A314: { x: 1548, y: 808 },
+        A315: { x: 1752, y: 798 },
+        A316: { x: 1568, y: 778 },
+        A319: { x: 1438, y: 810 },
+        B303: { x: 1663, y: 597 },
+        B305: { x: 1638, y: 627 },
+        B306: { x: 1622, y: 563 },
+        B307: { x: 1608, y: 547 },
+        B308: { x: 1572, y: 573 },
+        B309: { x: 1580, y: 518 },
+        B310: { x: 1548, y: 488 },
+        B311: { x: 1522, y: 508 },
+        B312: { x: 1462, y: 592 },
+        B313: { x: 1562, y: 622 },
+        B314: { x: 1328, y: 657 },
+        B315: { x: 1608, y: 662 },
+        B316: { x: 1338, y: 588 },
+        B319: { x: 1252, y: 725 },
+        C300: { x: 1168, y: 662 },
+        C301: { x: 1287, y: 577 },
+        C302: { x: 1338, y: 535 },
+        C303: { x: 1338, y: 502 },
+        C304: { x: 1291, y: 490 },
+        C305: { x: 1262, y: 493 },
+        C306: { x: 1227, y: 487 },
+        C307: { x: 1183, y: 491 },
+        C308: { x: 1175, y: 570 },
+        C309: { x: 1028, y: 470 },
+        C310: { x: 1022, y: 458 },
+        C311: { x: 1055, y: 598 },
+        C312: { x: 1057, y: 620 },
+        C313: { x: 1077, y: 655 },
+        C314: { x: 1045, y: 665 },
+        C315: { x: 1038, y: 652 },
+        C319: { x: 1023, y: 615 },
+        Z300: { x: 1438, y: 1065 },
+        Z301: { x: 1397, y: 1050 },
+        Z302: { x: 1355, y: 1092 },
+        Z303: { x: 1405, y: 1132 },
+        Z304: { x: 1425, y: 1028 },
+        Z305: { x: 1445, y: 1160 },
+        Z306: { x: 1465, y: 1190 },
+        Z307: { x: 1487, y: 1225 },
+        Z308: { x: 1528, y: 1188 },
+        Z309: { x: 1568, y: 1195 },
+        Z310: { x: 1515, y: 1263 },
+        Z311: { x: 1605, y: 1230 },
+        Z312: { x: 1558, y: 1082 },
+        Z313: { x: 1597, y: 1108 },
+        Z314: { x: 1637, y: 1135 },
+        Z319: { x: 1585, y: 1248 },
+        Z320: { x: 1628, y: 1198 },
+        Z321: { x: 1545, y: 1287 },
+        Z323: { x: 1665, y: 1170 },
+      };
+      const COORDS = { 1: C1, 2: C2, 3: C3 };
 
-// ── Helpers ───────────────────────────────────────────────────
-function getRoomFloor(room){
-  const pod=ALL_ROOMS[room]; if(!pod) return null;
-  if(pod.endsWith('_3')) return 3;
-  if(pod.endsWith('_2')) return 2;
-  return 1;
-}
-function getNodeFloor(node){
-  if(ALL_ROOMS[node]) return getRoomFloor(node);
-  if(STAIR_NODES.has(node)) return null;
-  if(node==='Lobby_1') return 1;
-  if(node==='Lobby_2') return 2;
-  if(node.endsWith('_3')) return 3;
-  if(node.endsWith('_2')) return 2;
-  return 1;
-}
+      // ── Helpers ───────────────────────────────────────────────────
+      function getRoomFloor(room) {
+        const pod = ALL_ROOMS[room];
+        if (!pod) return null;
+        if (pod.endsWith("_3")) return 3;
+        if (pod.endsWith("_2")) return 2;
+        return 1;
+      }
+      function getNodeFloor(node) {
+        if (ALL_ROOMS[node]) return getRoomFloor(node);
+        if (STAIR_NODES.has(node)) return null;
+        if (node === "Lobby_1") return 1;
+        if (node === "Lobby_2") return 2;
+        if (node.endsWith("_3")) return 3;
+        if (node.endsWith("_2")) return 2;
+        return 1;
+      }
 
-function bfs(start,end){
-  if(start===end) return [start];
-  const queue=[[start]], visited=new Set([start]);
-  while(queue.length){
-    const path=queue.shift(), node=path[path.length-1];
-    for(const nb of G[node]||[]){
-      if(nb===end) return [...path,nb];
-      if(!visited.has(nb)){ visited.add(nb); queue.push([...path,nb]); }
-    }
-  }
-  return null;
-}
+      function bfs(start, end) {
+        if (start === end) return [start];
+        const queue = [[start]],
+          visited = new Set([start]);
+        while (queue.length) {
+          const path = queue.shift(),
+            node = path[path.length - 1];
+          for (const nb of G[node] || []) {
+            if (nb === end) return [...path, nb];
+            if (!visited.has(nb)) {
+              visited.add(nb);
+              queue.push([...path, nb]);
+            }
+          }
+        }
+        return null;
+      }
 
-const SPECIAL={
-  A11:'Front Desk',A32:"Nurse's Office",C100:'Commons / Food Court',
-  C111:'Media Center',C121:'Auditorium Lobby',D138:'Auditorium',
-  D150:'Large Commons / Cafeteria',D123:'Field House / Gym',
-  B125:'Dream Center',Z122:'Student Entry / Attendance',
-};
-function roomLabel(r){ return SPECIAL[r]?`${r} – ${SPECIAL[r]}`:r; }
+      const SPECIAL = {
+        A11: "Front Desk",
+        A32: "Nurse's Office",
+        C100: "Commons / Food Court",
+        C111: "Media Center",
+        C121: "Auditorium Lobby",
+        D138: "Auditorium",
+        D150: "Large Commons / Cafeteria",
+        D123: "Field House / Gym",
+        B125: "Dream Center",
+        Z122: "Student Entry / Attendance",
+      };
+      function roomLabel(r) {
+        return SPECIAL[r] ? `${r} – ${SPECIAL[r]}` : r;
+      }
 
-// ── Draw route on canvas ──────────────────────────────────────
-function drawRoute(canvas, img, floor, path){
-  const W=img.offsetWidth, H=img.offsetHeight;
-  canvas.width=W; canvas.height=H;
-  const ctx=canvas.getContext('2d');
-  const [iw,ih]=IMG_SIZE[floor];
-  const sx=W/iw, sy=H/ih;
-  const coords=COORDS[floor];
+      // ── Draw route on canvas ──────────────────────────────────────
+      function drawRoute(canvas, img, floor, path) {
+        const W = img.offsetWidth,
+          H = img.offsetHeight;
+        canvas.width = W;
+        canvas.height = H;
+        const ctx = canvas.getContext("2d");
+        const [iw, ih] = IMG_SIZE[floor];
+        const sx = W / iw,
+          sy = H / ih;
+        const coords = COORDS[floor];
 
-  function toPx(node){
-    const c=coords[node]; if(!c) return null;
-    return {x:c.x*sx, y:c.y*sy};
-  }
+        function toPx(node) {
+          const c = coords[node];
+          if (!c) return null;
+          return { x: c.x * sx, y: c.y * sy };
+        }
 
-  // Gather points on this floor
-  const pts=[];
-  for(const node of path){
-    const nf=getNodeFloor(node);
-    if(nf===floor||nf===null){
-      const p=toPx(node);
-      if(p) pts.push({node,p});
-    }
-  }
-  if(pts.length<1) return;
+        // Gather points on this floor
+        const pts = [];
+        for (const node of path) {
+          const nf = getNodeFloor(node);
+          if (nf === floor || nf === null) {
+            const p = toPx(node);
+            if (p) pts.push({ node, p });
+          }
+        }
+        if (pts.length < 1) return;
 
-  // Draw route line
-  if(pts.length>=2){
-    ctx.beginPath();
-    ctx.moveTo(pts[0].p.x,pts[0].p.y);
-    for(let i=1;i<pts.length;i++) ctx.lineTo(pts[i].p.x,pts[i].p.y);
-    ctx.strokeStyle='rgba(22,163,74,0.25)';ctx.lineWidth=12;
-    ctx.lineCap='round';ctx.lineJoin='round';ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(pts[0].p.x,pts[0].p.y);
-    for(let i=1;i<pts.length;i++) ctx.lineTo(pts[i].p.x,pts[i].p.y);
-    ctx.strokeStyle='#16a34a';ctx.lineWidth=3.5;ctx.stroke();
-  }
+        // Draw route line
+        if (pts.length >= 2) {
+          ctx.beginPath();
+          ctx.moveTo(pts[0].p.x, pts[0].p.y);
+          for (let i = 1; i < pts.length; i++)
+            ctx.lineTo(pts[i].p.x, pts[i].p.y);
+          ctx.strokeStyle = "rgba(22,163,74,0.25)";
+          ctx.lineWidth = 12;
+          ctx.lineCap = "round";
+          ctx.lineJoin = "round";
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(pts[0].p.x, pts[0].p.y);
+          for (let i = 1; i < pts.length; i++)
+            ctx.lineTo(pts[i].p.x, pts[i].p.y);
+          ctx.strokeStyle = "#16a34a";
+          ctx.lineWidth = 3.5;
+          ctx.stroke();
+        }
 
-  // Start dot
-  const sp=toPx(path[0])||pts[0].p;
-  dot(ctx,sp.x,sp.y,7,'#0057b8','#fff');
-  label(ctx,sp.x,sp.y-12,'Start');
+        // Start dot
+        const sp = toPx(path[0]) || pts[0].p;
+        dot(ctx, sp.x, sp.y, 7, "#0057b8", "#fff");
+        label(ctx, sp.x, sp.y - 12, "Start");
 
-  // End dot (use actual end room coord if available)
-  const endNode=path[path.length-1];
-  const ep=toPx(endNode)||(pts.length>0?pts[pts.length-1].p:null);
-  if(ep && getNodeFloor(endNode)===floor){
-    dot(ctx,ep.x,ep.y,7,'#dc2626','#fff');
-    label(ctx,ep.x,ep.y-12,endNode);
-  } else if(pts.length>0){
-    // Stair exit on this floor
-    const last=pts[pts.length-1];
-    if(STAIR_NODES.has(last.node)){
-      dot(ctx,last.p.x,last.p.y,7,'#ea580c','#fff');
-      label(ctx,last.p.x,last.p.y-12,'Take Stairs ▲');
-    }
-  }
-}
+        // End dot (use actual end room coord if available)
+        const endNode = path[path.length - 1];
+        const ep =
+          toPx(endNode) || (pts.length > 0 ? pts[pts.length - 1].p : null);
+        if (ep && getNodeFloor(endNode) === floor) {
+          dot(ctx, ep.x, ep.y, 7, "#dc2626", "#fff");
+          label(ctx, ep.x, ep.y - 12, endNode);
+        } else if (pts.length > 0) {
+          // Stair exit on this floor
+          const last = pts[pts.length - 1];
+          if (STAIR_NODES.has(last.node)) {
+            dot(ctx, last.p.x, last.p.y, 7, "#ea580c", "#fff");
+            label(ctx, last.p.x, last.p.y - 12, "Take Stairs ▲");
+          }
+        }
+      }
 
-function dot(ctx,x,y,r,fill,stroke){
-  ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);
-  ctx.fillStyle=fill;ctx.fill();
-  ctx.strokeStyle=stroke;ctx.lineWidth=2;ctx.stroke();
-}
-function label(ctx,x,y,text){
-  ctx.font='bold 9px Inter,sans-serif';
-  ctx.textAlign='center';
-  const m=ctx.measureText(text);
-  const w=m.width+8,h=14;
-  ctx.fillStyle='rgba(255,255,255,0.92)';
-  ctx.beginPath();
-  ctx.roundRect(x-w/2,y-h+2,w,h,3);
-  ctx.fill();
-  ctx.fillStyle='#111827';
-  ctx.fillText(text,x,y-1);
-}
+      function dot(ctx, x, y, r, fill, stroke) {
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fillStyle = fill;
+        ctx.fill();
+        ctx.strokeStyle = stroke;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+      function label(ctx, x, y, text) {
+        ctx.font = "bold 9px Inter,sans-serif";
+        ctx.textAlign = "center";
+        const m = ctx.measureText(text);
+        const w = m.width + 8,
+          h = 14;
+        ctx.fillStyle = "rgba(255,255,255,0.92)";
+        ctx.beginPath();
+        ctx.roundRect(x - w / 2, y - h + 2, w, h, 3);
+        ctx.fill();
+        ctx.fillStyle = "#111827";
+        ctx.fillText(text, x, y - 1);
+      }
 
-// ── Expiry countdown ──────────────────────────────────────────
-function formatTimeLeft(ms){
-  if(ms<=0) return 'Expired';
-  const m=Math.floor(ms/60000), s=Math.floor((ms%60000)/1000);
-  return `${m}:${s.toString().padStart(2,'0')} left`;
-}
+      // ── Expiry countdown ──────────────────────────────────────────
+      function formatTimeLeft(ms) {
+        if (ms <= 0) return "Expired";
+        const m = Math.floor(ms / 60000),
+          s = Math.floor((ms % 60000) / 1000);
+        return `${m}:${s.toString().padStart(2, "0")} left`;
+      }
 
-function updateExpiry(issued, pillEl, labelEl){
-  const elapsed=Date.now()-issued;
-  const left=EXPIRY_MS-elapsed;
-  const pct=Math.max(0,left/EXPIRY_MS);
-  pillEl.textContent=formatTimeLeft(left);
-  if(pct>0.4){ pillEl.className='expiry-pill'; }
-  else if(pct>0.15){ pillEl.className='expiry-pill warn'; }
-  else { pillEl.className='expiry-pill dead'; }
-  if(left<=0){
-    document.getElementById('root').innerHTML=expiredHTML(new Date(issued));
-    return false;
-  }
-  return true;
-}
+      function updateExpiry(issued, pillEl, labelEl) {
+        const elapsed = Date.now() - issued;
+        const left = EXPIRY_MS - elapsed;
+        const pct = Math.max(0, left / EXPIRY_MS);
+        pillEl.textContent = formatTimeLeft(left);
+        if (pct > 0.4) {
+          pillEl.className = "expiry-pill";
+        } else if (pct > 0.15) {
+          pillEl.className = "expiry-pill warn";
+        } else {
+          pillEl.className = "expiry-pill dead";
+        }
+        if (left <= 0) {
+          document.getElementById("root").innerHTML = expiredHTML(
+            new Date(issued),
+          );
+          return false;
+        }
+        return true;
+      }
 
-function expiredHTML(issuedDate){
-  return `<div class="full-screen">
+      function expiredHTML(issuedDate) {
+        return `<div class="full-screen">
     <div class="expired-icon">⏱️</div>
     <div class="expired-title">Route Expired</div>
     <div class="expired-sub">This route link is no longer valid. Please return to the kiosk to generate a new one.</div>
     <div class="expired-time">Issued at ${issuedDate.toLocaleTimeString()}</div>
   </div>`;
-}
-
-// ── Direction builder ─────────────────────────────────────────
-function buildSteps(path, start, end){
-  const sf=getRoomFloor(start)||1;
-  const ef=getRoomFloor(end)||1;
-  const steps=[];
-  let prevFloor=sf;
-  const STAIR_DESC={
-    C_Stair:'C Stairwell (C Pod)',B_Stair:'B Stairwell (B/C junction)',
-    A_Stair:'A Stairwell (A/B connector)',Z_Stair:'Z Stairwell (A/Z junction)',
-    Z2:'Z2 connector stair',A2:'A2 connector stair',B2:'B2 connector stair',
-    Front_Stair:'Front office stairwell',
-  };
-  const fl=f=>f===1?'1st':f===2?'2nd':'3rd';
-
-  steps.push({icon:'📍',main:`<strong>${roomLabel(start)}</strong>`,sub:`${fl(sf)} floor`});
-
-  for(let i=1;i<path.length;i++){
-    const node=path[i];
-    if(STAIR_NODES.has(node)){
-      let toF=prevFloor;
-      for(let j=i+1;j<path.length;j++){
-        const f=getNodeFloor(path[j]); if(f){toF=f;break;}
       }
-      const dir=toF>prevFloor?'up':'down';
-      steps.push({icon:dir==='up'?'⬆️':'⬇️',
-        main:`Take the <strong>${STAIR_DESC[node]||node}</strong> ${dir} to the <strong>${fl(toF)} floor</strong>`,
-        sub:'Look for stairwell signs'});
-      prevFloor=toF; continue;
-    }
-    if(/^[A-Z](?:_Pod|_Wing)_\d$/.test(node)||/^Commons_\d$/.test(node)||node==='Lobby_1'||node==='Lobby_2'){
-      continue; // skip hub nodes in text
-    }
-    if(node===end){
-      steps.push({icon:'🎯',main:`<strong>${roomLabel(end)}</strong>`,sub:`${fl(ef)} floor · Destination`});
-    }
-  }
-  return steps;
-}
 
-// ── Main render ───────────────────────────────────────────────
-function render(){
-  const params=new URLSearchParams(window.location.search);
-  const start=params.get('s'), end=params.get('e'), t=parseInt(params.get('t')||'0',10);
+      // ── Direction builder ─────────────────────────────────────────
+      function buildSteps(path, start, end) {
+        const sf = getRoomFloor(start) || 1;
+        const ef = getRoomFloor(end) || 1;
+        const steps = [];
+        let prevFloor = sf;
+        const STAIR_DESC = {
+          C_Stair: "C Stairwell (C Pod)",
+          B_Stair: "B Stairwell (B/C junction)",
+          A_Stair: "A Stairwell (A/B connector)",
+          Z_Stair: "Z Stairwell (A/Z junction)",
+          Z2: "Z2 connector stair",
+          A2: "A2 connector stair",
+          B2: "B2 connector stair",
+          Front_Stair: "Front office stairwell",
+        };
+        const fl = (f) => (f === 1 ? "1st" : f === 2 ? "2nd" : "3rd");
 
-  if(!start||!end||!t){
-    document.getElementById('root').innerHTML=`<div class="full-screen">
+        steps.push({
+          icon: "📍",
+          main: `<strong>${roomLabel(start)}</strong>`,
+          sub: `${fl(sf)} floor`,
+        });
+
+        for (let i = 1; i < path.length; i++) {
+          const node = path[i];
+          if (STAIR_NODES.has(node)) {
+            let toF = prevFloor;
+            for (let j = i + 1; j < path.length; j++) {
+              const f = getNodeFloor(path[j]);
+              if (f) {
+                toF = f;
+                break;
+              }
+            }
+            const dir = toF > prevFloor ? "up" : "down";
+            steps.push({
+              icon: dir === "up" ? "⬆️" : "⬇️",
+              main: `Take the <strong>${STAIR_DESC[node] || node}</strong> ${dir} to the <strong>${fl(toF)} floor</strong>`,
+              sub: "Look for stairwell signs",
+            });
+            prevFloor = toF;
+            continue;
+          }
+          if (
+            /^[A-Z](?:_Pod|_Wing)_\d$/.test(node) ||
+            /^Commons_\d$/.test(node) ||
+            node === "Lobby_1" ||
+            node === "Lobby_2"
+          ) {
+            continue; // skip hub nodes in text
+          }
+          if (node === end) {
+            steps.push({
+              icon: "🎯",
+              main: `<strong>${roomLabel(end)}</strong>`,
+              sub: `${fl(ef)} floor · Destination`,
+            });
+          }
+        }
+        return steps;
+      }
+
+      // ── Main render ───────────────────────────────────────────────
+      function render() {
+        const params = new URLSearchParams(window.location.search);
+        const start = params.get("s"),
+          end = params.get("e"),
+          t = parseInt(params.get("t") || "0", 10);
+
+        if (!start || !end || !t) {
+          document.getElementById("root").innerHTML = `<div class="full-screen">
       <div class="expired-icon">🗺️</div>
       <div class="expired-title">No Route</div>
       <div class="expired-sub">Scan a QR code from the Mason Navigator kiosk to view your route.</div>
-    </div>`; return;
-  }
+    </div>`;
+          return;
+        }
 
-  const issued=t*1000;
-  const elapsed=Date.now()-issued;
-  if(elapsed>EXPIRY_MS){
-    document.getElementById('root').innerHTML=expiredHTML(new Date(issued)); return;
-  }
+        const issued = t * 1000;
+        const elapsed = Date.now() - issued;
+        if (elapsed > EXPIRY_MS) {
+          document.getElementById("root").innerHTML = expiredHTML(
+            new Date(issued),
+          );
+          return;
+        }
 
-  if(!G[start]||!G[end]){
-    document.getElementById('root').innerHTML=`<div class="full-screen">
+        if (!G[start] || !G[end]) {
+          document.getElementById("root").innerHTML = `<div class="full-screen">
       <div class="expired-icon">❌</div>
       <div class="expired-title">Unknown Room</div>
-      <div class="expired-sub">Room "${!G[start]?start:end}" not found in the system.</div>
-    </div>`; return;
-  }
+      <div class="expired-sub">Room "${!G[start] ? start : end}" not found in the system.</div>
+    </div>`;
+          return;
+        }
 
-  const path=bfs(start,end);
-  if(!path){
-    document.getElementById('root').innerHTML=`<div class="full-screen">
+        const path = bfs(start, end);
+        if (!path) {
+          document.getElementById("root").innerHTML = `<div class="full-screen">
       <div class="expired-icon">❌</div>
       <div class="expired-title">No Route Found</div>
       <div class="expired-sub">Could not find a path from ${start} to ${end}.</div>
-    </div>`; return;
-  }
+    </div>`;
+          return;
+        }
 
-  const sf=getRoomFloor(start)||1;
-  const ef=getRoomFloor(end)||1;
-  const floors=[...new Set(path.map(n=>getNodeFloor(n)).filter(Boolean))].sort();
-  const stairCount=path.filter(n=>STAIR_NODES.has(n)&&!['Z2','A2','B2'].includes(n)).length;
-  const steps=buildSteps(path,start,end);
+        const sf = getRoomFloor(start) || 1;
+        const ef = getRoomFloor(end) || 1;
+        const floors = [
+          ...new Set(path.map((n) => getNodeFloor(n)).filter(Boolean)),
+        ].sort();
+        const stairCount = path.filter(
+          (n) => STAIR_NODES.has(n) && !["Z2", "A2", "B2"].includes(n),
+        ).length;
+        const steps = buildSteps(path, start, end);
 
-  const flBadge=floors.length>1
-    ?`<span class="badge badge-floor">Floors ${floors.join('→')}</span>`
-    :`<span class="badge badge-floor">Floor ${floors[0]||sf}</span>`;
-  const stBadge=stairCount>0?`<span class="badge badge-stairs">🪜 ${stairCount} stairwell${stairCount>1?'s':''}</span>`:'';
+        const flBadge =
+          floors.length > 1
+            ? `<span class="badge badge-floor">Floors ${floors.join("→")}</span>`
+            : `<span class="badge badge-floor">Floor ${floors[0] || sf}</span>`;
+        const stBadge =
+          stairCount > 0
+            ? `<span class="badge badge-stairs">🪜 ${stairCount} stairwell${stairCount > 1 ? "s" : ""}</span>`
+            : "";
 
-  const mapsHTML=floors.map(f=>`
+        const mapsHTML = floors
+          .map(
+            (f) => `
     <div class="map-floor-block">
       <div class="map-floor-label">Floor ${f}</div>
       <div class="map-wrap">
         <img id="map-img-${f}" src="${FLOOR_IMGS[f]}" alt="Floor ${f}" crossorigin="anonymous"/>
         <canvas id="map-canvas-${f}"></canvas>
       </div>
-    </div>`).join('');
+    </div>`,
+          )
+          .join("");
 
-  const stepsHTML=steps.map((s,i)=>`
-    <li class="dir-step" style="animation-delay:${i*0.06}s">
+        const stepsHTML = steps
+          .map(
+            (s, i) => `
+    <li class="dir-step" style="animation-delay:${i * 0.06}s">
       <span class="step-ico">${s.icon}</span>
       <div>
         <div class="step-main">${s.main}</div>
         <div class="step-sub">${s.sub}</div>
-        ${s.warn?`<div class="step-warn">${s.warn}</div>`:''}
+        ${s.warn ? `<div class="step-warn">${s.warn}</div>` : ""}
       </div>
-    </li>`).join('');
+    </li>`,
+          )
+          .join("");
 
-  document.getElementById('root').innerHTML=`
+        document.getElementById("root").innerHTML = `
     <div class="header">
       <div class="header-inner">
         <div class="header-logo">🏫</div>
@@ -681,7 +1563,7 @@ function render(){
         <div class="expiry-label">Route expires in</div>
         <div class="expiry-sub">Issued at ${new Date(issued).toLocaleTimeString()}</div>
       </div>
-      <div class="expiry-pill" id="expiryPill">${formatTimeLeft(EXPIRY_MS-elapsed)}</div>
+      <div class="expiry-pill" id="expiryPill">${formatTimeLeft(EXPIRY_MS - elapsed)}</div>
     </div>
 
     <div class="route-card">
@@ -714,23 +1596,23 @@ function render(){
     <div class="footer">Mason City Schools · Student Navigation Project · Sarvin Sukhe</div>
   `;
 
-  // Draw maps after images load
-  for(const f of floors){
-    const img=document.getElementById(`map-img-${f}`);
-    const canvas=document.getElementById(`map-canvas-${f}`);
-    const draw=()=>drawRoute(canvas,img,f,path);
-    if(img.complete&&img.naturalWidth) draw();
-    else img.onload=draw;
-  }
+        // Draw maps after images load
+        for (const f of floors) {
+          const img = document.getElementById(`map-img-${f}`);
+          const canvas = document.getElementById(`map-canvas-${f}`);
+          const draw = () => drawRoute(canvas, img, f, path);
+          if (img.complete && img.naturalWidth) draw();
+          else img.onload = draw;
+        }
 
-  // Live countdown
-  const pillEl=document.getElementById('expiryPill');
-  const tick=setInterval(()=>{
-    if(!updateExpiry(issued,pillEl)) clearInterval(tick);
-  },1000);
-}
+        // Live countdown
+        const pillEl = document.getElementById("expiryPill");
+        const tick = setInterval(() => {
+          if (!updateExpiry(issued, pillEl)) clearInterval(tick);
+        }, 1000);
+      }
 
-render();
-</script>
-</body>
+      render();
+    </script>
+  </body>
 </html>
