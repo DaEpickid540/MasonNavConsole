@@ -102,6 +102,49 @@
         width: 160px;
         line-height: 1.5;
       }
+
+      /* ── Lines Toggle Styles (Beta Checkbox) ───────────────────── */
+      .lines-toggle {
+        display: flex;
+        align-items: center;
+        margin-top: 12px;
+        font-size: 0.85rem;
+        cursor: pointer;
+      }
+      .lines-toggle input[type="checkbox"] {
+        display: none; /* Hide the default checkbox */
+      }
+      .lines-toggle-track {
+        width: 40px;
+        height: 20px;
+        background-color: #ccc;
+        border-radius: 10px;
+        position: relative;
+        margin-right: 10px;
+        transition: background-color 0.3s;
+      }
+      .lines-toggle-track::before {
+        content: "";
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background-color: white;
+        top: 2px;
+        left: 2px;
+        transition: transform 0.3s;
+      }
+      input:checked + .lines-toggle-track {
+        background-color: #0057b8; /* Accent color */
+      }
+      input:checked + .lines-toggle-track::before {
+        transform: translateX(20px);
+      }
+      .beta-tag {
+        font-size: 0.7em;
+        color: #999;
+        margin-left: 5px;
+      }
     </style>
   </head>
   <body>
@@ -163,6 +206,47 @@
               <div class="autocomplete" id="ac"></div>
             </div>
             <button id="goBtn">🗺 Get Directions</button>
+
+            <!-- LINES TOGGLE -->
+            <label class="lines-toggle" for="linesToggle">
+              <input type="checkbox" id="linesToggle" />
+              <span class="lines-toggle-track"></span>
+              <span class="lines-toggle-label"
+                >Show route lines
+                <span class="beta-tag">Beta · may be inaccurate</span></span
+              >
+            </label>
+
+            <!-- GRID TOGGLE -->
+            <label class="lines-toggle" for="gridToggle">
+              <input type="checkbox" id="gridToggle" />
+              <span class="lines-toggle-track"></span>
+              <span class="lines-toggle-label">Show grid overlay</span>
+            </label>
+
+            <!-- SHOW ALL POINTS (DEV) -->
+            <label class="lines-toggle" for="showPointsToggle">
+              <input type="checkbox" id="showPointsToggle" />
+              <span class="lines-toggle-track"></span>
+              <span class="lines-toggle-label">Show all points (dev)</span>
+            </label>
+
+            <!-- SHOW HALLWAYS (DEV) -->
+            <label class="lines-toggle" for="showHallwaysToggle">
+              <input type="checkbox" id="showHallwaysToggle" />
+              <span class="lines-toggle-track"></span>
+              <span class="lines-toggle-label">Show hallways (dev)</span>
+            </label>
+
+            <!-- DISABLE IDLE & INTRO (DEV) -->
+            <label class="lines-toggle" for="disableIdleToggle">
+              <input type="checkbox" id="disableIdleToggle" />
+              <span class="lines-toggle-track"></span>
+              <span class="lines-toggle-label"
+                >Disable intro & auto-lock (dev)</span
+              >
+            </label>
+
             <div id="statusMsg"></div>
           </div>
 
@@ -186,6 +270,32 @@
           <div class="map-area" id="mapArea">
             <img id="mapImg" alt="Floor plan" />
             <canvas id="mapCanvas"></canvas>
+
+            <!-- INFO SIDEBAR (Dev) -->
+            <div id="infoSidebar" class="info-sidebar" style="display: none">
+              <div class="info-header">
+                <strong id="infoName">Point Info</strong>
+              </div>
+              <div class="info-body">
+                <div class="info-row">
+                  <span class="info-label">X:</span>
+                  <span class="info-value" id="infoX">-</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Y:</span>
+                  <span class="info-value" id="infoY">-</span>
+                </div>
+                <div class="info-row" id="infoEndRow" style="display: none">
+                  <span class="info-label">End X:</span>
+                  <span class="info-value" id="infoEndX">-</span>
+                </div>
+                <div class="info-row" id="infoEndYRow" style="display: none">
+                  <span class="info-label">End Y:</span>
+                  <span class="info-value" id="infoEndY">-</span>
+                </div>
+              </div>
+            </div>
+
             <div class="zoom-hint" id="zoomHint">
               Scroll or pinch to zoom · Double-click to zoom in
             </div>
@@ -208,6 +318,28 @@
               </div>
             </div>
           </div>
+        </div>
+
+        <!-- RIGHT: Coordinates Editor (Dev) -->
+        <div class="panel-coords" id="panelCoords">
+          <div class="coords-header">
+            <h3>Points Editor</h3>
+            <button
+              id="toggleCoordsPanel"
+              class="coords-close-btn"
+              title="Close"
+            >
+              ✕
+            </button>
+          </div>
+          <div class="coords-search">
+            <input
+              type="text"
+              id="coordsSearch"
+              placeholder="Search rooms..."
+            />
+          </div>
+          <div class="coords-list" id="coordsList"></div>
         </div>
       </main>
 

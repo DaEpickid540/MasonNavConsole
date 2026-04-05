@@ -4,6 +4,7 @@ const path = require("path");
 contextBridge.exposeInMainWorld("kioskAPI", {
   getConfig: () => ipcRenderer.invoke("get-config"),
   saveConfig: (cfg) => ipcRenderer.invoke("save-config", cfg),
+  saveCoordinates: (data) => ipcRenderer.invoke("save-coordinates", data),
   quit: () => ipcRenderer.invoke("quit"),
   // Resolve asset paths that work both in dev and after build
   assetPath: (file) => {

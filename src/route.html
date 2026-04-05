@@ -1209,6 +1209,204 @@
       };
       const COORDS = { 1: C1, 2: C2, 3: C3 };
 
+      // ── Hallway Waypoints for Route Visualization ──
+      const HALLWAYS = {
+        floor1: {
+          A_Pod_Corridor_1: {
+            waypoints: [
+              { x: 1630, y: 875 },
+              { x: 1600, y: 875 },
+              { x: 1550, y: 875 },
+            ],
+          },
+          Lobby_Corridor_1: {
+            waypoints: [
+              { x: 1330, y: 955 },
+              { x: 1380, y: 960 },
+              { x: 1445, y: 950 },
+            ],
+          },
+          B_Pod_Corridor_1: {
+            waypoints: [
+              { x: 1550, y: 755 },
+              { x: 1550, y: 740 },
+              { x: 1545, y: 700 },
+              { x: 1540, y: 650 },
+            ],
+          },
+          C_Pod_Corridor_1: {
+            waypoints: [
+              { x: 1185, y: 448 },
+              { x: 1250, y: 500 },
+              { x: 1310, y: 660 },
+              { x: 1350, y: 700 },
+            ],
+          },
+          Z_Pod_Corridor_1: {
+            waypoints: [
+              { x: 1450, y: 1200 },
+              { x: 1500, y: 1100 },
+              { x: 1550, y: 1050 },
+              { x: 1600, y: 1000 },
+            ],
+          },
+          A_B_Connector_1: {
+            waypoints: [
+              { x: 1600, y: 900 },
+              { x: 1575, y: 850 },
+              { x: 1555, y: 830 },
+              { x: 1545, y: 795 },
+              { x: 1520, y: 760 },
+            ],
+          },
+          B_C_Connector_1: {
+            waypoints: [
+              { x: 1510, y: 740 },
+              { x: 1460, y: 700 },
+              { x: 1415, y: 655 },
+              { x: 1393, y: 660 },
+              { x: 1350, y: 665 },
+              { x: 1310, y: 665 },
+            ],
+          },
+          A_Pod_To_Lobby_1: {
+            waypoints: [
+              { x: 1550, y: 960 },
+              { x: 1500, y: 960 },
+              { x: 1445, y: 955 },
+            ],
+          },
+          A_Z_Connector_1: {
+            waypoints: [
+              { x: 1600, y: 960 },
+              { x: 1567, y: 968 },
+              { x: 1507, y: 1040 },
+            ],
+          },
+          Commons_Central_1: {
+            waypoints: [
+              { x: 1310, y: 720 },
+              { x: 1280, y: 700 },
+              { x: 1295, y: 695 },
+              { x: 1250, y: 650 },
+            ],
+          },
+          Commons_To_D_Wing_1: {
+            waypoints: [
+              { x: 1295, y: 695 },
+              { x: 1230, y: 650 },
+              { x: 1150, y: 550 },
+              { x: 1060, y: 500 },
+            ],
+          },
+          D_Wing_Corridor_1: {
+            waypoints: [
+              { x: 1065, y: 367 },
+              { x: 1000, y: 350 },
+              { x: 920, y: 300 },
+              { x: 880, y: 400 },
+              { x: 897, y: 672 },
+            ],
+          },
+          D_E_Connector_1: {
+            waypoints: [
+              { x: 950, y: 350 },
+              { x: 898, y: 410 },
+            ],
+          },
+          D_F_Connector_1: {
+            waypoints: [
+              { x: 897, y: 500 },
+              { x: 914, y: 563 },
+            ],
+          },
+        },
+        floor2: {
+          A_Pod_Corridor_2: {
+            waypoints: [
+              { x: 1630, y: 875 },
+              { x: 1600, y: 875 },
+              { x: 1550, y: 875 },
+            ],
+          },
+          B_Pod_Corridor_2: {
+            waypoints: [
+              { x: 1550, y: 755 },
+              { x: 1545, y: 700 },
+              { x: 1540, y: 650 },
+            ],
+          },
+          C_Pod_Corridor_2: {
+            waypoints: [
+              { x: 1185, y: 448 },
+              { x: 1250, y: 500 },
+              { x: 1310, y: 660 },
+              { x: 1350, y: 700 },
+            ],
+          },
+          Z_Pod_Corridor_2: {
+            waypoints: [
+              { x: 1450, y: 1200 },
+              { x: 1500, y: 1100 },
+              { x: 1550, y: 1050 },
+              { x: 1600, y: 1000 },
+            ],
+          },
+          Commons_Central_2: {
+            waypoints: [
+              { x: 1310, y: 720 },
+              { x: 1295, y: 695 },
+              { x: 1250, y: 650 },
+            ],
+          },
+          D_Wing_Corridor_2: {
+            waypoints: [
+              { x: 1060, y: 500 },
+              { x: 920, y: 400 },
+            ],
+          },
+        },
+        floor3: {
+          A_Pod_Corridor_3: {
+            waypoints: [
+              { x: 1630, y: 875 },
+              { x: 1600, y: 875 },
+              { x: 1550, y: 875 },
+            ],
+          },
+          B_Pod_Corridor_3: {
+            waypoints: [
+              { x: 1550, y: 755 },
+              { x: 1545, y: 700 },
+              { x: 1540, y: 650 },
+            ],
+          },
+          C_Pod_Corridor_3: {
+            waypoints: [
+              { x: 1185, y: 448 },
+              { x: 1250, y: 500 },
+              { x: 1310, y: 660 },
+              { x: 1350, y: 700 },
+            ],
+          },
+          Z_Pod_Corridor_3: {
+            waypoints: [
+              { x: 1450, y: 1200 },
+              { x: 1500, y: 1100 },
+              { x: 1550, y: 1050 },
+              { x: 1600, y: 1000 },
+            ],
+          },
+          Commons_Central_3: {
+            waypoints: [
+              { x: 1310, y: 720 },
+              { x: 1295, y: 695 },
+              { x: 1250, y: 650 },
+            ],
+          },
+        },
+      };
+
       // ── Helpers ───────────────────────────────────────────────────
       function getRoomFloor(room) {
         const pod = ALL_ROOMS[room];
@@ -1290,21 +1488,48 @@
         }
         if (pts.length < 1) return;
 
-        // Draw route line
+        // Draw route line with hallway waypoints
         if (pts.length >= 2) {
+          const floorHallways = HALLWAYS[`floor${floor}`] || {};
           ctx.beginPath();
           ctx.moveTo(pts[0].p.x, pts[0].p.y);
-          for (let i = 1; i < pts.length; i++)
+
+          for (let i = 1; i < pts.length; i++) {
+            // Try to find hallway waypoints between consecutive nodes
+            let hasWaypts = false;
+            for (const [, hallwayData] of Object.entries(floorHallways)) {
+              if (hallwayData.waypoints && hallwayData.waypoints.length >= 2) {
+                hasWaypts = true;
+                for (const wp of hallwayData.waypoints) {
+                  ctx.lineTo(wp.x * sx, wp.y * sy);
+                }
+                break;
+              }
+            }
+
             ctx.lineTo(pts[i].p.x, pts[i].p.y);
+          }
+
           ctx.strokeStyle = "rgba(22,163,74,0.25)";
           ctx.lineWidth = 12;
           ctx.lineCap = "round";
           ctx.lineJoin = "round";
           ctx.stroke();
+
           ctx.beginPath();
           ctx.moveTo(pts[0].p.x, pts[0].p.y);
-          for (let i = 1; i < pts.length; i++)
+          for (let i = 1; i < pts.length; i++) {
+            const floorHallways = HALLWAYS[`floor${floor}`] || {};
+            for (const [, hallwayData] of Object.entries(floorHallways)) {
+              if (hallwayData.waypoints && hallwayData.waypoints.length >= 2) {
+                for (const wp of hallwayData.waypoints) {
+                  ctx.lineTo(wp.x * sx, wp.y * sy);
+                }
+                break;
+              }
+            }
             ctx.lineTo(pts[i].p.x, pts[i].p.y);
+          }
           ctx.strokeStyle = "#16a34a";
           ctx.lineWidth = 3.5;
           ctx.stroke();

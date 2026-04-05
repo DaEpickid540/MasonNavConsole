@@ -1,10 +1,8 @@
 export const A_Rooms = {
   // ── Floor 1 A Pod ─────────────────────────────────────────────
-  // Hallway nodes
   A100: "A_Pod_1",
   A115: "A_Pod_1",
   A119: "A_Pod_1",
-  // Rooms
   A101: "A_Pod_1",
   A102: "A_Pod_1",
   A103: "A_Pod_1",
@@ -20,12 +18,9 @@ export const A_Rooms = {
   A113: "A_Pod_1",
   A114: "A_Pod_1",
   A118: "A_Pod_1", // Bathroom
-  A122: "A_Pod_1", // Student Entry
-  A125: "A_Pod_1",
-  A126: "A_Pod_1",
-  A127: "A_Pod_1",
-  // Floor 1 Admin rooms (A11 = Front Desk, A14-A32 = Admin)
+  // Floor 1 Admin (Lobby_1)
   A11: "A_Pod_1", // Front Desk
+  A12: "A_Pod_1",
   A14: "A_Pod_1",
   A15: "A_Pod_1",
   A16: "A_Pod_1",
@@ -44,13 +39,14 @@ export const A_Rooms = {
   A29: "A_Pod_1",
   A30: "A_Pod_1",
   A31: "A_Pod_1",
-  A32: "A_Pod_1",
+  A32: "A_Pod_1", // Nurse's Office
+  A33: "A_Pod_1",
+  A34: "A_Pod_1",
+
   // ── Floor 2 A Pod ─────────────────────────────────────────────
-  // Hallway nodes
   A200: "A_Pod_2",
   A215: "A_Pod_2",
   A219: "A_Pod_2",
-  // Rooms
   A201: "A_Pod_2",
   A202: "A_Pod_2",
   A203: "A_Pod_2",
@@ -66,15 +62,11 @@ export const A_Rooms = {
   A213: "A_Pod_2",
   A214: "A_Pod_2",
   A218: "A_Pod_2", // Bathroom
-  // Floor 2 Admin rooms (A54-A71)
-  A51A: "A_Pod_2",
-  A51B: "A_Pod_2",
+  // Floor 2 Admin / Lobby_2
+  A10: "A_Pod_2", // Open to Lobby Below corridor
+  A50: "A_Pod_2",
   A52: "A_Pod_2",
-  A53: "A_Pod_2", // Large admin area
-  A53A: "A_Pod_2",
-  A53B: "A_Pod_2",
-  A53C: "A_Pod_2",
-  A53D: "A_Pod_2",
+  A53: "A_Pod_2",
   A54: "A_Pod_2",
   A55: "A_Pod_2",
   A56: "A_Pod_2",
@@ -93,12 +85,12 @@ export const A_Rooms = {
   A69: "A_Pod_2",
   A70: "A_Pod_2",
   A71: "A_Pod_2",
+  A72: "A_Pod_2",
+
   // ── Floor 3 A Pod ─────────────────────────────────────────────
-  // Hallway nodes
   A300: "A_Pod_3",
   A315: "A_Pod_3",
   A319: "A_Pod_3",
-  // Rooms
   A301: "A_Pod_3",
   A302: "A_Pod_3",
   A303: "A_Pod_3",
@@ -115,4 +107,5 @@ export const A_Rooms = {
   A314: "A_Pod_3",
   A316: "A_Pod_3",
   A318: "A_Pod_3", // Bathroom
+  A326: "A_Pod_3",
 };

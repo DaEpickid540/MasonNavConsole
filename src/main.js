@@ -76,6 +76,54 @@ ipcMain.handle("save-config", (_, c) => {
   saveConfig(c);
   return true;
 });
+ipcMain.handle("save-coordinates", (_, data) => {
+  try {
+    const { floor, roomName, x, y } = data;
+    const coordFilePath = path.join(
+      __dirname,
+      "..",
+      "data",
+      `coordinates_floor${floor}.js`,
+    );
+
+    // Read the current file
+    let content = fs.readFileSync(coordFilePath, "utf8");
+
+    // Parse the existing coordinates object
+    const coordsMatch = content.match(/const COORDS = ({[\s\S]*?});/);
+    if (!coordsMatch) {
+      return {
+        success: false,
+        error: "Could not parse coordinates file format",
+      };
+    }
+
+    // Create the replacement string for this room
+    const oldPattern = new RegExp(
+      `${roomName}:\\s*{\\s*x:\\s*[\\d.]+,\\s*y:\\s*[\\d.]+\\s*}`,
+    );
+    const newCoordStr = `${roomName}: { x: ${x}, y: ${y} }`;
+
+    // Replace the specific room's coordinates
+    const newContent = content.replace(oldPattern, newCoordStr);
+
+    // If no replacement was made, it might be a new room or the format is different
+    if (newContent === content) {
+      return {
+        success: false,
+        error: "Could not find room in coordinates file",
+      };
+    }
+
+    // Write the updated content back
+    fs.writeFileSync(coordFilePath, newContent, "utf8");
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error saving coordinates:", error);
+    return { success: false, error: error.message };
+  }
+});
 ipcMain.handle("quit", () => app.quit());
 ipcMain.handle("get-path", (_, key) => {
   // Let renderer ask for asset paths safely

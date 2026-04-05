@@ -1,10 +1,8 @@
 export const B_Rooms = {
   // ── Floor 1 B Pod ─────────────────────────────────────────────
-  // Hallway nodes
   B100: "B_Pod_1",
   B115: "B_Pod_1",
   B119: "B_Pod_1",
-  // Rooms
   B101: "B_Pod_1",
   B102: "B_Pod_1",
   B103: "B_Pod_1",
@@ -20,20 +18,17 @@ export const B_Rooms = {
   B113: "B_Pod_1",
   B114: "B_Pod_1",
   B118: "B_Pod_1", // Bathroom
-  B122: "B_Pod_1", // Student Entry
-  B125: "B_Pod_1", // Dream Center (opposite side of B1/B115)
-  B125b: "B_Pod_1", // Maker Space
-  B125c: "B_Pod_1", // Comet Cafe sitting area / library
+  B122: "B_Pod_1",
+  B125: "B_Pod_1", // Dream Center
   B126: "B_Pod_1",
   B127: "B_Pod_1",
-  B128: "B_Pod_1", // Comet Cafe (purchase counter)
-  B129: "B_Pod_1", // Only accessible through Dream Center
+  B128: "B_Pod_1", // Comet Cafe
+  B129: "B_Pod_1",
+
   // ── Floor 2 B Pod ─────────────────────────────────────────────
-  // Hallway nodes
   B200: "B_Pod_2",
   B215: "B_Pod_2",
   B219: "B_Pod_2",
-  // Rooms
   B201: "B_Pod_2",
   B202: "B_Pod_2",
   B203: "B_Pod_2",
@@ -51,12 +46,11 @@ export const B_Rooms = {
   B218: "B_Pod_2", // Bathroom
   B220: "B_Pod_2",
   B221: "B_Pod_2",
+
   // ── Floor 3 B Pod ─────────────────────────────────────────────
-  // Hallway nodes
   B300: "B_Pod_3",
   B315: "B_Pod_3",
   B319: "B_Pod_3",
-  // Rooms
   B301: "B_Pod_3",
   B302: "B_Pod_3",
   B303: "B_Pod_3",

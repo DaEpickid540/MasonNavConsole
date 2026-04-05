@@ -11,6 +11,12 @@ import { displayRooms } from "../data/displayRooms.js";
 import { coordinates_floor1 } from "../data/coordinates_floor1.js";
 import { coordinates_floor2 } from "../data/coordinates_floor2.js";
 import { coordinates_floor3 } from "../data/coordinates_floor3.js";
+import {
+  hallways,
+  getHallwaysForFloor,
+  getHallwayForRoom,
+  getHallwayWaypoints,
+} from "../data/hallways.js";
 
 // ══════════════════════════════════════════════════════
 //  CONSTANTS
@@ -372,6 +378,51 @@ function getWaypointsBetween(fromNode, toNode, floor) {
   }));
 }
 
+/**
+ * Get hallway-based waypoints for a room-to-room route
+ * Looks up which hallways connect the rooms and uses their waypoints
+ */
+function getHallwayWaypointsForRoute(fromRoom, toRoom, floor) {
+  const fromHallway = getHallwayForRoom(fromRoom);
+  const toHallway = getHallwayForRoom(toRoom);
+
+  if (!fromHallway || !toHallway) return null;
+
+  // If both rooms are in the same hallway, use that hallway's waypoints
+  if (fromHallway.hallwayId === toHallway.hallwayId) {
+    const waypts = fromHallway.waypoints || [];
+    if (waypts.length < 2) return null;
+
+    const [iw, ih] = IMG_SIZE[floor];
+    return waypts.map((p) => ({
+      x: p.x * (mapCanvas.width / iw),
+      y: p.y * (mapCanvas.height / ih),
+    }));
+  }
+
+  // If in different hallways, combine waypoints from both
+  const combined = [];
+  const floorHallways = getHallwaysForFloor(floor);
+
+  // Add waypoints from starting hallway
+  if (fromHallway.waypoints) {
+    combined.push(...fromHallway.waypoints);
+  }
+
+  // Add waypoints from ending hallway
+  if (toHallway.waypoints) {
+    combined.push(...toHallway.waypoints);
+  }
+
+  if (combined.length < 2) return null;
+
+  const [iw, ih] = IMG_SIZE[floor];
+  return combined.map((p) => ({
+    x: p.x * (mapCanvas.width / iw),
+    y: p.y * (mapCanvas.height / ih),
+  }));
+}
+
 const POD_LABELS = {
   A_Pod: "A Pod",
   B_Pod: "B Pod",
@@ -430,6 +481,12 @@ const WALK_DESC = {
 // ══════════════════════════════════════════════════════
 //  STATE
 // ══════════════════════════════════════════════════════
+let showLines = false; // route lines off by default (beta feature)
+let showGrid = false; // grid overlay off by default
+let showAllPoints = false; // show all coordinate points (dev mode)
+let showHallways = false; // show hallway lines (dev mode)
+let selectedCoordPoint = null; // currently selected point in coordinates editor
+let disableIdleAndIntro = false; // disable intro screen and auto-lock
 let config = {
   kioskName: "Mason High School",
   defaultRoom: "Z122",
@@ -464,6 +521,11 @@ const idleOverlay = document.getElementById("idleOverlay");
 const idleCount = document.getElementById("idleCount");
 const idleFill = document.getElementById("idleFill");
 const ctx = mapCanvas.getContext("2d");
+
+// Hover tracking for dev points
+let hoverPoint = null;
+let mouseX = 0;
+let mouseY = 0;
 
 // ══════════════════════════════════════════════════════
 //  START LOCATION BUTTONS
@@ -511,6 +573,9 @@ function applyConfig() {
 // restartCountdown: restart the 30s bar. Does NOT touch the overlay.
 // Called on every user interaction so timer resets while app is in use.
 function restartCountdown() {
+  // If idle is disabled, skip the countdown
+  if (disableIdleAndIntro) return;
+
   // If the home/idle screen is showing, don't let background activity dismiss it.
   if (idleOverlay.classList.contains("show")) return;
 
@@ -727,7 +792,15 @@ function drawAll() {
     }
     const fromNode = rawPts[i - 1].node;
     const toNode = rawPts[i].node;
-    const waypts = getWaypointsBetween(fromNode, toNode, currentFloor);
+
+    // Try hub-to-hub waypoints first
+    let waypts = getWaypointsBetween(fromNode, toNode, currentFloor);
+
+    // If no hub waypoints, try hallway-based waypoints for rooms
+    if (!waypts && allRooms[fromNode] && allRooms[toNode]) {
+      waypts = getHallwayWaypointsForRoute(fromNode, toNode, currentFloor);
+    }
+
     if (waypts) {
       // Skip the first waypoint if it's very close to the previous point
       for (const wp of waypts.slice(1, -1)) finalPts.push(wp);
@@ -741,9 +814,37 @@ function drawAll() {
   const endPt = toCanvas(endNode, currentFloor);
   const endOnFloor = nodeFloor(endNode) === currentFloor;
 
-  animateLine(finalPts, () => {
-    // After animation: draw start + end dots
-    if (startPt) drawDot(startPt.x, startPt.y, 8, "#003087", "#fff");
+  // Draw grid overlay
+  drawGrid();
+
+  // Draw hallway lines (dev mode)
+  drawHallways();
+
+  // Draw all points (dev mode)
+  drawAllPoints();
+
+  // Only animate and draw lines if showLines is enabled (beta feature)
+  if (showLines) {
+    animateLine(finalPts, () => {
+      // After animation: draw start + end dots
+      if (startPt) drawDot(startPt.x, startPt.y, 8, "#003087", "#fff");
+      if (pts.length > 0) {
+        const lastPt = pts[pts.length - 1];
+        const isStair = STAIR_NODES.has(lastPt.node);
+        const color = isStair ? "#ff6600" : endOnFloor ? "#cc2200" : "#ff6600";
+        drawDot(lastPt.p.x, lastPt.p.y, 8, color, "#fff");
+        const lbl = isStair ? "▲ Use Stairs" : displayRooms[endNode] || endNode;
+        drawLabel(lastPt.p.x, lastPt.p.y - 15, lbl);
+      }
+      if (startPt) drawLabel(startPt.x, startPt.y - 15, "You Are Here");
+      // Keep pulsing the start dot
+      pulseHereStatic(startPt);
+    });
+  } else {
+    // Lines disabled: show start and end points without the line animation
+    ctx.clearRect(0, 0, mapCanvas.width, mapCanvas.height);
+    drawGrid();
+    // Draw end point
     if (pts.length > 0) {
       const lastPt = pts[pts.length - 1];
       const isStair = STAIR_NODES.has(lastPt.node);
@@ -752,10 +853,313 @@ function drawAll() {
       const lbl = isStair ? "▲ Use Stairs" : displayRooms[endNode] || endNode;
       drawLabel(lastPt.p.x, lastPt.p.y - 15, lbl);
     }
+    // Draw start point
+    if (startPt) drawDot(startPt.x, startPt.y, 8, "#003087", "#fff");
     if (startPt) drawLabel(startPt.x, startPt.y - 15, "You Are Here");
     // Keep pulsing the start dot
     pulseHereStatic(startPt);
-  });
+  }
+}
+
+// Draw 100px grid overlay on the map
+function drawGrid() {
+  if (!showGrid) return; // Only draw if grid is enabled
+
+  const GRID_SPACING = 50; // 50px in image coordinates
+  const [iw, ih] = IMG_SIZE[currentFloor];
+  const sx = mapCanvas.width / iw;
+  const sy = mapCanvas.height / ih;
+
+  ctx.strokeStyle = "rgba(255, 0, 0, 0.5)"; // Red grid with transparency
+  ctx.lineWidth = 1;
+  ctx.lineCap = "butt";
+  ctx.lineJoin = "miter";
+
+  // Vertical lines
+  for (let x = 0; x <= iw; x += GRID_SPACING) {
+    const canvasX = x * sx;
+    ctx.beginPath();
+    ctx.moveTo(canvasX, 0);
+    ctx.lineTo(canvasX, mapCanvas.height);
+    ctx.stroke();
+  }
+
+  // Horizontal lines
+  for (let y = 0; y <= ih; y += GRID_SPACING) {
+    const canvasY = y * sy;
+    ctx.beginPath();
+    ctx.moveTo(0, canvasY);
+    ctx.lineTo(mapCanvas.width, canvasY);
+    ctx.stroke();
+  }
+}
+
+// Draw all points from coordinates (development mode)
+function drawAllPoints() {
+  if (!showAllPoints) return;
+
+  const [iw, ih] = IMG_SIZE[currentFloor];
+  const sx = mapCanvas.width / iw;
+  const sy = mapCanvas.height / ih;
+  const coords = COORDS[currentFloor];
+
+  if (!coords) return;
+
+  // Get hidden points for current floor
+  const floorKey = `floor${currentFloor}`;
+  const hiddenForFloor = window.hiddenPointsByFloor?.[floorKey] || new Set();
+
+  // Draw all points except hidden ones
+  for (const [roomName, coord] of Object.entries(coords)) {
+    if (hiddenForFloor.has(roomName)) continue; // Skip hidden points
+
+    const x = coord.x * sx;
+    const y = coord.y * sy;
+
+    // Draw selected point in red, others in green
+    const isSelected = selectedCoordPoint === roomName;
+
+    ctx.beginPath();
+    ctx.arc(x, y, isSelected ? 4 : 2, 0, Math.PI * 2);
+    if (isSelected) {
+      ctx.fillStyle = "rgba(255, 0, 0, 0.8)";
+      ctx.fill();
+      ctx.strokeStyle = "rgba(255, 100, 100, 1)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    } else {
+      ctx.fillStyle = "rgba(0, 255, 0, 0.7)";
+      ctx.fill();
+      ctx.strokeStyle = "rgba(0, 200, 0, 1)";
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+  }
+
+  // Draw tooltip for hovered point (next to cursor)
+  if (hoverPoint && !hiddenForFloor.has(hoverPoint) && coords[hoverPoint]) {
+    const coord = coords[hoverPoint];
+    const x = coord.x * sx;
+    const y = coord.y * sy;
+
+    // Highlight hovered point
+    ctx.beginPath();
+    ctx.arc(x, y, 5, 0, Math.PI * 2);
+    ctx.strokeStyle = "#ffff00";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Draw label tooltip at cursor position
+    const label = displayRooms[hoverPoint] || hoverPoint;
+    ctx.font = "bold 12px Inter,sans-serif";
+    ctx.textAlign = "left";
+    const metrics = ctx.measureText(label);
+    const boxW = metrics.width + 8;
+    const boxH = 18;
+    let boxX = mouseX + 12;
+    let boxY = mouseY - 8;
+
+    // Keep tooltip on screen
+    if (boxX + boxW > mapCanvas.width) {
+      boxX = mapCanvas.width - boxW - 5;
+    }
+    if (boxY < 0) {
+      boxY = mouseY + 12;
+    }
+
+    ctx.fillStyle = "rgba(255, 255, 0, 0.9)";
+    ctx.fillRect(boxX, boxY, boxW, boxH);
+    ctx.strokeStyle = "#000";
+    ctx.lineWidth = 1;
+    ctx.strokeRect(boxX, boxY, boxW, boxH);
+
+    ctx.fillStyle = "#000";
+    ctx.fillText(label, boxX + 4, boxY + 14);
+  }
+}
+
+// Get point under mouse cursor
+function getPointAtMouse(x, y) {
+  const [iw, ih] = IMG_SIZE[currentFloor];
+  const sx = mapCanvas.width / iw;
+  const sy = mapCanvas.height / ih;
+  const coords = COORDS[currentFloor];
+
+  if (!coords) return null;
+
+  const hitRadius = 6; // pixel radius for hit detection
+  for (const [roomName, coord] of Object.entries(coords)) {
+    const px = coord.x * sx;
+    const py = coord.y * sy;
+    const dist = Math.hypot(x - px, y - py);
+    if (dist < hitRadius) {
+      return roomName;
+    }
+  }
+  return null;
+}
+
+// Get hallway line under mouse cursor
+function getHallwayAtMouse(x, y) {
+  const [iw, ih] = IMG_SIZE[currentFloor];
+  const sx = mapCanvas.width / iw;
+  const sy = mapCanvas.height / ih;
+  const floorHallways = hallways[`floor${currentFloor}`] || {};
+
+  const hitRadius = 8; // pixel radius for hit detection on lines
+
+  for (const [hallwayId, hallwayData] of Object.entries(floorHallways)) {
+    const waypoints = hallwayData.waypoints || [];
+    if (waypoints.length < 2) continue;
+
+    // Check distance from point to each line segment
+    for (let i = 0; i < waypoints.length - 1; i++) {
+      const p1 = waypoints[i];
+      const p2 = waypoints[i + 1];
+      const dist = distanceToLineSegment(
+        x,
+        y,
+        p1.x * sx,
+        p1.y * sy,
+        p2.x * sx,
+        p2.y * sy,
+      );
+      if (dist < hitRadius) {
+        return { id: hallwayId, data: hallwayData };
+      }
+    }
+  }
+  return null;
+}
+
+// Calculate distance from point to line segment
+function distanceToLineSegment(px, py, x1, y1, x2, y2) {
+  const A = px - x1;
+  const B = py - y1;
+  const C = x2 - x1;
+  const D = y2 - y1;
+
+  const dot = A * C + B * D;
+  const len_sq = C * C + D * D;
+  let param = -1;
+
+  if (len_sq !== 0) param = dot / len_sq;
+
+  let xx, yy;
+  if (param < 0) {
+    xx = x1;
+    yy = y1;
+  } else if (param > 1) {
+    xx = x2;
+    yy = y2;
+  } else {
+    xx = x1 + param * C;
+    yy = y1 + param * D;
+  }
+
+  const dx = px - xx;
+  const dy = py - yy;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+
+// Show point info in sidebar
+function showPointInfo(roomName) {
+  const sidebar = document.getElementById("infoSidebar");
+  const coords = COORDS[currentFloor];
+
+  if (!coords || !coords[roomName]) return;
+
+  const coord = coords[roomName];
+  const label = displayRooms[roomName] || roomName;
+
+  document.getElementById("infoName").textContent = label;
+  document.getElementById("infoX").textContent = Math.round(coord.x);
+  document.getElementById("infoY").textContent = Math.round(coord.y);
+  document.getElementById("infoEndRow").style.display = "none";
+  document.getElementById("infoEndYRow").style.display = "none";
+
+  sidebar.style.display = "block";
+}
+
+// Show hallway info in sidebar
+function showHallwayInfo(hallwayData) {
+  const sidebar = document.getElementById("infoSidebar");
+  const waypoints = hallwayData.waypoints || [];
+
+  if (waypoints.length < 2) return;
+
+  const startPt = waypoints[0];
+  const endPt = waypoints[waypoints.length - 1];
+
+  document.getElementById("infoName").textContent = hallwayData.name;
+  document.getElementById("infoX").textContent = Math.round(startPt.x);
+  document.getElementById("infoY").textContent = Math.round(startPt.y);
+  document.getElementById("infoEndX").textContent = Math.round(endPt.x);
+  document.getElementById("infoEndY").textContent = Math.round(endPt.y);
+  document.getElementById("infoEndRow").style.display = "flex";
+  document.getElementById("infoEndYRow").style.display = "flex";
+
+  sidebar.style.display = "block";
+}
+
+// Hide info sidebar
+function hideInfoSidebar() {
+  const sidebar = document.getElementById("infoSidebar");
+  sidebar.style.display = "none";
+}
+
+// Draw hallway lines from hallways.js data
+function drawHallways() {
+  if (!showHallways) return;
+
+  const [iw, ih] = IMG_SIZE[currentFloor];
+  const sx = mapCanvas.width / iw;
+  const sy = mapCanvas.height / ih;
+
+  const floorHallways = hallways[`floor${currentFloor}`] || {};
+
+  for (const [hallwayId, hallwayData] of Object.entries(floorHallways)) {
+    const waypoints = hallwayData.waypoints || [];
+    if (waypoints.length < 2) continue;
+
+    // Draw hallway line
+    ctx.beginPath();
+    ctx.moveTo(waypoints[0].x * sx, waypoints[0].y * sy);
+    for (let i = 1; i < waypoints.length; i++) {
+      ctx.lineTo(waypoints[i].x * sx, waypoints[i].y * sy);
+    }
+    ctx.strokeStyle = "rgba(100, 150, 255, 0.6)"; // Semi-transparent blue
+    ctx.lineWidth = 3;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.stroke();
+
+    // Draw waypoint circles
+    for (let i = 0; i < waypoints.length; i++) {
+      const x = waypoints[i].x * sx;
+      const y = waypoints[i].y * sy;
+      ctx.beginPath();
+      ctx.arc(x, y, 3, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(100, 150, 255, 0.8)";
+      ctx.fill();
+      ctx.strokeStyle = "#6496FF";
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+
+    // Draw hallway name label at midpoint
+    if (waypoints.length > 1) {
+      const mid = Math.floor(waypoints.length / 2);
+      const midpt = waypoints[mid];
+      const x = midpt.x * sx;
+      const y = midpt.y * sy;
+
+      ctx.font = "bold 10px Inter,sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillStyle = "rgba(100, 150, 255, 1)";
+      ctx.fillText(hallwayData.name, x, y - 8);
+    }
+  }
 }
 
 function animateLine(points, onDone) {
@@ -783,6 +1187,15 @@ function animateLine(points, onDone) {
 
     ctx.clearRect(0, 0, mapCanvas.width, mapCanvas.height);
 
+    // Redraw grid after clearing
+    drawGrid();
+
+    // Draw hallway lines (dev mode)
+    drawHallways();
+
+    // Draw all points (dev mode)
+    drawAllPoints();
+
     // Build partial polyline
     let rem = progress;
     const partial = [points[0]];
@@ -804,31 +1217,31 @@ function animateLine(points, onDone) {
       }
     }
 
-    // Glow
+    // Glow (Red development)
     ctx.beginPath();
     ctx.moveTo(partial[0].x, partial[0].y);
     for (let i = 1; i < partial.length; i++)
       ctx.lineTo(partial[i].x, partial[i].y);
-    ctx.strokeStyle = "rgba(26,122,26,0.22)";
-    ctx.lineWidth = 16;
+    ctx.strokeStyle = "rgba(255, 0, 0, 0.4)";
+    ctx.lineWidth = 6;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
     ctx.stroke();
 
-    // Main line
+    // Main line (Red for development)
     ctx.beginPath();
     ctx.moveTo(partial[0].x, partial[0].y);
     for (let i = 1; i < partial.length; i++)
       ctx.lineTo(partial[i].x, partial[i].y);
-    ctx.strokeStyle = "#1a7a1a";
-    ctx.lineWidth = 4;
+    ctx.strokeStyle = "#ff0000";
+    ctx.lineWidth = 2;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
     ctx.stroke();
 
     // Moving dot tip
     const tip = partial[partial.length - 1];
-    drawDot(tip.x, tip.y, 5, "#fff", "#1a7a1a");
+    drawDot(tip.x, tip.y, 5, "#fff", "#ff0000");
 
     if (progress < total) {
       animFrame = requestAnimationFrame(frame);
@@ -847,6 +1260,16 @@ function pulseHere() {
   function frame() {
     if (currentPath && currentPath.length >= 2) return;
     ctx.clearRect(0, 0, mapCanvas.width, mapCanvas.height);
+
+    // Redraw grid after clearing
+    drawGrid();
+
+    // Draw hallway lines (dev mode)
+    drawHallways();
+
+    // Draw all points (dev mode)
+    drawAllPoints();
+
     tick++;
     const ring = 10 + Math.sin(tick * 0.06) * 4;
     ctx.beginPath();
@@ -995,8 +1418,393 @@ document.addEventListener("click", (e) => {
 });
 
 // ══════════════════════════════════════════════════════
-//  ROUTING
+//  ROUTING & TOGGLES
 // ══════════════════════════════════════════════════════
+
+// Load settings from localStorage
+function loadSettings() {
+  const lines = localStorage.getItem("showLines") === "true";
+  const grid = localStorage.getItem("showGrid") === "true";
+  const points = localStorage.getItem("showAllPoints") === "true";
+  const hallways = localStorage.getItem("showHallways") === "true";
+  const disableIdle = localStorage.getItem("disableIdleAndIntro") === "true";
+
+  showLines = lines;
+  showGrid = grid;
+  showAllPoints = points;
+  showHallways = hallways;
+  disableIdleAndIntro = disableIdle;
+
+  // Update checkbox UI
+  const linesToggle = document.getElementById("linesToggle");
+  const gridToggle = document.getElementById("gridToggle");
+  const showPointsToggle = document.getElementById("showPointsToggle");
+  const showHallwaysToggle = document.getElementById("showHallwaysToggle");
+
+  if (linesToggle) linesToggle.checked = lines;
+  if (gridToggle) gridToggle.checked = grid;
+  if (showPointsToggle) showPointsToggle.checked = points;
+  if (showHallwaysToggle) showHallwaysToggle.checked = hallways;
+
+  const idleToggle = document.getElementById("disableIdleToggle");
+  if (idleToggle) idleToggle.checked = disableIdleAndIntro;
+}
+
+// Save settings to localStorage
+function saveSettings() {
+  localStorage.setItem("showLines", showLines);
+  localStorage.setItem("showGrid", showGrid);
+  localStorage.setItem("showAllPoints", showAllPoints);
+  localStorage.setItem("showHallways", showHallways);
+  localStorage.setItem("disableIdleAndIntro", disableIdleAndIntro);
+}
+
+// Lines beta checkbox
+const linesToggle = document.getElementById("linesToggle");
+if (linesToggle) {
+  linesToggle.addEventListener("change", () => {
+    showLines = linesToggle.checked;
+    saveSettings();
+    drawAll(); // redraw immediately
+  });
+}
+
+// Grid overlay checkbox
+const gridToggle = document.getElementById("gridToggle");
+if (gridToggle) {
+  gridToggle.addEventListener("change", () => {
+    showGrid = gridToggle.checked;
+    saveSettings();
+    drawAll(); // redraw immediately
+  });
+}
+
+// Show all points checkbox (dev mode)
+const showPointsToggle = document.getElementById("showPointsToggle");
+if (showPointsToggle) {
+  showPointsToggle.addEventListener("change", () => {
+    showAllPoints = showPointsToggle.checked;
+    saveSettings();
+    hoverPoint = null; // reset hover when toggling
+    drawAll(); // redraw immediately
+  });
+}
+
+// Show hallways checkbox (dev mode)
+const showHallwaysToggle = document.getElementById("showHallwaysToggle");
+if (showHallwaysToggle) {
+  showHallwaysToggle.addEventListener("change", () => {
+    showHallways = showHallwaysToggle.checked;
+    saveSettings();
+    drawAll(); // redraw immediately
+  });
+}
+
+// Disable idle and intro toggle (dev mode)
+const disableIdleToggle = document.getElementById("disableIdleToggle");
+if (disableIdleToggle) {
+  disableIdleToggle.addEventListener("change", () => {
+    disableIdleAndIntro = disableIdleToggle.checked;
+    saveSettings();
+    if (disableIdleAndIntro) {
+      // Dismiss idle overlay if showing
+      idleOverlay.classList.remove("show");
+      // Clear any active idle timers
+      clearInterval(idleTimer);
+    } else {
+      // Resume normal idle behavior
+      restartCountdown();
+    }
+  });
+}
+
+// Initialize hidden points tracking per floor
+window.hiddenPointsByFloor = {
+  floor1: new Set(),
+  floor2: new Set(),
+  floor3: new Set(),
+};
+
+// Load settings from localStorage (after all toggles are set up)
+loadSettings();
+
+// Mouse tracking for point and line hover display
+mapCanvas.addEventListener("mousemove", (e) => {
+  const rect = mapCanvas.getBoundingClientRect();
+  mouseX = e.clientX - rect.left;
+  mouseY = e.clientY - rect.top;
+
+  if (showAllPoints) {
+    const newHoverPoint = getPointAtMouse(mouseX, mouseY);
+    if (newHoverPoint !== hoverPoint) {
+      hoverPoint = newHoverPoint;
+      if (hoverPoint) {
+        showPointInfo(hoverPoint);
+      } else {
+        hideInfoSidebar();
+      }
+      drawAll();
+    }
+  } else if (showHallways) {
+    const hallway = getHallwayAtMouse(mouseX, mouseY);
+    if (hallway) {
+      showHallwayInfo(hallway.data);
+    } else {
+      hideInfoSidebar();
+    }
+  } else {
+    hideInfoSidebar();
+  }
+});
+
+mapCanvas.addEventListener("mouseleave", () => {
+  if (hoverPoint !== null) {
+    hoverPoint = null;
+    drawAll();
+  }
+  hideInfoSidebar();
+});
+
+// Click to select points and show in editor
+mapCanvas.addEventListener("click", (e) => {
+  if (!showAllPoints) return;
+
+  const rect = mapCanvas.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+
+  const pointAtMouse = getPointAtMouse(x, y);
+  if (pointAtMouse) {
+    // Select the point in the coordinates editor
+    selectCoordinatePoint(pointAtMouse);
+
+    // Scroll coordinates panel into view if hidden
+    if (coordsPanel.style.display === "none") {
+      coordsPanel.style.display = "flex";
+    }
+  }
+});
+
+// ════════════════════════════════════════════════════════════════
+// COORDINATES EDITOR PANEL
+// ════════════════════════════════════════════════════════════════
+
+const coordsPanel = document.getElementById("panelCoords");
+const coordsList = document.getElementById("coordsList");
+const coordsSearch = document.getElementById("coordsSearch");
+const toggleCoordsPanel = document.getElementById("toggleCoordsPanel");
+
+// Store edited coordinates in memory before saving
+const coordsEdits = {};
+
+// Populate coordinates panel with all points for current floor
+function populateCoordinatesPanel() {
+  const coords = COORDS[currentFloor];
+  if (!coords) return;
+
+  coordsList.innerHTML = "";
+  coordsEdits[currentFloor] = coordsEdits[currentFloor] || {};
+
+  const roomNames = Object.keys(coords).sort();
+
+  for (const roomName of roomNames) {
+    const coord = coords[roomName];
+    const label = displayRooms[roomName] || roomName;
+    const key = `${currentFloor}-${roomName}`;
+
+    const item = document.createElement("div");
+    item.className = "coords-item";
+    item.dataset.roomName = roomName;
+    item.dataset.key = key;
+
+    const xVal = coordsEdits[currentFloor][roomName]?.x ?? coord.x;
+    const yVal = coordsEdits[currentFloor][roomName]?.y ?? coord.y;
+
+    item.innerHTML = `
+      <div class="coords-item-name">${label}</div>
+      <div class="coords-inputs">
+        <div class="coords-input-group">
+          <label class="coords-input-label">X</label>
+          <input type="number" class="coords-input-field coords-x" value="${xVal}" />
+        </div>
+        <div class="coords-input-group">
+          <label class="coords-input-label">Y</label>
+          <input type="number" class="coords-input-field coords-y" value="${yVal}" />
+        </div>
+      </div>
+      <button class="coords-save-btn">Save</button>
+    `;
+
+    coordsList.appendChild(item);
+
+    // Add input change listeners
+    const xInput = item.querySelector(".coords-x");
+    const yInput = item.querySelector(".coords-y");
+    const saveBtn = item.querySelector(".coords-save-btn");
+
+    const markModified = () => {
+      item.classList.add("modified");
+    };
+
+    // Live update as user types (real-time map preview)
+    xInput.addEventListener("input", (e) => {
+      const newX = parseFloat(e.target.value);
+      if (isNaN(newX)) return;
+
+      coordsEdits[currentFloor][roomName] =
+        coordsEdits[currentFloor][roomName] || {};
+      coordsEdits[currentFloor][roomName].x = newX;
+
+      // Live update the map
+      liveUpdateCoordinate(
+        roomName,
+        newX,
+        coordsEdits[currentFloor][roomName].y ?? coord.y,
+      );
+      markModified();
+    });
+
+    yInput.addEventListener("input", (e) => {
+      const newY = parseFloat(e.target.value);
+      if (isNaN(newY)) return;
+
+      coordsEdits[currentFloor][roomName] =
+        coordsEdits[currentFloor][roomName] || {};
+      coordsEdits[currentFloor][roomName].y = newY;
+
+      // Live update the map
+      liveUpdateCoordinate(
+        roomName,
+        coordsEdits[currentFloor][roomName].x ?? coord.x,
+        newY,
+      );
+      markModified();
+    });
+
+    saveBtn.addEventListener("click", () => {
+      saveCoordinateChange(
+        roomName,
+        parseFloat(xInput.value),
+        parseFloat(yInput.value),
+      );
+      item.classList.remove("modified");
+    });
+
+    // Add click handler to select point
+    item.addEventListener("click", () => {
+      selectCoordinatePoint(roomName);
+    });
+  }
+}
+
+// Select a point in the coordinates editor (highlights red on map)
+function selectCoordinatePoint(roomName) {
+  // Update selection state
+  selectedCoordPoint = roomName;
+
+  // Update UI - remove active class from all items
+  const items = coordsList.querySelectorAll(".coords-item");
+  for (const item of items) {
+    item.classList.remove("active");
+  }
+
+  // Add active class to selected item
+  const selectedItem = coordsList.querySelector(
+    `[data-room-name="${roomName}"]`,
+  );
+  if (selectedItem) {
+    selectedItem.classList.add("active");
+    // Scroll into view
+    selectedItem.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  // Redraw map to show selected point in red
+  drawAll();
+}
+
+// Live update: show changed coordinate on map immediately (doesn't save to file yet)
+function liveUpdateCoordinate(roomName, x, y) {
+  if (!COORDS[currentFloor] || !COORDS[currentFloor][roomName]) return;
+
+  // Update in-memory coordinate
+  COORDS[currentFloor][roomName].x = x;
+  COORDS[currentFloor][roomName].y = y;
+
+  // Redraw map to show updated point position
+  drawAll();
+}
+
+// Save coordinate change to file permanently
+async function saveCoordinateChange(roomName, x, y) {
+  if (!COORDS[currentFloor] || !COORDS[currentFloor][roomName]) return;
+
+  // Make sure the latest values are in COORDS
+  COORDS[currentFloor][roomName].x = x;
+  COORDS[currentFloor][roomName].y = y;
+
+  // Prepare the update
+  const updateData = {
+    floor: currentFloor,
+    roomName: roomName,
+    x: x,
+    y: y,
+  };
+
+  try {
+    // Call Electron IPC to save coordinates to file
+    const result = await window.kioskAPI.saveCoordinates(updateData);
+    if (result.success) {
+      // Clear the edit cache on successful save
+      delete coordsEdits[currentFloor][roomName];
+      // Visual feedback: show that it's saved
+      const item = coordsList.querySelector(`[data-room-name="${roomName}"]`);
+      if (item) {
+        item.classList.remove("modified");
+        item.classList.add("saved");
+        setTimeout(() => {
+          item.classList.remove("saved");
+        }, 1500);
+      }
+    } else {
+      throw new Error(result.error || "Failed to save");
+    }
+  } catch (error) {
+    console.error("Failed to save coordinate:", error);
+    alert(`Failed to save: ${error.message}`);
+  }
+}
+
+// Filter coordinates list by search
+coordsSearch.addEventListener("input", (e) => {
+  const searchTerm = e.target.value.toLowerCase();
+  const items = coordsList.querySelectorAll(".coords-item");
+
+  for (const item of items) {
+    const roomName = item.dataset.roomName;
+    const label = (displayRooms[roomName] || roomName).toLowerCase();
+    const matches =
+      label.includes(searchTerm) || roomName.toLowerCase().includes(searchTerm);
+    item.style.display = matches ? "" : "none";
+  }
+});
+
+// Toggle coordinates panel
+toggleCoordsPanel.addEventListener("click", () => {
+  const isVisible = coordsPanel.style.display !== "none";
+  coordsPanel.style.display = isVisible ? "none" : "flex";
+});
+
+// Populate panel when floor changes
+const originalSetFloor = window.setFloor;
+window.setFloor = function (floor) {
+  originalSetFloor(floor);
+  selectedCoordPoint = null; // Clear selection when changing floors
+  populateCoordinatesPanel();
+};
+
+// Initial population
+populateCoordinatesPanel();
+
 goBtn.addEventListener("click", go);
 
 function go() {
@@ -1494,7 +2302,14 @@ function generateQR(start, end) {
 // ══════════════════════════════════════════════════════
 await loadConfig();
 setFloor(parseInt(config.defaultFloor) || 1);
-showHomeScreen(); // Show welcome screen on first load
+
+// Show home screen on load (unless idle is disabled)
+if (!disableIdleAndIntro) {
+  showHomeScreen();
+} else {
+  // If idle is disabled, start the countdown without showing the overlay
+  restartCountdown();
+}
 
 // Hide zoom hint after 4 seconds
 const zoomHint = document.getElementById("zoomHint");
